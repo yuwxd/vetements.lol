@@ -485,6 +485,18 @@
     </footer>
 
     <script>
+        // Handle browser navigation
+        window.addEventListener('popstate', function(e) {
+            const path = window.location.pathname.replace('/', '') || 'home';
+            showPage(path);
+        });
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            const path = window.location.pathname.replace('/', '') || 'home';
+            showPage(path);
+        });
+
         const commands = {
             crypto: [
                 {name: '/cryptoprice', desc: 'Get current cryptocurrency price and market data'},
