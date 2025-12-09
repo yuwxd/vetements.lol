@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ • vetements</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        
+        .nav-links a.active {
+            color: #ffffff;
+        }
+        
+        .content-page {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-page h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+        
+        .content-page h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #ffffff;
+        }
+        
+        .content-page p {
+            font-size: 16px;
+            color: #909090;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .content-page ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        
+        .content-page ul li {
+            font-size: 16px;
+            color: #909090;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .content-page ul li:before {
+            content: "•";
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+        }
+        
+        .content-page code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #606060;
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        footer a {
+            color: #606060;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #808080;
+        }
+        
+        @media (max-width: 768px) {
+            .content-page {
+                padding: 100px 20px 40px;
+            }
+            
+            .content-page h2 {
+                font-size: 36px;
+            }
+            
+            .content-page h3 {
+                font-size: 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/commands">Commands</a>
+            <a href="/faq" class="active">FAQ</a>
+            <a href="/premium">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
+
+    <div class="content-page">
+        <h2>Frequently Asked Questions</h2>
+        
+        <h3>What is vetements?</h3>
+        <p>vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites - everything is accessible through Discord commands.</p>
+        
+        <h3>How do I use the bot?</h3>
+        <p>Simply add vetements to your server or send it a DM, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
+        
+        <h3>Is vetements free?</h3>
+        <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
+        
+        <h3>Where can I get support?</h3>
+        <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
+        
+        <h3>How do I add vetements to my server?</h3>
+        <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
+        
+        <h3>What permissions does the bot need?</h3>
+        <p>vetements requires basic permissions like Send Messages, Embed Links, and Attach Files. Some commands may require additional permissions which are clearly indicated when you try to use them.</p>
+        
+        <h3>Can I use vetements in DMs?</h3>
+        <p>Yes! Most commands work in direct messages. Simply start a DM with vetements and use slash commands as you would in a server.</p>
+        
+        <h3>How often is vetements updated?</h3>
+        <p>We release regular updates with new features, improvements, and bug fixes. Premium users get early access to new features.</p>
+        
+        <h3>Is my data safe?</h3>
+        <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: #808080;">Privacy Policy</a> for details.</p>
+        
+        <h3>Can I suggest new features?</h3>
+        <p>Absolutely! Join our Discord server and share your ideas in the suggestions channel. We value community feedback.</p>
+    </div>
+
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/faq">FAQ</a>
+            <a href="/premium">Premium</a>
+        </p>
+    </footer>
+</body>
+</html>
