@@ -73,6 +73,10 @@
             font-weight: 700;
             margin-bottom: 30px;
             letter-spacing: -1.5px;
+            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .search-container {
@@ -104,7 +108,10 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #606060;
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(0.4);
+            pointer-events: none;
         }
         
         .categories {
@@ -152,6 +159,9 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
         
         .command-card:hover {
@@ -159,18 +169,90 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
         
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
         .command-name {
             font-size: 16px;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 8px;
             font-family: 'Courier New', monospace;
+            flex: 1;
+            padding-right: 10px;
+        }
+        
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .copy-icon {
+            width: 16px;
+            height: 16px;
+            filter: brightness(0) invert(0.7);
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover .copy-icon {
+            filter: brightness(0) invert(1);
         }
         
         .command-desc {
             font-size: 14px;
             color: #808080;
             line-height: 1.5;
+        }
+        
+        .copied-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .copied-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .check-icon {
+            width: 16px;
+            height: 16px;
+            filter: brightness(0) invert(1);
         }
         
         footer {
@@ -213,6 +295,14 @@
                 padding: 8px 16px;
                 font-size: 13px;
             }
+            
+            .copied-notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                text-align: center;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -220,9 +310,9 @@
     <nav>
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="/commands" class="active">Commands</a>
-            <a href="/faq">FAQ</a>
-            <a href="/premium">Premium</a>
+            <a href="commands.html" class="active">Commands</a>
+            <a href="faq.html">FAQ</a>
+            <a href="premium.html">Premium</a>
             <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
         </div>
     </nav>
@@ -232,7 +322,7 @@
             <h2 class="commands-title">Commands</h2>
             <div class="search-container">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
-                <span class="search-icon">🔍</span>
+                <img src="https://img.icons8.com/?size=48&id=KRskJxjVf0BS&format=png" class="search-icon" alt="Search">
             </div>
         </div>
         
@@ -249,13 +339,18 @@
         <div class="commands-grid" id="commandsGrid"></div>
     </div>
 
+    <div class="copied-notification" id="copiedNotification">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/checked.png" class="check-icon" alt="✓">
+        <span>Copied to clipboard</span>
+    </div>
+
     <footer>
         <p>© 2025 vetements • Developed by @yuw</p>
         <p style="margin-top: 10px;">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-            <a href="/faq">FAQ</a>
-            <a href="/premium">Premium</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="faq.html">FAQ</a>
+            <a href="premium.html">Premium</a>
         </p>
     </footer>
 
@@ -348,7 +443,12 @@
             const grid = document.getElementById('commandsGrid');
             grid.innerHTML = commandsToShow.map(cmd => `
                 <div class="command-card">
-                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-header">
+                        <div class="command-name">${cmd.name}</div>
+                        <div class="copy-btn" onclick="copyCommand('${cmd.name.replace(/'/g, "\\'")}')">
+                            <img src="https://img.icons8.com/?size=48&id=KRskJxjVf0BS&format=png" class="copy-icon" alt="Copy">
+                        </div>
+                    </div>
                     <div class="command-desc">${cmd.desc}</div>
                 </div>
             `).join('');
@@ -376,6 +476,31 @@
             }
             
             renderCommands(filtered);
+        }
+
+        function copyCommand(commandText) {
+            navigator.clipboard.writeText(commandText).then(() => {
+                showCopiedNotification();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = commandText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopiedNotification();
+            });
+        }
+
+        function showCopiedNotification() {
+            const notification = document.getElementById('copiedNotification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
