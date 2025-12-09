@@ -58,97 +58,197 @@
             color: #ffffff;
         }
         
-        .content-page {
+        .premium-hero {
             min-height: 100vh;
-            padding: 120px 40px 80px;
-            max-width: 800px;
+            padding: 140px 40px 80px;
+            text-align: center;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        .content-page h2 {
-            font-size: 48px;
+        .premium-title {
+            font-size: 64px;
             font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -1px;
-        }
-        
-        .content-page h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 40px 0 20px;
-            color: #ffffff;
-        }
-        
-        .content-page p {
-            font-size: 16px;
-            color: #909090;
-            line-height: 1.8;
             margin-bottom: 20px;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .content-page ul {
-            list-style-type: none;
-            margin: 20px 0;
-            padding: 0;
+        .premium-subtitle {
+            font-size: 20px;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .content-page ul li {
-            font-size: 16px;
-            color: #909090;
-            line-height: 1.8;
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .content-page ul li:before {
-            content: "•";
-            color: #ffffff;
-            position: absolute;
-            left: 0;
-        }
-        
-        .content-page code {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 15px;
-        }
-        
-        .price-tag {
+        .price-badge {
             display: inline-block;
-            padding: 10px 20px;
-            background: rgba(255, 215, 0, 0.1);
+            padding: 12px 28px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
             border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
+            border-radius: 12px;
             color: #FFD700;
-            font-size: 18px;
-            font-weight: 600;
-            margin: 20px 0 30px 0;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 30px 0 50px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.1);
         }
         
-        .premium-highlight {
-            background: rgba(255, 215, 0, 0.05);
-            border-left: 3px solid #FFD700;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 30px 0;
+        .benefits-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
+        }
+        
+        .benefit-card {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 215, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.03) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+        
+        .benefit-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+        
+        .benefit-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        
+        .benefit-description {
+            font-size: 15px;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .payment-section {
+            margin: 80px 0 60px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .payment-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
         }
         
         .payment-methods {
             display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 15px;
+            margin-top: 30px;
         }
         
         .payment-method {
-            padding: 8px 16px;
+            padding: 12px 24px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #b0b0b0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        
+        .payment-icon {
+            font-size: 18px;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin: 40px auto;
+            max-width: 700px;
+        }
+        
+        .coming-soon h3 {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .coming-soon p {
+            font-size: 16px;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
         }
         
         footer {
@@ -171,29 +271,48 @@
         }
         
         @media (max-width: 768px) {
-            .content-page {
-                padding: 100px 20px 40px;
+            .premium-hero {
+                padding: 120px 20px 40px;
             }
             
-            .content-page h2 {
-                font-size: 36px;
+            .premium-title {
+                font-size: 42px;
             }
             
-            .content-page h3 {
-                font-size: 20px;
+            .premium-subtitle {
+                font-size: 18px;
+                padding: 0 20px;
+            }
+            
+            .benefits-container {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .benefit-card {
+                padding: 25px;
+            }
+            
+            .payment-section {
+                padding: 30px 20px;
+                margin: 40px 20px;
+            }
+            
+            .payment-title {
+                font-size: 26px;
+            }
+            
+            .payment-methods {
+                gap: 10px;
+            }
+            
+            .payment-method {
+                padding: 10px 16px;
+                font-size: 14px;
             }
             
             .nav-links {
                 gap: 20px;
-            }
-            
-            .payment-methods {
-                gap: 8px;
-            }
-            
-            .payment-method {
-                padding: 6px 12px;
-                font-size: 13px;
             }
         }
     </style>
@@ -209,49 +328,87 @@
         </div>
     </nav>
 
-    <div class="content-page">
-        <h2>Premium Features</h2>
+    <div class="premium-hero">
+        <h1 class="premium-title">Unlock Premium Power</h1>
+        <p class="premium-subtitle">Elevate your experience with exclusive features, enhanced limits, and priority access to the most advanced Discord utilities</p>
         
-        <div class="price-tag">Price: NOT OUT YET</div>
+        <div class="price-badge">Price: COMING SOON</div>
         
-        <p>Upgrade to vetements Premium for enhanced features and capabilities beyond the free tier. Premium supports ongoing development and server costs.</p>
-        
-        <div class="premium-highlight">
-            <p><strong>Coming Soon:</strong> Premium is currently in development. Join our Discord server to be notified when it launches!</p>
+        <div class="coming-soon">
+            <h3>🚀 Premium Launching Soon</h3>
+            <p>We're putting the final touches on our premium experience. Join our Discord to be the first to know when it drops!</p>
+            <a href="https://discord.gg/larpfunds" class="cta-button" target="_blank">Get Notified on Discord</a>
         </div>
         
-        <h3>Premium Benefits:</h3>
-        <ul>
-            <li><strong>Enhanced Clipboard Limits</strong> - Increased storage capacity for saved images and text in your personal clipboard</li>
-            <li><strong>Higher Generation Limits</strong> - Expanded limits for various generation commands like AI image generation, QR codes, and more</li>
-            <li><strong>Exclusive Premium Commands</strong> - Access to special commands not available in the free tier</li>
-            <li><strong>Early Access</strong> - Be the first to try new features and commands before they're released to everyone</li>
-            <li><strong>Priority Processing</strong> - Your commands get processed faster during high-traffic periods</li>
-            <li><strong>Regular Updates</strong> - Guaranteed continuous development and improvements with dedicated support</li>
-            <li><strong>Lifetime Access</strong> - One-time payment for permanent premium benefits (subject to terms)</li>
-            <li><strong>No Rate Limits</strong> - Unlimited command usage without restrictions</li>
-            <li><strong>Premium Support</strong> - Direct access to developer support for assistance</li>
-        </ul>
-        
-        <h3>Payment Methods</h3>
-        <p>We will accept various payment methods including:</p>
-        <div class="payment-methods">
-            <span class="payment-method">Cryptocurrency</span>
-            <span class="payment-method">Credit/Debit Cards</span>
-            <span class="payment-method">BLIK</span>
-            <span class="payment-method">Paysafecard</span>
-            <span class="payment-method">Robux</span>
+        <div class="benefits-container">
+            <div class="benefit-card">
+                <div class="benefit-icon">💾</div>
+                <h3 class="benefit-title">Enhanced Clipboard Limits</h3>
+                <p class="benefit-description">Increased storage capacity for saved images and text. Store more items in your personal clipboard with extended retention time.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <h3 class="benefit-title">Higher Generation Limits</h3>
+                <p class="benefit-description">Expanded limits for AI image generation, QR codes, and all creative commands. Create more, faster, without restrictions.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🔒</div>
+                <h3 class="benefit-title">Exclusive Premium Commands</h3>
+                <p class="benefit-description">Access to special commands not available in the free tier. Premium-only utilities for power users.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🚀</div>
+                <h3 class="benefit-title">Early Access</h3>
+                <p class="benefit-description">Be the first to try new features and experimental commands before they're released to the public.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🔄</div>
+                <h3 class="benefit-title">Regular Updates</h3>
+                <p class="benefit-description">Guaranteed continuous development and improvements with premium-exclusive features and enhancements.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">👑</div>
+                <h3 class="benefit-title">Lifetime Access</h3>
+                <p class="benefit-description">One-time payment for permanent premium benefits. No subscriptions, just unlimited access forever.</p>
+            </div>
         </div>
         
-        <h3>How to Activate Premium</h3>
-        <p>Once premium is available, use the <code>/redeem</code> command in Discord to activate your premium license key. Keys will be provided after purchase through our Discord server.</p>
+        <div class="payment-section">
+            <h3 class="payment-title">Accepted Payment Methods</h3>
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <span class="payment-icon">₿</span>
+                    Cryptocurrency
+                </div>
+                <div class="payment-method">
+                    <span class="payment-icon">💳</span>
+                    Credit Card
+                </div>
+                <div class="payment-method">
+                    <span class="payment-icon">🇵🇱</span>
+                    BLIK
+                </div>
+                <div class="payment-method">
+                    <span class="payment-icon">🏷️</span>
+                    paysafecard
+                </div>
+                <div class="payment-method">
+                    <span class="payment-icon">🎮</span>
+                    Robux
+                </div>
+            </div>
+        </div>
         
-        <p><em>Note: Premium features are not yet available. Join our Discord server to be notified when premium launches!</em></p>
-        
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="https://discord.gg/larpfunds" style="display: inline-block; padding: 12px 24px; background: #5865F2; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;" target="_blank">
-                Join Discord for Updates
-            </a>
+        <div style="text-align: center; margin-top: 60px;">
+            <p style="color: #909090; font-size: 16px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Premium will be activated using the <code>/redeem</code> command in Discord. Once available, you'll receive a license key to unlock all premium features.
+            </p>
+            <a href="https://discord.gg/larpfunds" class="cta-button" target="_blank">Join Discord for Updates</a>
         </div>
     </div>
 
