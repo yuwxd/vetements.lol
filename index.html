@@ -54,6 +54,10 @@
             color: #ffffff;
         }
         
+        .nav-links a.active {
+            color: #ffffff;
+        }
+        
         .hero {
             min-height: 100vh;
             display: flex;
@@ -362,10 +366,10 @@
 <body>
     <nav>
         <div class="nav-links">
-            <a href="/" onclick="event.preventDefault(); showPage('home')">Home</a>
-            <a href="/commands" onclick="event.preventDefault(); showPage('commands')">Commands</a>
-            <a href="/faq" onclick="event.preventDefault(); showPage('faq')">FAQ</a>
-            <a href="/premium" onclick="event.preventDefault(); showPage('premium')">Premium</a>
+            <a href="javascript:void(0)" onclick="navigate('')" data-page="">Home</a>
+            <a href="javascript:void(0)" onclick="navigate('commands')" data-page="commands">Commands</a>
+            <a href="javascript:void(0)" onclick="navigate('faq')" data-page="faq">FAQ</a>
+            <a href="javascript:void(0)" onclick="navigate('premium')" data-page="premium">Premium</a>
             <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
         </div>
     </nav>
@@ -478,25 +482,13 @@
     <footer>
         <p>© 2025 vetements • Developed by @yuw</p>
         <p style="margin-top: 10px;">
-            <a href="/privacy" onclick="event.preventDefault(); showPage('privacy')" style="color: #606060; text-decoration: none; margin: 0 10px;">Privacy</a>
-            <a href="/terms" onclick="event.preventDefault(); showPage('terms')" style="color: #606060; text-decoration: none; margin: 0 10px;">Terms</a>
-            <a href="/faq" onclick="event.preventDefault(); showPage('faq')" style="color: #606060; text-decoration: none; margin: 0 10px;">FAQ</a>
+            <a href="javascript:void(0)" onclick="navigate('privacy')" style="color: #606060; text-decoration: none; margin: 0 10px;">Privacy</a>
+            <a href="javascript:void(0)" onclick="navigate('terms')" style="color: #606060; text-decoration: none; margin: 0 10px;">Terms</a>
+            <a href="javascript:void(0)" onclick="navigate('faq')" style="color: #606060; text-decoration: none; margin: 0 10px;">FAQ</a>
         </p>
     </footer>
 
     <script>
-        // Handle browser navigation
-        window.addEventListener('popstate', function(e) {
-            const path = window.location.pathname.replace('/', '') || 'home';
-            showPage(path);
-        });
-
-        // Initialize on load
-        window.addEventListener('load', function() {
-            const path = window.location.pathname.replace('/', '') || 'home';
-            showPage(path);
-        });
-
         const commands = {
             crypto: [
                 {name: '/cryptoprice', desc: 'Get current cryptocurrency price and market data'},
@@ -619,12 +611,25 @@
             filterCommands(e.target.value.toLowerCase());
         });
 
+        function navigate(page) {
+            // Update URL hash
+            if (page === '') {
+                window.location.hash = '';
+            } else {
+                window.location.hash = page;
+            }
+            
+            showPage(page || 'home');
+        }
+
         function showPage(pageId) {
+            // Hide all sections
             document.querySelectorAll('.hero, .commands-section, .content-page').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
             
+            // Show requested page
             const page = document.getElementById(pageId);
             if (page) {
                 if (pageId === 'home') {
@@ -636,18 +641,31 @@
                 }
             }
             
-            // Update URL without reload
-            if (pageId !== 'home') {
-                history.pushState({page: pageId}, '', '/' + pageId);
-            } else {
-                history.pushState({page: 'home'}, '', '/');
-            }
+            // Update active nav link
+            document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === (pageId === 'home' ? '' : pageId)) {
+                    link.classList.add('active');
+                }
+            });
             
             window.scrollTo(0, 0);
         }
 
+        // Handle hash changes (back/forward buttons)
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.slice(1);
+            showPage(hash || 'home');
+        });
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.slice(1);
+            showPage(hash || 'home');
+            renderCommands(allCommands);
+        });
+
         renderCommands(allCommands);
-        showPage('home');
     </script>
 </body>
 </html>
