@@ -162,22 +162,22 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 15px;
             margin-top: 30px;
         }
         
         .payment-method {
-            padding: 12px 20px;
+            padding: 14px 24px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 500;
             color: #b0b0b0;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
         
         .payment-method:hover {
@@ -187,8 +187,15 @@
         }
         
         .payment-icon {
-            font-size: 16px;
-            opacity: 0.8;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: brightness(0) invert(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover .payment-icon {
+            filter: brightness(0) invert(1);
         }
         
         .coming-soon {
@@ -321,8 +328,14 @@
             }
             
             .payment-method {
-                padding: 10px 16px;
-                font-size: 13px;
+                padding: 12px 18px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .payment-icon {
+                width: 20px;
+                height: 20px;
             }
             
             .nav-links {
@@ -423,24 +436,24 @@
             <h3 class="payment-title">Accepted Payment Methods</h3>
             <div class="payment-methods">
                 <div class="payment-method">
-                    <span class="payment-icon">₿</span>
-                    Cryptocurrency
+                    <img src="https://raw.githubusercontent.com/datatrans/payment-logos/master/assets/apm/blik.svg?sanitize=true" class="payment-icon" alt="BLIK">
+                    <span>BLIK</span>
                 </div>
                 <div class="payment-method">
-                    <span class="payment-icon">💳</span>
-                    Credit Card
+                    <img src="https://emoji.discadia.com/emojis/1434df0c-8dbb-4783-8e5d-707f8f0780b1.PNG" class="payment-icon" alt="Cryptocurrency">
+                    <span>Cryptocurrency</span>
                 </div>
                 <div class="payment-method">
-                    <span class="payment-icon">🇵🇱</span>
-                    BLIK
+                    <img src="https://emoji.discadia.com/emojis/d41c547a-7896-48e2-94df-62e0776f0669.PNG" class="payment-icon" alt="Credit Card">
+                    <span>Credit Card</span>
                 </div>
                 <div class="payment-method">
-                    <span class="payment-icon">🏷️</span>
-                    paysafecard
+                    <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
+                    <span>paysafecard</span>
                 </div>
                 <div class="payment-method">
-                    <span class="payment-icon">🎮</span>
-                    Robux
+                    <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
+                    <span>Robux</span>
                 </div>
             </div>
         </div>
