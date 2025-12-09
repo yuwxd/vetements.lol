@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium • vetements</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        
+        .nav-links a.active {
+            color: #ffffff;
+        }
+        
+        .content-page {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-page h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+        
+        .content-page h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #ffffff;
+        }
+        
+        .content-page p {
+            font-size: 16px;
+            color: #909090;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .content-page ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        
+        .content-page ul li {
+            font-size: 16px;
+            color: #909090;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .content-page ul li:before {
+            content: "•";
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+        }
+        
+        .content-page code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: #FFD700;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 30px 0;
+        }
+        
+        .premium-highlight {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 3px solid #FFD700;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .payment-method {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #606060;
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        footer a {
+            color: #606060;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #808080;
+        }
+        
+        @media (max-width: 768px) {
+            .content-page {
+                padding: 100px 20px 40px;
+            }
+            
+            .content-page h2 {
+                font-size: 36px;
+            }
+            
+            .content-page h3 {
+                font-size: 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .payment-methods {
+                gap: 8px;
+            }
+            
+            .payment-method {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/commands">Commands</a>
+            <a href="/faq">FAQ</a>
+            <a href="/premium" class="active">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
+
+    <div class="content-page">
+        <h2>Premium Features</h2>
+        
+        <div class="price-tag">Price: NOT OUT YET</div>
+        
+        <p>Upgrade to vetements Premium for enhanced features and capabilities beyond the free tier. Premium supports ongoing development and server costs.</p>
+        
+        <div class="premium-highlight">
+            <p><strong>Coming Soon:</strong> Premium is currently in development. Join our Discord server to be notified when it launches!</p>
+        </div>
+        
+        <h3>Premium Benefits:</h3>
+        <ul>
+            <li><strong>Enhanced Clipboard Limits</strong> - Increased storage capacity for saved images and text in your personal clipboard</li>
+            <li><strong>Higher Generation Limits</strong> - Expanded limits for various generation commands like AI image generation, QR codes, and more</li>
+            <li><strong>Exclusive Premium Commands</strong> - Access to special commands not available in the free tier</li>
+            <li><strong>Early Access</strong> - Be the first to try new features and commands before they're released to everyone</li>
+            <li><strong>Priority Processing</strong> - Your commands get processed faster during high-traffic periods</li>
+            <li><strong>Regular Updates</strong> - Guaranteed continuous development and improvements with dedicated support</li>
+            <li><strong>Lifetime Access</strong> - One-time payment for permanent premium benefits (subject to terms)</li>
+            <li><strong>No Rate Limits</strong> - Unlimited command usage without restrictions</li>
+            <li><strong>Premium Support</strong> - Direct access to developer support for assistance</li>
+        </ul>
+        
+        <h3>Payment Methods</h3>
+        <p>We will accept various payment methods including:</p>
+        <div class="payment-methods">
+            <span class="payment-method">Cryptocurrency</span>
+            <span class="payment-method">Credit/Debit Cards</span>
+            <span class="payment-method">BLIK</span>
+            <span class="payment-method">Paysafecard</span>
+            <span class="payment-method">Robux</span>
+        </div>
+        
+        <h3>How to Activate Premium</h3>
+        <p>Once premium is available, use the <code>/redeem</code> command in Discord to activate your premium license key. Keys will be provided after purchase through our Discord server.</p>
+        
+        <p><em>Note: Premium features are not yet available. Join our Discord server to be notified when premium launches!</em></p>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="https://discord.gg/larpfunds" style="display: inline-block; padding: 12px 24px; background: #5865F2; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;" target="_blank">
+                Join Discord for Updates
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/faq">FAQ</a>
+            <a href="/premium">Premium</a>
+        </p>
+    </footer>
+</body>
+</html>
