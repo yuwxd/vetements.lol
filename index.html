@@ -362,10 +362,10 @@
 <body>
     <nav>
         <div class="nav-links">
-            <a href="#" onclick="showPage('home')">Home</a>
-            <a href="#" onclick="showPage('commands')">Commands</a>
-            <a href="#" onclick="showPage('faq')">FAQ</a>
-            <a href="#" onclick="showPage('premium')">Premium</a>
+            <a href="/" onclick="event.preventDefault(); showPage('home')">Home</a>
+            <a href="/commands" onclick="event.preventDefault(); showPage('commands')">Commands</a>
+            <a href="/faq" onclick="event.preventDefault(); showPage('faq')">FAQ</a>
+            <a href="/premium" onclick="event.preventDefault(); showPage('premium')">Premium</a>
             <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
         </div>
     </nav>
@@ -478,9 +478,9 @@
     <footer>
         <p>© 2025 vetements • Developed by @yuw</p>
         <p style="margin-top: 10px;">
-            <a href="#" onclick="showPage('privacy')" style="color: #606060; text-decoration: none; margin: 0 10px;">Privacy</a>
-            <a href="#" onclick="showPage('terms')" style="color: #606060; text-decoration: none; margin: 0 10px;">Terms</a>
-            <a href="#" onclick="showPage('faq')" style="color: #606060; text-decoration: none; margin: 0 10px;">FAQ</a>
+            <a href="/privacy" onclick="event.preventDefault(); showPage('privacy')" style="color: #606060; text-decoration: none; margin: 0 10px;">Privacy</a>
+            <a href="/terms" onclick="event.preventDefault(); showPage('terms')" style="color: #606060; text-decoration: none; margin: 0 10px;">Terms</a>
+            <a href="/faq" onclick="event.preventDefault(); showPage('faq')" style="color: #606060; text-decoration: none; margin: 0 10px;">FAQ</a>
         </p>
     </footer>
 
@@ -634,6 +634,13 @@
                 } else {
                     page.classList.add('active');
                 }
+            }
+            
+            // Update URL without reload
+            if (pageId !== 'home') {
+                history.pushState({page: pageId}, '', '/' + pageId);
+            } else {
+                history.pushState({page: 'home'}, '', '/');
             }
             
             window.scrollTo(0, 0);
