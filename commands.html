@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands • vetements</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+        
+        .nav-links a.active {
+            color: #ffffff;
+        }
+        
+        .commands-container {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
+        }
+        
+        .commands-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .commands-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1.5px;
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #606060;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            color: #909090;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+        
+        .category-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        .commands-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+        }
+        
+        .command-card {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .command-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .command-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command-desc {
+            font-size: 14px;
+            color: #808080;
+            line-height: 1.5;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #606060;
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        footer a {
+            color: #606060;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #808080;
+        }
+        
+        @media (max-width: 768px) {
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .commands-title {
+                font-size: 42px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .categories {
+                gap: 8px;
+            }
+            
+            .category-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/commands" class="active">Commands</a>
+            <a href="/faq">FAQ</a>
+            <a href="/premium">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
+
+    <div class="commands-container">
+        <div class="commands-header">
+            <h2 class="commands-title">Commands</h2>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+        
+        <div class="categories">
+            <button class="category-btn active" onclick="filterCategory('all')">All</button>
+            <button class="category-btn" onclick="filterCategory('crypto')">Crypto & Web</button>
+            <button class="category-btn" onclick="filterCategory('fun')">Fun</button>
+            <button class="category-btn" onclick="filterCategory('ai')">AI & Text</button>
+            <button class="category-btn" onclick="filterCategory('utility')">Utility</button>
+            <button class="category-btn" onclick="filterCategory('media')">Media</button>
+            <button class="category-btn" onclick="filterCategory('info')">Info</button>
+        </div>
+        
+        <div class="commands-grid" id="commandsGrid"></div>
+    </div>
+
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/faq">FAQ</a>
+            <a href="/premium">Premium</a>
+        </p>
+    </footer>
+
+    <script>
+        const commands = {
+            crypto: [
+                {name: '/cryptoprice', desc: 'Get current cryptocurrency price and market data'},
+                {name: '/screenshot', desc: 'Capture website screenshot with optional delay'},
+                {name: '/iplookup', desc: 'Lookup IP address information'},
+                {name: '/pinghost', desc: 'Check if a host is online'},
+                {name: '/shorten', desc: 'Shorten a URL using TinyURL'},
+                {name: '/domaininfo', desc: 'Get WHOIS and status info for a domain'},
+                {name: '/bypass', desc: 'Bypass URL shorteners and restrictions'}
+            ],
+            fun: [
+                {name: '/coinflip', desc: 'Flip a coin'},
+                {name: '/ppsize', desc: 'Measure PP size'},
+                {name: '/proverb', desc: 'Create a thinking monkey proverb image'},
+                {name: '/howgay', desc: 'Calculate how gay someone is'},
+                {name: '/howlarp', desc: 'Check how much of a larper someone is'},
+                {name: '/roast', desc: 'Roast a user with random insults'},
+                {name: '/rizz', desc: 'Rizz up a user with smooth pickup lines'},
+                {name: '/ship', desc: 'Check compatibility between two users'},
+                {name: '/monkeythink', desc: 'Create a funny monkey thinking about an image'}
+            ],
+            ai: [
+                {name: '/askai', desc: 'Ask AI anything'},
+                {name: '/translate', desc: 'Translate text to another language'},
+                {name: '/tts', desc: 'Convert text to speech (male or female voice)'},
+                {name: '/say', desc: 'Make the bot say something'},
+                {name: '/define', desc: 'Get the definition of an English word'},
+                {name: '/summarize', desc: 'Summarize long text using AI'},
+                {name: '/imagegen', desc: 'Generate an image using AI'}
+            ],
+            utility: [
+                {name: '/qrgen', desc: 'Generate QR code from URL or text'},
+                {name: '/qrscan', desc: 'Scan and decode a QR code from an image'},
+                {name: '/fakemessage', desc: 'Generate a fake Discord message from a user'},
+                {name: '/poll', desc: 'Create a poll with multiple options'},
+                {name: '/number', desc: 'Generate a random number between two values'},
+                {name: '/webhookmessage', desc: 'Send a message to a webhook'},
+                {name: '/clipboard', desc: 'Save and manage your clipboard items'},
+                {name: '/clipboardimage', desc: 'Save an image to clipboard'},
+                {name: '/clipboardtext', desc: 'Save text to clipboard'},
+                {name: '/clipboardsend', desc: 'Send items from clipboard'},
+                {name: '/timezone', desc: 'Get current time in different timezones'},
+                {name: '/passwordgen', desc: 'Generate a strong random password'},
+                {name: '/passwordstrength', desc: 'Check a strength of a password'},
+                {name: '/countcharacters', desc: 'Count characters, words, and lines in text'},
+                {name: '/base64', desc: 'Encode or decode Base64 text'},
+                {name: '/math', desc: 'Solve mathematical equations'},
+                {name: '/taxcalc', desc: 'Calculate amount after tax/commission'}
+            ],
+            media: [
+                {name: '/imagetogif', desc: 'Convert image to high-quality GIF format'},
+                {name: '/videotogif', desc: 'Convert video to GIF format'},
+                {name: '/caption', desc: 'Add caption text to top of image'},
+                {name: '/gif', desc: 'Search and send a random GIF by topic'},
+                {name: '/youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)'},
+                {name: '/blur', desc: 'Apply blur effect to an image'},
+                {name: '/avatar', desc: "Get user's avatar"},
+                {name: '/banner', desc: "Get user's banner"}
+            ],
+            info: [
+                {name: '/about', desc: 'Display information about vetements'},
+                {name: '/discord', desc: 'Get Discord server invite link'},
+                {name: '/ping', desc: 'Check bot latency and connection status'},
+                {name: '/whois', desc: 'Get information about a Discord user'},
+                {name: '/invite', desc: 'Authorize the bot'},
+                {name: '/support', desc: 'Get the support for the bot'},
+                {name: '/embed', desc: 'Create a custom embed message'},
+                {name: '/redeem', desc: 'Redeem a premium license key'},
+                {name: '/spotifysearch', desc: 'Search for a song on spotify'},
+                {name: '/robloxprofile', desc: 'Get detailed Roblox user profile with generated image and past usernames'},
+                {name: '/robloxlimiteds', desc: 'Search for a limited items or get item details'},
+                {name: '/virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis'}
+            ]
+        };
+
+        let currentCategory = 'all';
+        let allCommands = [];
+        
+        Object.keys(commands).forEach(cat => {
+            commands[cat].forEach(cmd => {
+                allCommands.push({...cmd, category: cat});
+            });
+        });
+
+        function renderCommands(commandsToShow) {
+            const grid = document.getElementById('commandsGrid');
+            grid.innerHTML = commandsToShow.map(cmd => `
+                <div class="command-card">
+                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-desc">${cmd.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            filterCommands(searchTerm);
+        }
+
+        function filterCommands(searchTerm) {
+            let filtered = currentCategory === 'all' 
+                ? allCommands 
+                : allCommands.filter(cmd => cmd.category === currentCategory);
+            
+            if (searchTerm) {
+                filtered = filtered.filter(cmd => 
+                    cmd.name.toLowerCase().includes(searchTerm) || 
+                    cmd.desc.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            renderCommands(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterCommands(e.target.value.toLowerCase());
+        });
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            renderCommands(allCommands);
+        });
+    </script>
+</body>
+</html>
