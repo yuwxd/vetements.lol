@@ -323,11 +323,60 @@
             letter-spacing: -1px;
         }
         
+        .content-page h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: #ffffff;
+        }
+        
         .content-page p {
             font-size: 16px;
             color: #909090;
             line-height: 1.8;
             margin-bottom: 20px;
+        }
+        
+        .content-page ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        
+        .content-page ul li {
+            font-size: 16px;
+            color: #909090;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .content-page ul li:before {
+            content: "•";
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+        }
+        
+        .content-page code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: #FFD700;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0;
         }
         
         footer {
@@ -359,6 +408,10 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .content-page {
+                padding: 100px 20px 40px;
             }
         }
     </style>
@@ -424,59 +477,193 @@
     </div>
 
     <div id="faq" class="content-page">
-        <h2>FAQ</h2>
-        <p><strong>What is vetements?</strong><br>
-        vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites.</p>
+        <h2>Frequently Asked Questions</h2>
         
-        <p><strong>How do I use the bot?</strong><br>
-        Simply add vetements to your server or send it a DM, then use slash commands like /qrgen, /translate, or /cryptoprice to access various features.</p>
+        <h3>What is vetements?</h3>
+        <p>vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites - everything is accessible through Discord commands.</p>
         
-        <p><strong>Is vetements free?</strong><br>
-        Yes! Most features are completely free. Premium features unlock additional capabilities.</p>
+        <h3>How do I use the bot?</h3>
+        <p>Simply add vetements to your server or send it a DM, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
         
-        <p><strong>Where can I get support?</strong><br>
-        Join our Discord server for support, updates, and to connect with the community.</p>
+        <h3>Is vetements free?</h3>
+        <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
+        
+        <h3>Where can I get support?</h3>
+        <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
+        
+        <h3>How do I add vetements to my server?</h3>
+        <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
+        
+        <h3>What permissions does the bot need?</h3>
+        <p>vetements requires basic permissions like Send Messages, Embed Links, and Attach Files. Some commands may require additional permissions which are clearly indicated when you try to use them.</p>
+        
+        <h3>Can I use vetements in DMs?</h3>
+        <p>Yes! Most commands work in direct messages. Simply start a DM with vetements and use slash commands as you would in a server.</p>
+        
+        <h3>How often is vetements updated?</h3>
+        <p>We release regular updates with new features, improvements, and bug fixes. Premium users get early access to new features.</p>
     </div>
 
     <div id="premium" class="content-page">
-        <h2>Premium</h2>
-        <p>Upgrade to vetements Premium for enhanced features and capabilities.</p>
+        <h2>Premium Features</h2>
         
-        <p><strong>Premium Benefits:</strong></p>
-        <p>• Priority command processing<br>
-        • Extended rate limits<br>
-        • Exclusive premium commands<br>
-        • Early access to new features<br>
-        • Premium support</p>
+        <div class="price-tag">Price: NOT OUT YET</div>
         
-        <p>Use <code>/redeem</code> to activate your premium license key.</p>
+        <p>Upgrade to vetements Premium for enhanced features and capabilities beyond the free tier. Premium supports ongoing development and server costs.</p>
+        
+        <h3>Premium Benefits:</h3>
+        <ul>
+            <li><strong>Enhanced Clipboard Limits</strong> - Increased storage capacity for saved images and text in your personal clipboard</li>
+            <li><strong>Higher Generation Limits</strong> - Expanded limits for various generation commands like AI image generation, QR codes, and more</li>
+            <li><strong>Exclusive Premium Commands</strong> - Access to special commands not available in the free tier</li>
+            <li><strong>Early Access</strong> - Be the first to try new features and commands before they're released to everyone</li>
+            <li><strong>Priority Processing</strong> - Your commands get processed faster during high-traffic periods</li>
+            <li><strong>Regular Updates</strong> - Guaranteed continuous development and improvements with dedicated support</li>
+            <li><strong>Lifetime Access</strong> - One-time payment for permanent premium benefits (subject to terms)</li>
+            <li><strong>No Rate Limits</strong> - Unlimited command usage without restrictions</li>
+            <li><strong>Premium Support</strong> - Direct access to developer support for assistance</li>
+        </ul>
+        
+        <h3>Payment Methods</h3>
+        <p>We accept various payment methods including:</p>
+        <ul>
+            <li>Cryptocurrency (BTC, ETH, USDT)</li>
+            <li>Credit/Debit Cards (Visa, Mastercard, American Express)</li>
+            <li>BLIK (Polish payment system)</li>
+            <li>Paysafecard</li>
+            <li>Robux (Roblox currency)</li>
+        </ul>
+        
+        <h3>How to Activate Premium</h3>
+        <p>Once premium is available, use the <code>/redeem</code> command in Discord to activate your premium license key. Keys will be provided after purchase through our Discord server.</p>
+        
+        <p><em>Note: Premium features are not yet available. Join our Discord server to be notified when premium launches!</em></p>
     </div>
 
     <div id="privacy" class="content-page">
         <h2>Privacy Policy</h2>
-        <p>vetements respects your privacy. We collect minimal data necessary for bot functionality.</p>
         
-        <p><strong>Data Collection:</strong><br>
-        We collect command usage data and user IDs for functionality purposes only. No messages or personal information are stored permanently.</p>
+        <p><strong>Last Updated:</strong> [Current Date]</p>
         
-        <p><strong>Data Usage:</strong><br>
-        Data is used solely to improve bot performance and user experience.</p>
+        <p>vetements ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our Discord bot.</p>
         
-        <p>For questions, contact us on Discord.</p>
+        <h3>Data Collection</h3>
+        <p>We collect minimal data necessary for bot functionality:</p>
+        <ul>
+            <li><strong>User IDs:</strong> To identify users for command functionality</li>
+            <li><strong>Server IDs:</strong> To provide server-specific features</li>
+            <li><strong>Command Usage:</strong> To improve bot performance and fix issues</li>
+            <li><strong>Temporary Data:</strong> Some commands may temporarily process data (like images or text) but this is not stored permanently</li>
+        </ul>
+        
+        <h3>What We Do NOT Collect</h3>
+        <ul>
+            <li>We do NOT store your Discord messages</li>
+            <li>We do NOT collect personal information beyond Discord IDs</li>
+            <li>We do NOT share your data with third parties</li>
+            <li>We do NOT use cookies or tracking technologies</li>
+        </ul>
+        
+        <h3>Data Usage</h3>
+        <p>Collected data is used solely for:</p>
+        <ul>
+            <li>Providing and improving bot functionality</li>
+            <li>Fixing bugs and issues</li>
+            <li>Understanding usage patterns to enhance user experience</li>
+            <li>Ensuring compliance with our Terms of Service</li>
+        </ul>
+        
+        <h3>Data Storage and Security</h3>
+        <p>We implement appropriate technical and organizational measures to protect your data. Data is stored securely and access is restricted to authorized personnel only.</p>
+        
+        <h3>Third-Party Services</h3>
+        <p>Some commands may interact with third-party services (like cryptocurrency APIs or image processing services). These services have their own privacy policies, and we encourage you to review them.</p>
+        
+        <h3>Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Request access to your data</li>
+            <li>Request deletion of your data</li>
+            <li>Opt-out of data collection (by ceasing to use the bot)</li>
+        </ul>
+        
+        <h3>Children's Privacy</h3>
+        <p>Our services are not directed to individuals under 13. We do not knowingly collect personal information from children under 13.</p>
+        
+        <h3>Changes to This Policy</h3>
+        <p>We may update this privacy policy from time to time. We will notify users of significant changes through our Discord server.</p>
+        
+        <h3>Contact Us</h3>
+        <p>For privacy-related questions or requests, contact us on our Discord server.</p>
     </div>
 
     <div id="terms" class="content-page">
         <h2>Terms of Service</h2>
-        <p>By using vetements, you agree to these terms.</p>
         
-        <p><strong>Acceptable Use:</strong><br>
-        Do not use the bot for illegal activities, harassment, or to violate Discord's Terms of Service.</p>
+        <p><strong>Last Updated:</strong> [Current Date]</p>
         
-        <p><strong>Liability:</strong><br>
-        vetements is provided "as is" without warranties. We are not responsible for any damages from bot usage.</p>
+        <p>By using vetements ("the Bot"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Bot.</p>
         
-        <p><strong>Changes:</strong><br>
-        We reserve the right to modify these terms at any time.</p>
+        <h3>1. Acceptance of Terms</h3>
+        <p>Your access to and use of the Bot is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all users of the Bot.</p>
+        
+        <h3>2. Description of Service</h3>
+        <p>vetements is a Discord utility bot that provides various features including but not limited to:</p>
+        <ul>
+            <li>Image processing and generation</li>
+            <li>Cryptocurrency information</li>
+            <li>AI-powered tools</li>
+            <li>Utility functions</li>
+            <li>Entertainment features</li>
+        </ul>
+        
+        <h3>3. Acceptable Use</h3>
+        <p>You agree not to use the Bot for any unlawful purposes or in violation of these Terms, including but not limited to:</p>
+        <ul>
+            <li>Violating Discord's Terms of Service or Community Guidelines</li>
+            <li>Engaging in harassment, hate speech, or discrimination</li>
+            <li>Spamming commands or attempting to disrupt service</li>
+            <li>Using the Bot for illegal activities</li>
+            <li>Attempting to reverse engineer, hack, or exploit the Bot</li>
+            <li>Using the Bot to generate harmful or inappropriate content</li>
+        </ul>
+        
+        <h3>4. Service Availability</h3>
+        <p>We strive to maintain 24/7 availability but do not guarantee uninterrupted service. We reserve the right to:</p>
+        <ul>
+            <li>Modify or discontinue the Bot at any time</li>
+            <li>Limit usage during high traffic</li>
+            <li>Temporarily suspend service for maintenance</li>
+            <li>Terminate access for violations of these Terms</li>
+        </ul>
+        
+        <h3>5. Premium Features</h3>
+        <p>Premium features may be offered subject to additional terms. Premium purchases are generally non-refundable except as required by law.</p>
+        
+        <h3>6. Limitation of Liability</h3>
+        <p>THE BOT IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE ARE NOT RESPONSIBLE FOR:</p>
+        <ul>
+            <li>Any damages resulting from Bot usage</li>
+            <li>Accuracy of information provided by the Bot</li>
+            <li>Actions taken based on Bot output</li>
+            <li>Service interruptions or data loss</li>
+            <li>Third-party content accessed through the Bot</li>
+        </ul>
+        
+        <h3>7. User Content</h3>
+        <p>Some commands process user-provided content. You retain rights to your content, but grant us limited rights to process it for command functionality.</p>
+        
+        <h3>8. Termination</h3>
+        <p>We reserve the right to terminate or suspend access to the Bot immediately, without prior notice, for conduct that we believe violates these Terms or is harmful to other users.</p>
+        
+        <h3>9. Changes to Terms</h3>
+        <p>We reserve the right to modify these Terms at any time. Continued use of the Bot after changes constitutes acceptance of the new Terms.</p>
+        
+        <h3>10. Governing Law</h3>
+        <p>These Terms shall be governed by applicable laws. Any disputes shall be resolved through our Discord server support system initially.</p>
+        
+        <h3>11. Contact</h3>
+        <p>For questions about these Terms, contact us on our Discord server.</p>
     </div>
 
     <footer>
@@ -485,6 +672,7 @@
             <a href="javascript:void(0)" onclick="navigate('privacy')" style="color: #606060; text-decoration: none; margin: 0 10px;">Privacy</a>
             <a href="javascript:void(0)" onclick="navigate('terms')" style="color: #606060; text-decoration: none; margin: 0 10px;">Terms</a>
             <a href="javascript:void(0)" onclick="navigate('faq')" style="color: #606060; text-decoration: none; margin: 0 10px;">FAQ</a>
+            <a href="javascript:void(0)" onclick="navigate('premium')" style="color: #606060; text-decoration: none; margin: 0 10px;">Premium</a>
         </p>
     </footer>
 
