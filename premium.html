@@ -477,17 +477,14 @@
     </footer>
 
     <script>
-        // Close notification functionality
         const closeButton = document.getElementById('closeNotification');
         const notification = document.getElementById('launchNotification');
         
         closeButton.addEventListener('click', function() {
             notification.classList.add('hidden');
-            // Save to localStorage so it doesn't show again
             localStorage.setItem('premiumNotificationClosed', 'true');
         });
         
-        // Check if notification was previously closed
         window.addEventListener('load', function() {
             const notificationClosed = localStorage.getItem('premiumNotificationClosed');
             if (notificationClosed === 'true') {
