@@ -186,7 +186,8 @@
             border-radius: 12px;
             padding: 20px;
             margin: 0 auto 40px;
-            max-width: 420px;
+            max-width: 520px;
+            width: 100%;
             text-align: left;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -266,6 +267,42 @@
             font-size: 12px;
             margin-top: 12px;
             font-style: italic;
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            min-width: 140px;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #909090;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .cta-buttons {
@@ -438,6 +475,36 @@
             .command-preview {
                 margin: 0 20px 40px;
             }
+            
+            .stats-container {
+                gap: 15px;
+            }
+            
+            .stat-item {
+                padding: 12px 20px;
+                min-width: 120px;
+            }
+            
+            .stat-number {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .command-preview {
+                margin: 0 15px 30px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -466,7 +533,8 @@
             <div class="message-header">
                 <img src="https://i.ibb.co/N6xZmzFm/39c79bbc95257d9aeb23d92e17c1b85a.png" class="bot-avatar" alt="vetements">
                 <div class="message-info">
-                    <div class="bot-name">vetements<span style="font-size: 10px; margin-left: 6px; color: #23a55a;"></span></div>
+                    <div class="bot-name">vetements<span style="font-size: 10px; margin-left: 6px; color: #23a55a;">●</span></div>
+                    <div class="message-time">Today at 2:57 PM</div>
                 </div>
             </div>
             <div class="discord-message">
@@ -489,13 +557,22 @@
                         <li>Roblox Integration - Profile lookup, limited item tracking</li>
                     </ul>
                     
-                    <strong>Premium Benefits:</strong><br>
-                    <ul class="discord-list">
-                        <li>Expanded clipboard storage</li>
-                        <li>Enhanced limits across all commands</li>
-                        <li>Priority access to new features</li>
-                        <li>Advanced AI capabilities</li>
-                    </ul>
+                    <div class="discord-divider"></div>
+                    
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <div class="stat-number">60+</div>
+                            <div class="stat-label">Commands</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Categories</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
                     
                     <div class="discord-footer">Get Started: Use /commands to explore all features</div>
                 </div>
