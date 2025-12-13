@@ -22,6 +22,46 @@
             line-height: 1.6;
         }
         
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
         nav {
             position: fixed;
             top: 0;
@@ -34,6 +74,9 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 1000;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
         }
         
         .nav-links {
@@ -49,7 +92,16 @@
             font-weight: 500;
             transition: color 0.3s ease;
             letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+        
+        .nav-links a:nth-child(1) { animation-delay: 0.6s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.7s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.8s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.9s; }
+        .nav-links a:nth-child(5) { animation-delay: 1.0s; }
         
         .nav-links a:hover {
             color: #ffffff;
@@ -64,6 +116,8 @@
             padding: 120px 40px 80px;
             max-width: 800px;
             margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
         }
         
         .content-page h2 {
@@ -71,6 +125,13 @@
             font-weight: 700;
             margin-bottom: 30px;
             letter-spacing: -1px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+        }
+        
+        .policy-section {
+            margin-bottom: 40px;
         }
         
         .content-page h3 {
@@ -78,6 +139,8 @@
             font-weight: 600;
             margin: 40px 0 20px;
             color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page p {
@@ -85,12 +148,16 @@
             color: #909090;
             line-height: 1.8;
             margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page ul {
             list-style-type: none;
             margin: 20px 0;
             padding: 0;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page ul li {
@@ -114,6 +181,30 @@
             font-size: 14px;
             margin-bottom: 30px;
             font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        }
+        
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-on-scroll.up {
+            transform: translateY(-30px);
+        }
+        
+        .animate-on-scroll.up.visible {
+            transform: translateY(0);
         }
         
         footer {
@@ -122,6 +213,9 @@
             color: #606060;
             font-size: 13px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
         }
         
         footer a {
@@ -133,6 +227,27 @@
         
         footer a:hover {
             color: #808080;
+        }
+        
+        /* Keyframes */
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 768px) {
@@ -155,106 +270,184 @@
     </style>
 </head>
 <body>
-<nav>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="commands.html">Commands</a>
-        <a href="faq.html">FAQ</a>
-        <a href="premium.html">Premium</a>
-        <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">V</div>
     </div>
-</nav>
+
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="commands.html">Commands</a>
+            <a href="faq.html">FAQ</a>
+            <a href="premium.html">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
 
     <div class="content-page">
         <h2>Privacy Policy</h2>
         
         <div class="update-date">Last Updated: January 1, 2025</div>
         
-        <p>vetements ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our Discord bot.</p>
+        <div class="policy-section animate-on-scroll">
+            <h3>1. Data Collection</h3>
+            <p>We collect minimal data necessary for bot functionality:</p>
+            <ul>
+                <li><strong>User IDs:</strong> To identify users for command functionality and settings</li>
+                <li><strong>Server IDs:</strong> To provide server-specific features and settings</li>
+                <li><strong>Command Usage:</strong> To improve bot performance, fix issues, and understand usage patterns</li>
+                <li><strong>Temporary Data:</strong> Some commands may temporarily process data (like images or text) but this is not stored permanently</li>
+                <li><strong>Premium Status:</strong> To track premium feature access for users with valid licenses</li>
+            </ul>
+        </div>
         
-        <h3>1. Data Collection</h3>
-        <p>We collect minimal data necessary for bot functionality:</p>
-        <ul>
-            <li><strong>User IDs:</strong> To identify users for command functionality and settings</li>
-            <li><strong>Server IDs:</strong> To provide server-specific features and settings</li>
-            <li><strong>Command Usage:</strong> To improve bot performance, fix issues, and understand usage patterns</li>
-            <li><strong>Temporary Data:</strong> Some commands may temporarily process data (like images or text) but this is not stored permanently</li>
-            <li><strong>Premium Status:</strong> To track premium feature access for users with valid licenses</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>2. What We Do NOT Collect</h3>
+            <ul>
+                <li>We do NOT store your Discord messages or conversation history</li>
+                <li>We do NOT collect personal information beyond Discord IDs</li>
+                <li>We do NOT share your data with third parties for marketing purposes</li>
+                <li>We do NOT use cookies or tracking technologies on our website</li>
+                <li>We do NOT collect payment information directly (handled by payment processors)</li>
+            </ul>
+        </div>
         
-        <h3>2. What We Do NOT Collect</h3>
-        <ul>
-            <li>We do NOT store your Discord messages or conversation history</li>
-            <li>We do NOT collect personal information beyond Discord IDs</li>
-            <li>We do NOT share your data with third parties for marketing purposes</li>
-            <li>We do NOT use cookies or tracking technologies on our website</li>
-            <li>We do NOT collect payment information directly (handled by payment processors)</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>3. Data Usage</h3>
+            <p>Collected data is used solely for:</p>
+            <ul>
+                <li>Providing and improving bot functionality</li>
+                <li>Fixing bugs and technical issues</li>
+                <li>Understanding usage patterns to enhance user experience</li>
+                <li>Ensuring compliance with our Terms of Service</li>
+                <li>Preventing abuse and malicious activity</li>
+                <li>Providing premium features to eligible users</li>
+            </ul>
+        </div>
         
-        <h3>3. Data Usage</h3>
-        <p>Collected data is used solely for:</p>
-        <ul>
-            <li>Providing and improving bot functionality</li>
-            <li>Fixing bugs and technical issues</li>
-            <li>Understanding usage patterns to enhance user experience</li>
-            <li>Ensuring compliance with our Terms of Service</li>
-            <li>Preventing abuse and malicious activity</li>
-            <li>Providing premium features to eligible users</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>4. Data Storage and Security</h3>
+            <p>We implement appropriate technical and organizational measures to protect your data:</p>
+            <ul>
+                <li>Data is stored on secure servers with limited access</li>
+                <li>Access is restricted to authorized personnel only</li>
+                <li>Regular security assessments are conducted</li>
+                <li>Data is encrypted in transit using SSL/TLS</li>
+            </ul>
+        </div>
         
-        <h3>4. Data Storage and Security</h3>
-        <p>We implement appropriate technical and organizational measures to protect your data:</p>
-        <ul>
-            <li>Data is stored on secure servers with limited access</li>
-            <li>Access is restricted to authorized personnel only</li>
-            <li>Regular security assessments are conducted</li>
-            <li>Data is encrypted in transit using SSL/TLS</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>5. Third-Party Services</h3>
+            <p>Some commands may interact with third-party services (like cryptocurrency APIs, image processing services, or AI providers). These services have their own privacy policies, and we encourage you to review them. We only share necessary data with these services for command functionality.</p>
+        </div>
         
-        <h3>5. Third-Party Services</h3>
-        <p>Some commands may interact with third-party services (like cryptocurrency APIs, image processing services, or AI providers). These services have their own privacy policies, and we encourage you to review them. We only share necessary data with these services for command functionality.</p>
+        <div class="policy-section animate-on-scroll">
+            <h3>6. Data Retention</h3>
+            <p>We retain data only as long as necessary for the purposes outlined in this policy:</p>
+            <ul>
+                <li>User IDs and server IDs are retained while the bot is in use</li>
+                <li>Command usage logs are retained for up to 90 days for debugging purposes</li>
+                <li>Temporary processing data is deleted immediately after command execution</li>
+                <li>You can request deletion of your data at any time</li>
+            </ul>
+        </div>
         
-        <h3>6. Data Retention</h3>
-        <p>We retain data only as long as necessary for the purposes outlined in this policy:</p>
-        <ul>
-            <li>User IDs and server IDs are retained while the bot is in use</li>
-            <li>Command usage logs are retained for up to 90 days for debugging purposes</li>
-            <li>Temporary processing data is deleted immediately after command execution</li>
-            <li>You can request deletion of your data at any time</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>7. Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Request access to your data</li>
+                <li>Request correction of inaccurate data</li>
+                <li>Request deletion of your data</li>
+                <li>Opt-out of data collection (by ceasing to use the bot)</li>
+                <li>Withdraw consent where applicable</li>
+            </ul>
+            <p>To exercise these rights, contact us through our Discord server.</p>
+        </div>
         
-        <h3>7. Your Rights</h3>
-        <p>You have the right to:</p>
-        <ul>
-            <li>Request access to your data</li>
-            <li>Request correction of inaccurate data</li>
-            <li>Request deletion of your data</li>
-            <li>Opt-out of data collection (by ceasing to use the bot)</li>
-            <li>Withdraw consent where applicable</li>
-        </ul>
+        <div class="policy-section animate-on-scroll">
+            <h3>8. Children's Privacy</h3>
+            <p>Our services are not directed to individuals under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.</p>
+        </div>
         
-        <p>To exercise these rights, contact us through our Discord server.</p>
+        <div class="policy-section animate-on-scroll">
+            <h3>9. International Data Transfers</h3>
+            <p>Our servers are located in the European Union. If you are accessing our services from outside the EU, your data may be transferred to and processed in the EU.</p>
+        </div>
         
-        <h3>8. Children's Privacy</h3>
-        <p>Our services are not directed to individuals under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.</p>
+        <div class="policy-section animate-on-scroll">
+            <h3>10. Changes to This Policy</h3>
+            <p>We may update this privacy policy from time to time. We will notify users of significant changes through our Discord server and by updating the "Last Updated" date at the top of this policy.</p>
+        </div>
         
-        <h3>9. International Data Transfers</h3>
-        <p>Our servers are located in the European Union. If you are accessing our services from outside the EU, your data may be transferred to and processed in the EU.</p>
-        
-        <h3>10. Changes to This Policy</h3>
-        <p>We may update this privacy policy from time to time. We will notify users of significant changes through our Discord server and by updating the "Last Updated" date at the top of this policy.</p>
-        
-        <h3>11. Contact Us</h3>
-        <p>For privacy-related questions, requests, or concerns, contact us on our Discord server: <a href="https://discord.gg/larpfunds" style="color: #808080;">discord.gg/larpfunds</a></p>
+        <div class="policy-section animate-on-scroll">
+            <h3>11. Contact Us</h3>
+            <p>For privacy-related questions, requests, or concerns, contact us on our Discord server: <a href="https://discord.gg/larpfunds" style="color: #808080;">discord.gg/larpfunds</a></p>
+        </div>
     </div>
 
-<footer>
-    <p>© 2025 vetements • Developed by @yuw</p>
-    <p style="margin-top: 10px;">
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="faq.html">FAQ</a>
-    </p>
-</footer>
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="faq.html">FAQ</a>
+        </p>
+    </footer>
+
+    <script>
+        // Initial loading animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('fade-out');
+                
+                // Add initial animations
+                const policySections = document.querySelectorAll('.policy-section');
+                policySections.forEach((section, index) => {
+                    const h3 = section.querySelector('h3');
+                    const p = section.querySelectorAll('p');
+                    const ul = section.querySelector('ul');
+                    
+                    if (h3) {
+                        h3.style.animationDelay = `${index * 0.1 + 0.5}s`;
+                        h3.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                    
+                    p.forEach((paragraph, pIndex) => {
+                        paragraph.style.animationDelay = `${index * 0.1 + 0.6 + pIndex * 0.05}s`;
+                        paragraph.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    });
+                    
+                    if (ul) {
+                        ul.style.animationDelay = `${index * 0.1 + 0.7}s`;
+                        ul.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                });
+                
+                // Initialize scroll animations
+                initScrollAnimations();
+            }, 800);
+        });
+        
+        // Scroll animation function
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+    </script>
 </body>
 </html>
