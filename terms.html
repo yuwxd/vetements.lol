@@ -196,6 +196,19 @@
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
         }
+
+        /* Naprawa: Tekst wewnątrz warning-box ma być widoczny */
+        .warning-box p {
+            opacity: 1 !important;
+            transform: none !important;
+            color: #e5e5e5 !important;
+            animation: none !important;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p strong {
+            color: #ff5757;
+        }
         
         /* Scroll animations */
         .animate-on-scroll {
