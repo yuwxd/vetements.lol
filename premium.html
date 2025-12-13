@@ -194,26 +194,9 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
-        .card-badge {
-            position: absolute;
-            top: -12px;
-            right: 30px;
-            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-        
         .pricing-icon {
             font-size: 42px;
             margin-bottom: 25px;
-            filter: brightness(0.9) contrast(1.2);
-            opacity: 0.9;
         }
         
         .pricing-title {
@@ -318,42 +301,13 @@
             letter-spacing: 0.3px;
             position: relative;
             overflow: hidden;
-        }
-        
-        .pricing-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.1), 
-                transparent);
-            transition: left 0.6s ease;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
         
         .pricing-button:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .pricing-button:hover::before {
-            left: 100%;
-        }
-        
-        .pricing-button.coming-soon {
-            background: rgba(255, 255, 255, 0.02);
-            border-color: rgba(255, 255, 255, 0.05);
-            color: #666;
-            cursor: not-allowed;
-        }
-        
-        .pricing-button.coming-soon:hover {
-            background: rgba(255, 255, 255, 0.02);
-            border-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
             transform: none;
         }
         
@@ -457,9 +411,6 @@
         .benefit-icon {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #ffffff;
-            opacity: 0.9;
-            filter: brightness(0.9) contrast(1.2);
         }
         
         .benefit-title {
@@ -713,12 +664,11 @@
         <div class="pricing-container">
             <!-- Monthly Subscription Card -->
             <div class="pricing-card">
-                <div class="card-badge">MOST POPULAR</div>
                 <div class="pricing-icon">🔁</div>
                 <h3 class="pricing-title">Monthly Subscription</h3>
                 <p class="pricing-subtitle">Perfect for users who want full access with ongoing updates</p>
                 <div class="price">
-                    <span class="price-currency">$</span>4.99
+                    <span class="price-currency">$</span>3.99
                 </div>
                 <div class="price-period">per month</div>
                 <ul class="pricing-features">
@@ -728,17 +678,16 @@
                     <li>Priority Support</li>
                     <li>All Premium Features</li>
                 </ul>
-                <a href="#" class="pricing-button coming-soon">Coming Soon</a>
+                <a href="#" class="pricing-button">Coming Soon</a>
             </div>
             
             <!-- Lifetime Subscription Card -->
             <div class="pricing-card">
-                <div class="card-badge">BEST VALUE</div>
                 <div class="pricing-icon">👑</div>
                 <h3 class="pricing-title">Lifetime Subscription</h3>
                 <p class="pricing-subtitle">One-time payment for permanent premium access</p>
                 <div class="price">
-                    <span class="price-currency">$</span>49.99
+                    <span class="price-currency">$</span>9.99
                 </div>
                 <div class="price-period">one-time payment</div>
                 <ul class="pricing-features">
@@ -748,7 +697,7 @@
                     <li>Priority Updates</li>
                     <li>No Recurring Payments</li>
                 </ul>
-                <a href="#" class="pricing-button coming-soon">Coming Soon</a>
+                <a href="#" class="pricing-button">Coming Soon</a>
             </div>
         </div>
         
@@ -883,6 +832,15 @@
             
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
+            });
+        });
+        
+        // Disable button clicks
+        document.querySelectorAll('.pricing-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Optional: Show a tooltip or notification
+                // alert('Premium is coming soon! Join our Discord for updates.');
             });
         });
         
