@@ -22,6 +22,46 @@
             line-height: 1.6;
         }
         
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
         nav {
             position: fixed;
             top: 0;
@@ -34,6 +74,9 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 1000;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
         }
         
         .nav-links {
@@ -49,7 +92,16 @@
             font-weight: 500;
             transition: color 0.3s ease;
             letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+        
+        .nav-links a:nth-child(1) { animation-delay: 0.6s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.7s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.8s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.9s; }
+        .nav-links a:nth-child(5) { animation-delay: 1.0s; }
         
         .nav-links a:hover {
             color: #ffffff;
@@ -64,6 +116,8 @@
             padding: 120px 40px 80px;
             max-width: 800px;
             margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
         }
         
         .content-page h2 {
@@ -71,6 +125,13 @@
             font-weight: 700;
             margin-bottom: 30px;
             letter-spacing: -1px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+        }
+        
+        .faq-section {
+            margin-bottom: 40px;
         }
         
         .content-page h3 {
@@ -78,6 +139,8 @@
             font-weight: 600;
             margin: 40px 0 20px;
             color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page p {
@@ -85,12 +148,16 @@
             color: #909090;
             line-height: 1.8;
             margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page ul {
             list-style-type: none;
             margin: 20px 0;
             padding: 0;
+            opacity: 0;
+            transform: translateY(20px);
         }
         
         .content-page ul li {
@@ -117,12 +184,36 @@
             font-size: 15px;
         }
         
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-on-scroll.up {
+            transform: translateY(-30px);
+        }
+        
+        .animate-on-scroll.up.visible {
+            transform: translateY(0);
+        }
+        
         footer {
             text-align: center;
             padding: 40px;
             color: #606060;
             font-size: 13px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
         }
         
         footer a {
@@ -134,6 +225,27 @@
         
         footer a:hover {
             color: #808080;
+        }
+        
+        /* Keyframes */
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 768px) {
@@ -156,57 +268,136 @@
     </style>
 </head>
 <body>
-<nav>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="commands.html">Commands</a>
-        <a href="faq.html" class="active">FAQ</a>
-        <a href="premium.html">Premium</a>
-        <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">V</div>
     </div>
-</nav>
+
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="commands.html">Commands</a>
+            <a href="faq.html" class="active">FAQ</a>
+            <a href="premium.html">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
 
     <div class="content-page">
         <h2>Frequently Asked Questions</h2>
         
-        <h3>What is vetements?</h3>
-        <p>vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites - everything is accessible through Discord commands.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>What is vetements?</h3>
+            <p>vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites - everything is accessible through Discord commands.</p>
+        </div>
         
-        <h3>How do I use the bot?</h3>
-        <p>Simply add vetements to your server or send it a DM, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>How do I use the bot?</h3>
+            <p>Simply add vetements to your server or send it a DM, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
+        </div>
         
-        <h3>Is vetements free?</h3>
-        <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>Is vetements free?</h3>
+            <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
+        </div>
         
-        <h3>Where can I get support?</h3>
-        <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>Where can I get support?</h3>
+            <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
+        </div>
         
-        <h3>How do I add vetements to my server?</h3>
-        <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>How do I add vetements to my server?</h3>
+            <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
+        </div>
         
-        <h3>What permissions does the bot need?</h3>
-        <p>vetements requires basic permissions like Send Messages, Embed Links, and Attach Files. Some commands may require additional permissions which are clearly indicated when you try to use them.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>What permissions does the bot need?</h3>
+            <p>vetements requires basic permissions like Send Messages, Embed Links, and Attach Files. Some commands may require additional permissions which are clearly indicated when you try to use them.</p>
+        </div>
         
-        <h3>Can I use vetements in DMs?</h3>
-        <p>Yes! Most commands work in direct messages. Simply start a DM with vetements and use slash commands as you would in a server.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>Can I use vetements in DMs?</h3>
+            <p>Yes! Most commands work in direct messages. Simply start a DM with vetements and use slash commands as you would in a server.</p>
+        </div>
         
-        <h3>How often is vetements updated?</h3>
-        <p>We release regular updates with new features, improvements, and bug fixes. Premium users get early access to new features.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>How often is vetements updated?</h3>
+            <p>We release regular updates with new features, improvements, and bug fixes. Premium users get early access to new features.</p>
+        </div>
         
-        <h3>Is my data safe?</h3>
-        <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: #808080;">Privacy Policy</a> for details.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>Is my data safe?</h3>
+            <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: #808080;">Privacy Policy</a> for details.</p>
+        </div>
         
-        <h3>Can I suggest new features?</h3>
-        <p>Absolutely! Join our Discord server and share your ideas in the suggestions channel. We value community feedback.</p>
+        <div class="faq-section animate-on-scroll">
+            <h3>Can I suggest new features?</h3>
+            <p>Absolutely! Join our Discord server and share your ideas in the suggestions channel. We value community feedback.</p>
+        </div>
     </div>
 
-<footer>
-    <p>© 2025 vetements • Developed by @yuw</p>
-    <p style="margin-top: 10px;">
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="faq.html">FAQ</a>
-    </p>
-</footer>
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="faq.html">FAQ</a>
+        </p>
+    </footer>
+
+    <script>
+        // Initial loading animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('fade-out');
+                
+                // Add initial animations
+                const faqSections = document.querySelectorAll('.faq-section');
+                faqSections.forEach((section, index) => {
+                    const h3 = section.querySelector('h3');
+                    const p = section.querySelector('p');
+                    const ul = section.querySelector('ul');
+                    
+                    if (h3) {
+                        h3.style.animationDelay = `${index * 0.1 + 0.5}s`;
+                        h3.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                    
+                    if (p) {
+                        p.style.animationDelay = `${index * 0.1 + 0.6}s`;
+                        p.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                    
+                    if (ul) {
+                        ul.style.animationDelay = `${index * 0.1 + 0.7}s`;
+                        ul.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }
+                });
+                
+                // Initialize scroll animations
+                initScrollAnimations();
+            }, 800);
+        });
+        
+        // Scroll animation function
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+    </script>
 </body>
 </html>
