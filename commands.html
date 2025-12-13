@@ -129,12 +129,20 @@
         .commands-title {
             font-size: 56px;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             letter-spacing: -1.5px;
             background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        
+        .commands-count {
+            font-size: 16px;
+            color: #808080;
+            margin-bottom: 30px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
         
         .search-container {
@@ -446,6 +454,7 @@
     <div class="commands-container">
         <div class="commands-header">
             <h2 class="commands-title">Commands</h2>
+            <div class="commands-count" id="commandsCount">Total commands: 0</div>
             <div class="search-container">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
                 <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="Search">
@@ -567,12 +576,26 @@
 
         let currentCategory = 'all';
         let allCommands = [];
+        let totalCommands = 0;
         
         Object.keys(commands).forEach(cat => {
             commands[cat].forEach(cmd => {
                 allCommands.push({...cmd, category: cat});
             });
         });
+
+        totalCommands = allCommands.length;
+
+        function updateCommandsCount(filteredCount = null) {
+            const countElement = document.getElementById('commandsCount');
+            if (filteredCount !== null && currentCategory !== 'all') {
+                countElement.textContent = `Showing ${filteredCount} of ${totalCommands} total commands`;
+            } else if (filteredCount !== null) {
+                countElement.textContent = `Showing ${filteredCount} commands (${totalCommands} total)`;
+            } else {
+                countElement.textContent = `Total commands: ${totalCommands}`;
+            }
+        }
 
         function renderCommands(commandsToShow) {
             const grid = document.getElementById('commandsGrid');
@@ -592,6 +615,9 @@
             setTimeout(() => {
                 initScrollAnimations();
             }, 100);
+            
+            // Update the commands count with filtered results
+            updateCommandsCount(commandsToShow.length);
         }
 
         function filterCategory(category) {
@@ -667,6 +693,9 @@
         window.addEventListener('load', function() {
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
+                
+                // Update commands count
+                updateCommandsCount();
                 
                 // Render initial commands
                 renderCommands(allCommands);
