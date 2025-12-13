@@ -263,7 +263,7 @@
             border-radius: 12px;
             padding: 25px;
             margin: 0 auto 40px;
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             text-align: left;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -316,15 +316,6 @@
             font-weight: 600;
             font-size: 18px;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .discord-title::before {
-            content: "/";
-            color: #7289da;
-            font-weight: 700;
         }
         
         .discord-divider {
@@ -335,26 +326,8 @@
         
         .discord-content {
             color: #dbdee1;
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.5;
-        }
-        
-        .command-example {
-            background: #1e1f22;
-            border-radius: 6px;
-            padding: 12px;
-            margin: 15px 0;
-            border-left: 3px solid #7289da;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-        }
-        
-        .command-example code {
-            color: #7289da;
-        }
-        
-        .parameter {
-            color: #faa81a;
         }
         
         .discord-list {
@@ -371,13 +344,6 @@
             font-size: 12px;
             margin-top: 15px;
             font-style: italic;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .discord-footer::before {
-            content: "📝";
         }
         
         .features {
@@ -520,6 +486,7 @@
             
             .command-preview {
                 margin: 0 20px 40px;
+                max-width: calc(100% - 40px);
             }
             
             .feature {
@@ -578,33 +545,26 @@
                 </div>
             </div>
             <div class="discord-message">
-                <div class="discord-title">screenshot - Capture screenshots of any website</div>
-                
-                <div class="command-example">
-                    <code>/screenshot</code> <span class="parameter">url:https://example.com</span> <span class="parameter">width:1920</span> <span class="parameter">height:1080</span>
-                </div>
-                
+                <div class="discord-title">About vetements</div>
                 <div class="discord-content">
-                    <strong>Description:</strong> This command allows you to capture a screenshot of any website with customizable dimensions. Perfect for sharing website previews or documenting web content.
-                    <br><br>
+                    <strong>Developer:</strong> @yuw<br>
+                    <strong>Version:</strong> 2.0<br><br>
                     
-                    <strong>Parameters:</strong><br>
+                    <strong>vetements - Your All-in-one discord app</strong><br><br>
+                    
+                    <strong>Main Features:</strong><br>
                     <ul class="discord-list">
-                        <li><strong>url</strong> - The website URL to capture (required)</li>
-                        <li><strong>width</strong> - Screenshot width in pixels (default: 1280)</li>
-                        <li><strong>height</strong> - Screenshot height in pixels (default: 720)</li>
-                        <li><strong>full_page</strong> - Capture full page screenshot (true/false)</li>
-                        <li><strong>delay</strong> - Delay in seconds before capture (0-10)</li>
+                        <li>Clipboard Suite - Advanced image/text storage with premium capacity</li>
+                        <li>Media Processing - Screenshots, QR generation, GIF conversion</li>
+                        <li>Web Utilities - URL shortening, domain analysis, security tools</li>
+                        <li>AI Services - Text-to-speech, translation, AI chat, image generation</li>
+                        <li>Crypto Tools - Real-time prices, market tracking, portfolio support</li>
+                        <li>Productivity - Math solver, password tools, text utilities</li>
+                        <li>Entertainment - Fun commands, creative tools, social features</li>
+                        <li>Roblox Integration - Profile lookup, limited item tracking</li>
                     </ul>
                     
-                    <div class="discord-divider"></div>
-                    
-                    <strong>Examples:</strong><br>
-                    1. <code>/screenshot url:https://google.com</code><br>
-                    2. <code>/screenshot url:https://github.com width:1920 height:1080 full_page:true</code><br>
-                    3. <code>/screenshot url:https://discord.com delay:3</code>
-                    
-                    <div class="discord-footer">Premium users get higher resolution screenshots and faster processing times</div>
+                    <div class="discord-footer">Get Started: Use /commands to explore all features</div>
                 </div>
             </div>
         </div>
