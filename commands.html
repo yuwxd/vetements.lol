@@ -227,6 +227,7 @@
         .category-btn:nth-child(5) { animation-delay: 1.35s; }
         .category-btn:nth-child(6) { animation-delay: 1.4s; }
         .category-btn:nth-child(7) { animation-delay: 1.45s; }
+        .category-btn:nth-child(8) { animation-delay: 1.5s; }
         
         .category-btn:hover {
             background: rgba(255, 255, 255, 0.05);
@@ -474,6 +475,7 @@
         
         <div class="categories">
             <button class="category-btn active" onclick="filterCategory('all')">All</button>
+            <button class="category-btn" onclick="filterCategory('moderation')">Moderation</button>
             <button class="category-btn" onclick="filterCategory('crypto')">Crypto & Web</button>
             <button class="category-btn" onclick="filterCategory('fun')">Fun</button>
             <button class="category-btn" onclick="filterCategory('ai')">AI & Text</button>
@@ -501,6 +503,18 @@
 
     <script>
         const commands = {
+            moderation: [
+                {name: '/kick', desc: 'Kick a user from the server'},
+                {name: '/ban', desc: 'Ban a user from the server'},
+                {name: '/unban', desc: 'Unban a user from the server'},
+                {name: '/lock', desc: 'Lock the current channel for everyone'},
+                {name: '/unlock', desc: 'Unlock the current channel for everyone'},
+                {name: '/role', desc: 'Add a role to a user'},
+                {name: '/unrole', desc: 'Remove a role from a user'},
+                {name: '/timeout', desc: 'Timeout a user'},
+                {name: '/untimeout', desc: 'Remove timeout from a user'},
+                {name: '/softban', desc: 'Softban a user to delete their messages (ban and unban)'}
+            ],
             crypto: [
                 {name: '/cryptoprice', desc: 'Get current cryptocurrency price and market data'},
                 {name: '/screenshot', desc: 'Capture website screenshot with optional delay'},
