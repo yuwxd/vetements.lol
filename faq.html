@@ -209,10 +209,11 @@
         .command-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 12px;
             padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            gap: 20px;
         }
         
         .command-item:last-child {
@@ -225,13 +226,17 @@
             font-family: 'Courier New', monospace;
             color: #ffffff;
             font-weight: 500;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 120px;
         }
         
         .command-desc {
             color: #808080;
             font-size: 14px;
             text-align: right;
-            max-width: 300px;
+            flex: 1;
+            line-height: 1.5;
         }
         
         /* Scroll animations */
@@ -324,6 +329,10 @@
             .command-desc {
                 text-align: left;
                 max-width: 100%;
+            }
+            
+            .command-name {
+                min-width: auto;
             }
         }
     </style>
