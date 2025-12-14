@@ -207,6 +207,18 @@
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
         }
         
+        .tagline {
+            font-size: 24px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 20px;
+            max-width: 600px;
+            line-height: 1.4;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.85s forwards;
+        }
+        
         .version {
             display: inline-block;
             padding: 6px 16px;
@@ -257,6 +269,7 @@
         .btn-primary:hover {
             background: #e5e5e5;
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
         }
         
         .btn-secondary {
@@ -351,6 +364,35 @@
         
         .discord-list li {
             margin-bottom: 8px;
+            position: relative;
+            padding-left: 8px;
+        }
+        
+        .discord-list li:before {
+            content: "•";
+            position: absolute;
+            left: -12px;
+            color: #ffffff;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .feature-item strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 4px;
         }
         
         .discord-footer {
@@ -358,13 +400,31 @@
             font-size: 12px;
             margin-top: 15px;
             font-style: italic;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .philosophy {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        
+        .philosophy strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 5px;
         }
         
         .features {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            max-width: 900px;
+            max-width: 1100px;
             margin: 40px auto 0;
         }
         
@@ -383,6 +443,7 @@
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .feature-number {
@@ -474,13 +535,19 @@
                 font-size: 48px;
             }
             
+            .tagline {
+                font-size: 18px;
+                padding: 0 20px;
+            }
+            
             .made-by {
                 font-size: 16px;
             }
             
             .features {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
+                max-width: 500px;
             }
             
             .cta-buttons {
@@ -510,6 +577,10 @@
             .feature-number {
                 font-size: 28px;
             }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -521,6 +592,11 @@
             .discord-title {
                 font-size: 16px;
             }
+            
+            .features {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
@@ -531,7 +607,7 @@
 
     <nav>
         <div class="nav-links">
-            <a href="/">Home</a>
+            <a href="/" class="active">Home</a>
             <a href="commands.html">Commands</a>
             <a href="faq.html">FAQ</a>
             <a href="premium.html">Premium</a>
@@ -543,7 +619,8 @@
         <div class="logo">V</div>
         <h1>vetements</h1>
         <p class="made-by">made by <a href="https://fakecrime.bio/external" class="made-by-link" target="_blank">@yuw</a></p>
-        <p class="subtitle">Advanced all-in-one Discord utility bot</p>
+        <p class="subtitle">The Ultimate All-in-One Discord Utility Bot</p>
+        <p class="tagline">From powerful moderation tools to advanced utilities - everything you need in one place</p>
         <span class="version">v2.0</span>
         
         <div class="cta-buttons">
@@ -562,23 +639,55 @@
                 <div class="discord-title">About vetements</div>
                 <div class="discord-content">
                     <strong>Developer:</strong> @yuw<br>
-                    <strong>Version:</strong> 2.0<br><br>
+                    <strong>Version:</strong> 2.0<br>
+                    <strong>Status:</strong> 85+ Commands | 10 Categories<br><br>
                     
-                    <strong>vetements - Your All-in-one discord app</strong><br><br>
+                    <strong>The Complete Discord Companion</strong><br>
+                    vetements combines cutting-edge functionality with intuitive design, offering everything from essential server management to advanced creative tools - all accessible through simple Discord commands.<br><br>
                     
-                    <strong>Main Features:</strong><br>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <strong>🔧 Advanced Moderation</strong>
+                            Full server management suite with kick, ban, timeout, role management, and channel control tools
+                        </div>
+                        <div class="feature-item">
+                            <strong>🎨 Creative Tools</strong>
+                            Image processing, QR generation, media conversion, and AI-powered content creation
+                        </div>
+                        <div class="feature-item">
+                            <strong>💼 Productivity Suite</strong>
+                            Clipboard management, URL utilities, text processing, and calculation tools
+                        </div>
+                        <div class="feature-item">
+                            <strong>🤖 AI Integration</strong>
+                            Text-to-speech, AI chat, translation services, and intelligent automation
+                        </div>
+                        <div class="feature-item">
+                            <strong>🛡️ Security & Privacy</strong>
+                            Virus scanning, password tools, and secure data handling with premium encryption
+                        </div>
+                        <div class="feature-item">
+                            <strong>🎮 Entertainment</strong>
+                            Fun commands, games, social features, and Roblox integration for community engagement
+                        </div>
+                    </div>
+                    
+                    <br>
+                    <strong>Recent Additions:</strong>
                     <ul class="discord-list">
-                        <li>Clipboard Suite - Advanced image/text storage with premium capacity</li>
-                        <li>Media Processing - Screenshots, QR generation, GIF conversion</li>
-                        <li>Web Utilities - URL shortening, domain analysis, security tools</li>
-                        <li>AI Services - Text-to-speech, translation, AI chat, image generation</li>
-                        <li>Crypto Tools - Real-time prices, market tracking, portfolio support</li>
-                        <li>Productivity - Math solver, password tools, text utilities</li>
-                        <li>Entertainment - Fun commands, creative tools, social features</li>
-                        <li>Roblox Integration - Profile lookup, limited item tracking</li>
+                        <li>Comprehensive Server Moderation Tools</li>
+                        <li>Advanced Clipboard Suite with Premium Storage</li>
+                        <li>Real-time Crypto & Market Tracking</li>
+                        <li>Enhanced AI Services & Image Generation</li>
+                        <li>Professional Web Utilities & Security Analysis</li>
                     </ul>
                     
-                    <div class="discord-footer">Get Started: Use /commands to explore all features</div>
+                    <div class="philosophy">
+                        <strong>Our Philosophy:</strong>
+                        We believe in creating tools that combine aesthetic appeal with powerful functionality. vetements isn't just a bot - it's a carefully crafted experience that values both form and function, delivering professional-grade tools through an intuitive interface.
+                    </div>
+                    
+                    <div class="discord-footer">✨ We aim for bot's perfection in both appearance and functionality - because your Discord experience deserves nothing less</div>
                 </div>
             </div>
         </div>
@@ -589,12 +698,16 @@
                 <div class="feature-text">Commands</div>
             </div>
             <div class="feature animate-on-scroll">
-                <div class="feature-number">9</div>
+                <div class="feature-number">10</div>
                 <div class="feature-text">Categories</div>
             </div>
             <div class="feature animate-on-scroll">
                 <div class="feature-number">24/7</div>
                 <div class="feature-text">Uptime</div>
+            </div>
+            <div class="feature animate-on-scroll">
+                <div class="feature-number">99.9%</div>
+                <div class="feature-text">Reliability</div>
             </div>
         </div>
     </div>
@@ -646,16 +759,6 @@
             
             elements.forEach(element => {
                 observer.observe(element);
-            });
-            
-            // Handle scroll direction
-            let lastScrollTop = 0;
-            window.addEventListener('scroll', function() {
-                const st = window.pageYOffset || document.documentElement.scrollTop;
-                const direction = st > lastScrollTop ? 'down' : 'up';
-                lastScrollTop = st <= 0 ? 0 : st;
-                
-                // You can add direction-based animations here if needed
             });
         }
         
