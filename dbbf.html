@@ -68,7 +68,6 @@
             font-weight: 400;
         }
         
-        /* Spinner with countdown */
         .spinner-container {
             position: relative;
             width: 120px;
@@ -100,7 +99,6 @@
             color: #ffffff;
         }
         
-        /* Redirect text with animated dots */
         .redirect-text {
             font-size: 16px;
             color: #b0b0b0;
@@ -310,8 +308,8 @@
     <div class="watermark">vetements.lol</div>
 
     <script>
-        // Set redirect time (7 seconds)
-        let timeLeft = 7;
+
+        let timeLeft = 4;
         const countdownElement = document.getElementById('countdown');
         
         // Update countdown every second
@@ -325,10 +323,10 @@
             }
         }, 1000);
         
-        // Redirect after 7 seconds (fallback)
+
         setTimeout(() => {
             window.location.href = 'https://guns.lol/ibb';
-        }, 7000);
+        }, 4000);
         
         // Click anywhere to redirect immediately
         document.addEventListener('click', function() {
