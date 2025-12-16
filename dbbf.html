@@ -5,23 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vetements / dbbf</title>
     <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
-    
-    <!-- Discord Embed Meta Tags -->
-    <meta property="og:title" content="vetements">
-    <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
-    <meta property="og:url" content="https://vetements.lol">
-    <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="vetements">
-    <meta name="theme-color" content="#1e1f22">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="vetements">
-    <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
-    <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -29,525 +13,206 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0a0a0a;
             color: #e5e5e5;
-            overflow-x: hidden;
-            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
         
-        /* Watermark */
-        .watermark {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            z-index: 9998;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* Redirect overlay */
-        .redirect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
+        .container {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease;
-        }
-        
-        .redirect-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .redirect-spinner {
-            width: 60px;
-            height: 60px;
-            position: relative;
-            margin-bottom: 25px;
-        }
-        
-        .redirect-spinner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 4px solid rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-        }
-        
-        .redirect-spinner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 4px solid transparent;
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            animation: redirectSpin 1s linear infinite;
-        }
-        
-        @keyframes redirectSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .redirect-text {
-            font-size: 18px;
-            font-weight: 500;
-            color: #ffffff;
+            justify-content: center;
+            padding: 40px 20px;
             text-align: center;
-            margin-bottom: 15px;
         }
         
-        .redirect-dots {
-            display: inline-block;
-            min-width: 20px;
-            text-align: left;
-        }
-        
-        .redirect-dots::after {
-            content: '...';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-        
-        .redirect-url {
-            font-size: 14px;
-            color: #808080;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-        
-        /* Bot advertisement section */
-        .bot-ad {
-            padding: 60px 20px;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), rgba(26, 26, 26, 0.95));
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            margin-top: auto;
-        }
-        
-        .bot-ad-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .bot-ad-title {
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 36px;
             font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
         
-        .bot-ad-subtitle {
-            font-size: 18px;
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            font-size: 16px;
             color: #808080;
             margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 400px;
+            line-height: 1.5;
         }
         
-        .bot-ad-description {
-            font-size: 16px;
-            color: #b0b0b0;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .bot-ad-features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 30px 0 40px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .bot-feature {
+        .bot-ad {
             background: rgba(255, 255, 255, 0.03);
-            padding: 20px 15px;
-            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .bot-feature:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .bot-feature-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .bot-feature-title {
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-        
-        .bot-feature-desc {
-            color: #909090;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        
-        .bot-ad-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
             margin-top: 30px;
         }
         
-        .bot-ad-btn {
-            padding: 14px 32px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .bot-ad h2 {
+            color: #ffffff;
+            font-size: 22px;
+            margin-bottom: 10px;
         }
         
-        .bot-ad-btn-primary {
+        .bot-ad p {
+            color: #b0b0b0;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
             background: #ffffff;
             color: #0a0a0a;
         }
         
-        .bot-ad-btn-primary:hover {
+        .btn-primary:hover {
             background: #e5e5e5;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
         }
         
-        .bot-ad-btn-secondary {
+        .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .bot-ad-btn-secondary:hover {
+        .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         
-        .bot-ad-footer {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .bot-ad-footer-text {
+        .redirect-info {
+            margin-top: 30px;
             color: #606060;
             font-size: 13px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .bot-ad-footer-text a {
-            color: #808080;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .bot-ad-footer-text a:hover {
-            color: #ffffff;
-        }
-        
-        /* Main content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .main-logo {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            font-weight: 700;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        
-        .main-title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .main-subtitle {
-            font-size: 20px;
-            color: #808080;
-            margin-bottom: 25px;
-            max-width: 500px;
-            line-height: 1.5;
-        }
-        
-        .main-info {
+            padding: 12px;
             background: rgba(255, 255, 255, 0.02);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            margin: 30px 0;
-            max-width: 600px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            max-width: 500px;
+            width: 100%;
         }
         
-        .main-info-title {
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        
-        .main-info-text {
-            color: #b0b0b0;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 36px;
-            }
-            
-            .bot-ad-title {
-                font-size: 28px;
-            }
-            
-            .bot-ad-features {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            
-            .bot-ad-buttons {
-                flex-direction: column;
-                align-items: center;
-                max-width: 300px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .bot-ad-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .redirect-text {
-                font-size: 16px;
-            }
+        .watermark {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            pointer-events: none;
         }
         
         @media (max-width: 480px) {
-            .main-title {
-                font-size: 28px;
+            .buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .main-subtitle {
-                font-size: 16px;
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+                display: flex;
             }
             
-            .bot-ad-title {
-                font-size: 24px;
+            h1 {
+                font-size: 26px;
             }
             
-            .bot-ad-features {
-                grid-template-columns: 1fr;
-            }
-            
-            .bot-ad-description {
-                font-size: 14px;
-            }
-            
-            .watermark {
-                font-size: 12px;
-                bottom: 15px;
-                right: 15px;
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 32px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Redirect Overlay -->
-    <div class="redirect-overlay" id="redirectOverlay">
-        <div class="redirect-spinner"></div>
-        <div class="redirect-text">
-            Redirecting<span class="redirect-dots"></span>
-        </div>
-        <div class="redirect-url">guns.lol/ibb</div>
-    </div>
-
-    <!-- Watermark -->
-    <div class="watermark">vetements.lol</div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="main-logo">V</div>
-        <h1 class="main-title">vetements / dbbf</h1>
-        <p class="main-subtitle">Redirecting to guns.lol</p>
+    <div class="container">
+        <div class="logo">V</div>
+        <h1>vetements / dbbf</h1>
+        <p class="subtitle">Powered by vetements infrastructure</p>
         
-        <div class="main-info">
-            <div class="main-info-title">🔗 Instant Redirect</div>
-            <div class="main-info-text">
-                You are being redirected to <strong>guns.lol/ibb</strong> in a few seconds. 
-                This page is powered by vetements infrastructure.
-            </div>
-        </div>
-        
-        <p style="color: #808080; font-size: 14px; margin-top: 20px;">
-            If you are not redirected automatically, <a href="https://guns.lol/ibb" style="color: #ffffff; text-decoration: none;">click here</a>.
-        </p>
-    </div>
-
-    <!-- Bot Advertisement Section -->
-    <div class="bot-ad">
-        <div class="bot-ad-content">
-            <h2 class="bot-ad-title">vetements Bot</h2>
-            <p class="bot-ad-subtitle">The Ultimate All-in-One Discord Utility Bot</p>
-            <p class="bot-ad-description">
-                vetements combines cutting-edge functionality with intuitive design, offering everything from essential server management to advanced creative tools. With 100+ commands across 9 categories, it's the complete Discord companion you've been looking for.
-            </p>
+        <div class="bot-ad">
+            <h2>vetements Bot</h2>
+            <p>The ultimate Discord utility bot with 100+ commands, advanced moderation tools, AI features, and creative utilities.</p>
             
-            <div class="bot-ad-features">
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">🔧</div>
-                    <div class="bot-feature-title">Advanced Moderation</div>
-                    <div class="bot-feature-desc">Full server management suite with kick, ban, timeout, role management tools</div>
-                </div>
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">🎨</div>
-                    <div class="bot-feature-title">Creative Tools</div>
-                    <div class="bot-feature-desc">Image processing, QR generation, media conversion, AI content creation</div>
-                </div>
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">🤖</div>
-                    <div class="bot-feature-title">AI Integration</div>
-                    <div class="bot-feature-desc">Text-to-speech, AI chat, translation services, intelligent automation</div>
-                </div>
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">💼</div>
-                    <div class="bot-feature-title">Productivity Suite</div>
-                    <div class="bot-feature-desc">Clipboard management, URL utilities, text processing, calculations</div>
-                </div>
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">🛡️</div>
-                    <div class="bot-feature-title">Security & Privacy</div>
-                    <div class="bot-feature-desc">Virus scanning, password tools, secure data handling with encryption</div>
-                </div>
-                <div class="bot-feature">
-                    <div class="bot-feature-icon">🎮</div>
-                    <div class="bot-feature-title">Entertainment</div>
-                    <div class="bot-feature-desc">Fun commands, games, social features, Roblox integration</div>
-                </div>
-            </div>
-            
-            <div class="bot-ad-buttons">
-                <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="bot-ad-btn bot-ad-btn-primary" target="_blank">
+            <div class="buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="btn btn-primary" target="_blank">
                     Add to Discord
                 </a>
-                <a href="https://discord.gg/larpfunds" class="bot-ad-btn bot-ad-btn-secondary" target="_blank">
+                <a href="https://discord.gg/larpfunds" class="btn btn-secondary" target="_blank">
                     Join Server
                 </a>
             </div>
-            
-            <div class="bot-ad-footer">
-                <p class="bot-ad-footer-text">
-                    © 2025 vetements • Developed by @yuw • 
-                    <a href="https://vetements.lol" target="_blank">Main Website</a> • 
-                    <a href="https://discord.gg/larpfunds" target="_blank">Support Server</a>
-                </p>
-            </div>
+        </div>
+        
+        <div class="redirect-info">
+            Redirecting to <strong>guns.lol/ibb</strong> in a few seconds...
         </div>
     </div>
+    
+    <div class="watermark">vetements.lol</div>
 
     <script>
-        // Redirect sequence
-        window.addEventListener('load', function() {
-            // Show redirect overlay immediately
-            const redirectOverlay = document.getElementById('redirectOverlay');
-            
-            // After 3 seconds, start fade out
-            setTimeout(() => {
-                redirectOverlay.classList.add('fade-out');
-                
-                // Remove redirect overlay from DOM after animation
-                setTimeout(() => {
-                    redirectOverlay.style.display = 'none';
-                }, 500);
-                
-            }, 3000); // Show redirect overlay for 3 seconds
-            
-            // Redirect after 4 seconds total (3s display + 1s fade)
-            setTimeout(() => {
-                window.location.href = 'https://guns.lol/ibb';
-            }, 4000);
-        });
+        // Przekierowanie po 7 sekundach
+        setTimeout(() => {
+            window.location.href = 'https://guns.lol/ibb';
+        }, 7000);
         
-        // Manual redirect link
+        // Manualne przekierowanie po kliknięciu w info
         document.addEventListener('DOMContentLoaded', function() {
-            const manualRedirect = document.querySelector('a[href="https://guns.lol/ibb"]');
-            if (manualRedirect) {
-                manualRedirect.addEventListener('click', function(e) {
-                    e.preventDefault();
+            const redirectInfo = document.querySelector('.redirect-info');
+            if (redirectInfo) {
+                redirectInfo.style.cursor = 'pointer';
+                redirectInfo.addEventListener('click', function() {
                     window.location.href = 'https://guns.lol/ibb';
                 });
             }
