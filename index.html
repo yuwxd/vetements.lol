@@ -234,7 +234,7 @@
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
         }
         
-        /* Bot Stats Section - NEW */
+        /* Bot Stats Section */
         .bot-stats-section {
             background: rgba(30, 31, 34, 0.6);
             border-radius: 16px;
@@ -303,6 +303,7 @@
             color: #ffffff;
             margin: 10px 0;
             font-variant-numeric: tabular-nums;
+            transition: all 0.3s ease;
         }
         
         .stat-label {
@@ -345,6 +346,7 @@
             text-align: center;
             padding: 20px;
             color: #8e9297;
+            display: none;
         }
         
         .loading-dots {
@@ -784,7 +786,7 @@
         <p class="tagline">From powerful moderation tools to advanced utilities - everything you need in one place</p>
         <span class="version">v2.0</span>
         
-        <!-- Bot Stats Section - NEW -->
+        <!-- Bot Stats Section -->
         <div class="bot-stats-section">
             <h2 class="stats-title">Live Bot Statistics</h2>
             <div class="stats-grid">
@@ -812,7 +814,7 @@
                 Last updated: <span id="lastUpdated">-</span>
             </div>
             
-            <div class="stats-loading" id="statsLoading" style="display: none;">
+            <div class="stats-loading" id="statsLoading">
                 <div class="loading-dots"></div>
                 <div class="loading-dots"></div>
                 <div class="loading-dots"></div>
@@ -933,7 +935,9 @@
         });
         
         // Bot stats functionality
-        const STATS_URL = 'https://us1.bot-hosting.net:21801/stats';
+        const STATS_URL = 'https://gist.githubusercontent.com/o9qq/8cfdf2f2eb2cbe40a72c2ea7af4c1b61/raw/f6a019cda9a8d728538d8c92ea2c38797abc2faa/bot_stats.json';
+        // ======================================================
+        
         let currentStats = {
             authorized_users: 0,
             guild_count: 0,
@@ -949,11 +953,12 @@
             try {
                 // Add timestamp to prevent caching
                 const response = await fetch(STATS_URL + '?t=' + new Date().getTime(), {
-                    cache: 'no-cache'
+                    cache: 'no-cache',
+                    mode: 'cors'
                 });
                 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch');
+                    throw new Error('Failed to fetch stats');
                 }
                 
                 const data = await response.json();
@@ -999,7 +1004,7 @@
                 currentStats = data;
                 
             } catch (error) {
-                console.log('Error loading bot stats');
+                console.log('Error loading bot stats:', error);
                 document.getElementById('botStatus').textContent = 'Offline';
                 document.getElementById('botStatus').style.color = '#f04747';
                 document.getElementById('statusBadge').textContent = 'Offline';
@@ -1043,6 +1048,11 @@
         
         // Auto refresh every 30 seconds
         setInterval(loadBotStats, 30000);
+        
+        // Manual refresh button (add if you want)
+        function refreshStats() {
+            loadBotStats();
+        }
         
         // Scroll animation function
         function initScrollAnimations() {
