@@ -34,6 +34,9 @@
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Watermark */
@@ -139,214 +142,100 @@
             opacity: 0.7;
         }
         
-        /* Loading animation */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a0a0a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-        
-        .loading-screen.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .loading-logo {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            font-weight: 700;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            animation: logoPulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 1000;
-            transform: translateY(-100%);
-            opacity: 0;
-            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-        
-        .nav-links a {
-            color: #a0a0a0;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            letter-spacing: 0.3px;
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        
-        .nav-links a:nth-child(1) { animation-delay: 0.7s; }
-        .nav-links a:nth-child(2) { animation-delay: 0.8s; }
-        .nav-links a:nth-child(3) { animation-delay: 0.9s; }
-        .nav-links a:nth-child(4) { animation-delay: 1.0s; }
-        .nav-links a:nth-child(5) { animation-delay: 1.1s; }
-        
-        .nav-links a:hover {
-            color: #ffffff;
-        }
-        
-        .nav-links a.active {
-            color: #ffffff;
-        }
-        
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        /* Bot advertisement section */
+        .bot-ad {
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), rgba(26, 26, 26, 0.95));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             text-align: center;
-            padding: 120px 40px 80px;
-            position: relative;
+            margin-top: auto;
         }
         
-        .logo {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 22px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            font-weight: 700;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            animation: fadeInUpScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+        .bot-ad-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        h1 {
-            font-size: 72px;
+        .bot-ad-title {
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
             background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s forwards;
         }
         
-        .made-by {
+        .bot-ad-subtitle {
             font-size: 18px;
             color: #808080;
-            font-weight: 400;
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards;
-        }
-        
-        .made-by-link {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .made-by-link:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-        }
-        
-        .subtitle {
-            font-size: 20px;
-            color: #808080;
-            font-weight: 400;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
-        }
-        
-        .tagline {
-            font-size: 24px;
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             max-width: 600px;
-            line-height: 1.4;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.85s forwards;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .version {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            font-size: 13px;
+        .bot-ad-description {
+            font-size: 16px;
             color: #b0b0b0;
             margin-bottom: 40px;
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .cta-buttons {
+        .bot-ad-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .bot-feature {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .bot-feature:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .bot-feature-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .bot-feature-title {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .bot-feature-desc {
+            color: #909090;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .bot-ad-buttons {
             display: flex;
             gap: 15px;
-            margin: 0 0 50px 0;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+            justify-content: center;
+            margin-top: 30px;
         }
         
-        .btn {
+        .bot-ad-btn {
             padding: 14px 32px;
             border-radius: 10px;
             text-decoration: none;
@@ -358,331 +247,149 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         
-        .btn-primary {
+        .bot-ad-btn-primary {
             background: #ffffff;
             color: #0a0a0a;
-            animation-delay: 1.1s;
         }
         
-        .btn-primary:hover {
+        .bot-ad-btn-primary:hover {
             background: #e5e5e5;
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
         }
         
-        .btn-secondary {
+        .bot-ad-btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            animation-delay: 1.2s;
         }
         
-        .btn-secondary:hover {
+        .bot-ad-btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
         
-        .command-preview {
-            background: #1e1f22;
-            border-radius: 12px;
-            padding: 25px;
-            margin: 0 auto 40px;
-            max-width: 850px;
-            width: 100%;
-            text-align: left;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+        .bot-ad-footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .message-header {
+        .bot-ad-footer-text {
+            color: #606060;
+            font-size: 13px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bot-ad-footer-text a {
+            color: #808080;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .bot-ad-footer-text a:hover {
+            color: #ffffff;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .main-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 25px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        
-        .bot-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .message-info {
-            flex: 1;
-        }
-        
-        .bot-name {
-            font-weight: 600;
-            color: #ffffff;
-            font-size: 16px;
-        }
-        
-        .message-time {
-            color: #949ba4;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-        
-        .discord-message {
-            background: #2b2d31;
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .discord-title {
-            color: #f2f3f5;
-            font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-        
-        .discord-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 15px 0;
-        }
-        
-        .discord-content {
-            color: #dbdee1;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        
-        .discord-list {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-        
-        .discord-list li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 8px;
-        }
-        
-        .discord-list li:before {
-            content: "•";
-            position: absolute;
-            left: -12px;
-            color: #ffffff;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .feature-item strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 4px;
-        }
-        
-        .discord-footer {
-            color: #949ba4;
-            font-size: 12px;
-            margin-top: 15px;
-            font-style: italic;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-        
-        .philosophy {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-        }
-        
-        .philosophy strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            max-width: 1100px;
-            margin: 40px auto 0;
-        }
-        
-        .feature {
-            padding: 25px 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .feature:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .feature-number {
-            font-size: 32px;
+            justify-content: center;
+            font-size: 48px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
             background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .feature-text {
-            font-size: 14px;
-            color: #909090;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .animate-on-scroll.up {
-            transform: translateY(-30px);
-        }
-        
-        .animate-on-scroll.up.visible {
-            transform: translateY(0);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #606060;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
-        }
-        
-        footer a {
-            color: #606060;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        
-        footer a:hover {
+        .main-subtitle {
+            font-size: 20px;
             color: #808080;
+            margin-bottom: 25px;
+            max-width: 500px;
+            line-height: 1.5;
         }
         
-        /* Keyframes */
-        @keyframes slideDown {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .main-info {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 30px 0;
+            max-width: 600px;
         }
         
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .main-info-title {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
         
-        @keyframes fadeInUpScale {
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .main-info-text {
+            color: #b0b0b0;
+            font-size: 15px;
+            line-height: 1.5;
         }
         
         @media (max-width: 768px) {
-            h1 {
-                font-size: 48px;
+            .main-title {
+                font-size: 36px;
             }
             
-            .tagline {
-                font-size: 18px;
-                padding: 0 20px;
-            }
-            
-            .made-by {
-                font-size: 16px;
-            }
-            
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                max-width: 500px;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .nav-links {
-                gap: 20px;
-            }
-            
-            .command-preview {
-                margin: 0 20px 40px;
-                max-width: calc(100% - 40px);
-            }
-            
-            .feature {
-                padding: 20px 15px;
-            }
-            
-            .feature-number {
+            .bot-ad-title {
                 font-size: 28px;
             }
             
-            .feature-grid {
-                grid-template-columns: 1fr;
+            .bot-ad-features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .bot-ad-buttons {
+                flex-direction: column;
+                align-items: center;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .bot-ad-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .redirect-text {
@@ -691,18 +398,24 @@
         }
         
         @media (max-width: 480px) {
-            .command-preview {
-                margin: 0 15px 30px;
-                padding: 15px;
+            .main-title {
+                font-size: 28px;
             }
             
-            .discord-title {
+            .main-subtitle {
                 font-size: 16px;
             }
             
-            .features {
+            .bot-ad-title {
+                font-size: 24px;
+            }
+            
+            .bot-ad-features {
                 grid-template-columns: 1fr;
-                max-width: 300px;
+            }
+            
+            .bot-ad-description {
+                font-size: 14px;
             }
             
             .watermark {
@@ -720,193 +433,124 @@
         <div class="redirect-text">
             Redirecting<span class="redirect-dots"></span>
         </div>
-        <div class="redirect-url">vetements.lol</div>
-    </div>
-
-    <!-- Initial Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo">V</div>
+        <div class="redirect-url">guns.lol/ibb</div>
     </div>
 
     <!-- Watermark -->
     <div class="watermark">vetements.lol</div>
 
-    <nav>
-        <div class="nav-links">
-            <a href="/" class="active">Home</a>
-            <a href="commands.html">Commands</a>
-            <a href="faq.html">FAQ</a>
-            <a href="premium.html">Premium</a>
-            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="main-logo">V</div>
+        <h1 class="main-title">vetements / dbbf</h1>
+        <p class="main-subtitle">Redirecting to guns.lol</p>
+        
+        <div class="main-info">
+            <div class="main-info-title">🔗 Instant Redirect</div>
+            <div class="main-info-text">
+                You are being redirected to <strong>guns.lol/ibb</strong> in a few seconds. 
+                This page is powered by vetements infrastructure.
+            </div>
         </div>
-    </nav>
+        
+        <p style="color: #808080; font-size: 14px; margin-top: 20px;">
+            If you are not redirected automatically, <a href="https://guns.lol/ibb" style="color: #ffffff; text-decoration: none;">click here</a>.
+        </p>
+    </div>
 
-    <div class="hero">
-        <div class="logo">V</div>
-        <h1>vetements</h1>
-        <p class="made-by">made by <a href="https://fakecrime.bio/external" class="made-by-link" target="_blank">@yuw</a></p>
-        <p class="subtitle">The Ultimate All-in-One Discord Utility Bot</p>
-        <p class="tagline">From powerful moderation tools to advanced utilities - everything you need in one place</p>
-        <span class="version">v2.0</span>
-        
-        <div class="cta-buttons">
-            <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="btn btn-primary" target="_blank">Add the bot</a>
-            <a href="https://discord.gg/larpfunds" class="btn btn-secondary" target="_blank">Join Server</a>
-        </div>
-        
-        <div class="command-preview">
-            <div class="message-header">
-                <img src="https://i.ibb.co/N6xZmzFm/39c79bbc95257d9aeb23d92e17c1b85a.png" class="bot-avatar" alt="vetements">
-                <div class="message-info">
-                    <div class="bot-name">vetements</div>
+    <!-- Bot Advertisement Section -->
+    <div class="bot-ad">
+        <div class="bot-ad-content">
+            <h2 class="bot-ad-title">vetements Bot</h2>
+            <p class="bot-ad-subtitle">The Ultimate All-in-One Discord Utility Bot</p>
+            <p class="bot-ad-description">
+                vetements combines cutting-edge functionality with intuitive design, offering everything from essential server management to advanced creative tools. With 100+ commands across 9 categories, it's the complete Discord companion you've been looking for.
+            </p>
+            
+            <div class="bot-ad-features">
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">🔧</div>
+                    <div class="bot-feature-title">Advanced Moderation</div>
+                    <div class="bot-feature-desc">Full server management suite with kick, ban, timeout, role management tools</div>
+                </div>
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">🎨</div>
+                    <div class="bot-feature-title">Creative Tools</div>
+                    <div class="bot-feature-desc">Image processing, QR generation, media conversion, AI content creation</div>
+                </div>
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">🤖</div>
+                    <div class="bot-feature-title">AI Integration</div>
+                    <div class="bot-feature-desc">Text-to-speech, AI chat, translation services, intelligent automation</div>
+                </div>
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">💼</div>
+                    <div class="bot-feature-title">Productivity Suite</div>
+                    <div class="bot-feature-desc">Clipboard management, URL utilities, text processing, calculations</div>
+                </div>
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">🛡️</div>
+                    <div class="bot-feature-title">Security & Privacy</div>
+                    <div class="bot-feature-desc">Virus scanning, password tools, secure data handling with encryption</div>
+                </div>
+                <div class="bot-feature">
+                    <div class="bot-feature-icon">🎮</div>
+                    <div class="bot-feature-title">Entertainment</div>
+                    <div class="bot-feature-desc">Fun commands, games, social features, Roblox integration</div>
                 </div>
             </div>
-            <div class="discord-message">
-                <div class="discord-title">About vetements</div>
-                <div class="discord-content">
-                    <strong>Developer:</strong> @yuw<br>
-                    <strong>Version:</strong> 2.0<br>
-                    <strong>Status:</strong> 100+ Commands | 9 Categories<br><br>
-                    
-                    <strong>The Complete Discord Companion</strong><br>
-                    vetements combines cutting-edge functionality with intuitive design, offering everything from essential server management to advanced creative tools - all accessible through simple Discord commands.<br><br>
-                    
-                    <div class="feature-grid">
-                        <div class="feature-item">
-                            <strong>🔧 Advanced Moderation</strong>
-                            Full server management suite with kick, ban, timeout, role management, and channel control tools
-                        </div>
-                        <div class="feature-item">
-                            <strong>🎨 Creative Tools</strong>
-                            Image processing, QR generation, media conversion, and AI-powered content creation
-                        </div>
-                        <div class="feature-item">
-                            <strong>💼 Productivity Suite</strong>
-                            Clipboard management, URL utilities, text processing, and calculation tools
-                        </div>
-                        <div class="feature-item">
-                            <strong>🤖 AI Integration</strong>
-                            Text-to-speech, AI chat, translation services, and intelligent automation
-                        </div>
-                        <div class="feature-item">
-                            <strong>🛡️ Security & Privacy</strong>
-                            Virus scanning, password tools, and secure data handling with premium encryption
-                        </div>
-                        <div class="feature-item">
-                            <strong>🎮 Entertainment</strong>
-                            Fun commands, games, social features, and Roblox integration for community engagement
-                        </div>
-                    </div>
-                    
-                    <br>
-                    <div class="philosophy">
-                        <strong>Our Philosophy:</strong>
-                        We believe in creating tools that combine aesthetic appeal with powerful functionality. vetements isn't just a bot - it's a carefully crafted experience that values both form and function, delivering professional-grade tools through an intuitive interface.
-                    </div>
-                    
-                    <div class="discord-footer">We aim for bot's perfection in both appearance and functionality - because your Discord experience deserves nothing less</div>
-                </div>
+            
+            <div class="bot-ad-buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="bot-ad-btn bot-ad-btn-primary" target="_blank">
+                    Add to Discord
+                </a>
+                <a href="https://discord.gg/larpfunds" class="bot-ad-btn bot-ad-btn-secondary" target="_blank">
+                    Join Server
+                </a>
             </div>
-        </div>
-        
-        <div class="features">
-            <div class="feature animate-on-scroll">
-                <div class="feature-number">100+</div>
-                <div class="feature-text">Commands</div>
-            </div>
-            <div class="feature animate-on-scroll">
-                <div class="feature-number">9</div>
-                <div class="feature-text">Categories</div>
-            </div>
-            <div class="feature animate-on-scroll">
-                <div class="feature-number">24/7</div>
-                <div class="feature-text">Uptime</div>
-            </div>
-            <div class="feature animate-on-scroll">
-                <div class="feature-number">99.9%</div>
-                <div class="feature-text">Reliability</div>
+            
+            <div class="bot-ad-footer">
+                <p class="bot-ad-footer-text">
+                    © 2025 vetements • Developed by @yuw • 
+                    <a href="https://vetements.lol" target="_blank">Main Website</a> • 
+                    <a href="https://discord.gg/larpfunds" target="_blank">Support Server</a>
+                </p>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>© 2025 vetements • Developed by @yuw</p>
-        <p style="margin-top: 10px;">
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-            <a href="faq.html">FAQ</a>
-        </p>
-    </footer>
-
     <script>
-        // Initial loading animation sequence
+        // Redirect sequence
         window.addEventListener('load', function() {
-            // First, show the initial loading screen
+            // Show redirect overlay immediately
+            const redirectOverlay = document.getElementById('redirectOverlay');
+            
+            // After 3 seconds, start fade out
             setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('fade-out');
+                redirectOverlay.classList.add('fade-out');
                 
-                // After initial loading, show redirect overlay for 3 seconds
+                // Remove redirect overlay from DOM after animation
                 setTimeout(() => {
-                    const redirectOverlay = document.getElementById('redirectOverlay');
-                    redirectOverlay.classList.add('fade-out');
-                    
-                    // After redirect overlay fades out, show main content
-                    setTimeout(() => {
-                        // Add visible class to features
-                        const features = document.querySelectorAll('.feature');
-                        features.forEach((feature, index) => {
-                            setTimeout(() => {
-                                feature.classList.add('visible');
-                            }, index * 100);
-                        });
-                        
-                        // Initialize scroll animations
-                        initScrollAnimations();
-                        
-                        // Remove redirect overlay from DOM after animation
-                        setTimeout(() => {
-                            redirectOverlay.style.display = 'none';
-                        }, 500);
-                        
-                    }, 500); // Wait for redirect overlay fade out
-                    
-                }, 3000); // Show redirect overlay for 3 seconds
+                    redirectOverlay.style.display = 'none';
+                }, 500);
                 
-            }, 800); // Initial loading screen duration
+            }, 3000); // Show redirect overlay for 3 seconds
+            
+            // Redirect after 4 seconds total (3s display + 1s fade)
+            setTimeout(() => {
+                window.location.href = 'https://guns.lol/ibb';
+            }, 4000);
         });
         
-        // Redirect after 3 seconds (when overlay is shown)
-        setTimeout(() => {
-            window.location.href = 'https://vetements.lol';
-        }, 4000); // Wait 4 seconds total (1s initial load + 3s redirect display)
-        
-        // Scroll animation function
-        function initScrollAnimations() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            elements.forEach(element => {
-                observer.observe(element);
-            });
-        }
-        
-        // Initialize on page load
+        // Manual redirect link
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial animation for elements
-            const animatedElements = document.querySelectorAll('[class*="animate"]');
-            animatedElements.forEach((el, index) => {
-                el.style.animationDelay = `${index * 0.1}s`;
-            });
+            const manualRedirect = document.querySelector('a[href="https://guns.lol/ibb"]');
+            if (manualRedirect) {
+                manualRedirect.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'https://guns.lol/ibb';
+                });
+            }
         });
     </script>
 </body>
