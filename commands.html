@@ -230,6 +230,7 @@
         .category-btn:nth-child(8) { animation-delay: 1.5s; }
         .category-btn:nth-child(9) { animation-delay: 1.55s; }
         .category-btn:nth-child(10) { animation-delay: 1.6s; }
+        .category-btn:nth-child(11) { animation-delay: 1.65s; }
         
         .category-btn:hover {
             background: rgba(255, 255, 255, 0.05);
@@ -261,6 +262,13 @@
             position: relative;
             opacity: 0;
             transform: translateY(30px);
+        }
+        
+        .command-card.animated-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                       transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .command-card:hover {
@@ -538,7 +546,7 @@
                 {name: '/moderation massunrole', desc: 'Remove a role from all users who have it'},
                 {name: '/moderation slowmode', desc: 'Set slowmode for the current channel'},
                 {name: '/moderation vcmute', desc: 'Mute a user in voice channels'},
-                {name: '/admin vcunmute', desc: 'Unmute a user in voice channels'},
+                {name: '/moderation vcunmute', desc: 'Unmute a user in voice channels'},
                 {name: '/moderation nick', desc: "Change a user's nickname"},
                 {name: '/moderation invites', desc: 'Check how many invites a user has'},
                 {name: '/moderation hide', desc: 'Hide the current channel from everyone except owners and admins'},
@@ -629,9 +637,14 @@
         let allCommands = [];
         let totalCommands = 0;
         
+        // Populate allCommands array with proper categories
         Object.keys(commands).forEach(cat => {
             commands[cat].forEach(cmd => {
-                allCommands.push({...cmd, category: cat});
+                allCommands.push({
+                    name: cmd.name,
+                    desc: cmd.desc,
+                    category: cat
+                });
             });
         });
 
@@ -650,22 +663,32 @@
 
         function renderCommands(commandsToShow) {
             const grid = document.getElementById('commandsGrid');
-            grid.innerHTML = commandsToShow.map((cmd, index) => `
-                <div class="command-card animate-on-scroll" style="animation-delay: ${index * 0.05}s">
+            grid.innerHTML = '';
+            
+            commandsToShow.forEach((cmd, index) => {
+                const card = document.createElement('div');
+                card.className = 'command-card animate-on-scroll';
+                card.innerHTML = `
                     <div class="command-header">
                         <div class="command-name">${cmd.name}</div>
-                        <div class="copy-btn" onclick="copyCommand('${cmd.name.replace(/'/g, "\\'")}')">
+                        <div class="copy-btn">
                             <img src="https://img.icons8.com/?size=48&id=KRskJxjVf0BS&format=png" class="copy-icon" alt="Copy">
                         </div>
                     </div>
                     <div class="command-desc">${cmd.desc}</div>
-                </div>
-            `).join('');
-            
-            // Initialize scroll animation observer for new cards
-            setTimeout(() => {
-                initScrollAnimations();
-            }, 100);
+                `;
+                
+                // Add click event for copy button
+                const copyBtn = card.querySelector('.copy-btn');
+                copyBtn.addEventListener('click', () => copyCommand(cmd.name));
+                
+                grid.appendChild(card);
+                
+                // Stagger the animations
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 50);
+            });
             
             // Update the commands count with filtered results
             updateCommandsCount(commandsToShow.length);
@@ -758,6 +781,16 @@
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             filterCommands(e.target.value.toLowerCase());
+        });
+        
+        // Also trigger scroll animations on page load
+        window.addEventListener('scroll', () => {
+            initScrollAnimations();
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // This ensures everything is properly loaded
         });
     </script>
 </body>
