@@ -228,6 +228,8 @@
         .category-btn:nth-child(6) { animation-delay: 1.4s; }
         .category-btn:nth-child(7) { animation-delay: 1.45s; }
         .category-btn:nth-child(8) { animation-delay: 1.5s; }
+        .category-btn:nth-child(9) { animation-delay: 1.55s; }
+        .category-btn:nth-child(10) { animation-delay: 1.6s; }
         
         .category-btn:hover {
             background: rgba(255, 255, 255, 0.05);
@@ -475,13 +477,16 @@
         
         <div class="categories">
             <button class="category-btn active" onclick="filterCategory('all')">All</button>
+            <button class="category-btn" onclick="filterCategory('info')">Information</button>
             <button class="category-btn" onclick="filterCategory('moderation')">Moderation</button>
-            <button class="category-btn" onclick="filterCategory('crypto')">Crypto & Web</button>
+            <button class="category-btn" onclick="filterCategory('ai')">AI</button>
+            <button class="category-btn" onclick="filterCategory('asciify')">Asciify</button>
+            <button class="category-btn" onclick="filterCategory('clipboard')">Clipboard</button>
+            <button class="category-btn" onclick="filterCategory('count')">Count</button>
             <button class="category-btn" onclick="filterCategory('fun')">Fun</button>
-            <button class="category-btn" onclick="filterCategory('ai')">AI & Text</button>
-            <button class="category-btn" onclick="filterCategory('utility')">Utility</button>
             <button class="category-btn" onclick="filterCategory('media')">Media</button>
-            <button class="category-btn" onclick="filterCategory('info')">Info</button>
+            <button class="category-btn" onclick="filterCategory('network')">Network</button>
+            <button class="category-btn" onclick="filterCategory('utility')">Utility</button>
         </div>
         
         <div class="commands-grid" id="commandsGrid"></div>
@@ -503,113 +508,122 @@
 
     <script>
         const commands = {
-            moderation: [
-                {name: '/kick', desc: 'Kick a user from the server'},
-                {name: '/ban', desc: 'Ban a user from the server'},
-                {name: '/unban', desc: 'Unban a user from the server'},
-                {name: '/lock', desc: 'Lock the current channel for everyone'},
-                {name: '/unlock', desc: 'Unlock the current channel for everyone'},
-                {name: '/role', desc: 'Add a role to a user'},
-                {name: '/unrole', desc: 'Remove a role from a user'},
-                {name: '/timeout', desc: 'Timeout a user'},
-                {name: '/untimeout', desc: 'Remove timeout from a user'},
-                {name: '/softban', desc: 'Softban a user to delete their messages (ban and unban)'},
-                {name: '/giveaway', desc: 'Create a giveaway'},
-                {name: '/massrole', desc: 'Add a role to all users with a specific role'},
-                {name: '/massunrole', desc: 'Remove a role from all users who have it'},
-                {name: '/slowmode', desc: 'Set slowmode for the current channel'},
-                {name: '/modlogs', desc: 'View moderation logs for a user or channel'},
-                {name: '/vcmute', desc: 'Mute a user in voice channels'},
-                {name: '/vcunmute', desc: 'Unmute a user in voice channels'},
-                {name: '/nick', desc: 'Change a users nickname'},
-                {name: '/invites', desc: 'Check how many invites a user has'},
-                {name: '/hide', desc: 'Hide the current channel from everyone except owners and admins'},
-                {name: '/reveal', desc: 'Reveal the current channel to everyone'}
-            ],
-            crypto: [
-                {name: '/cryptoprice', desc: 'Get current cryptocurrency price and market data'},
-                {name: '/screenshot', desc: 'Capture website screenshot with optional delay'},
-                {name: '/iplookup', desc: 'Lookup IP address information'},
-                {name: '/pinghost', desc: 'Check if a host is online'},
-                {name: '/shorten', desc: 'Shorten a URL using TinyURL'},
-                {name: '/domaininfo', desc: 'Get WHOIS and status info for a domain'}
-            ],
-            fun: [
-                {name: '/hug', desc: 'Hug another user'},
-                {name: '/kiss', desc: 'Kiss another user'},
-                {name: '/joke', desc: 'Get a random joke'},
-                {name: '/roll', desc: 'Roll a dice or random number'},
-                {name: '/fact', desc: 'Get a random interesting fact'},
-                {name: '/dogfact', desc: 'Get a random dog fact'},
-                {name: '/catfact', desc: 'Get a random cat fact'},
-                {name: '/coinflip', desc: 'Flip a coin'},
-                {name: '/ppsize', desc: 'Measure PP size'},
-                {name: '/proverb', desc: 'Create a thinking monkey proverb image'},
-                {name: '/howgay', desc: 'Calculate how gay someone is'},
-                {name: '/howlarp', desc: 'Check how much of a larper someone is'},
-                {name: '/roast', desc: 'Roast a user with random insults'},
-                {name: '/rizz', desc: 'Rizz up a user with smooth pickup lines'},
-                {name: '/ship', desc: 'Check compatibility between two users'},
-                {name: '/deathdate', desc: 'Predict your death date and how you will die (just for fun)'},
-                {name: '/monkeythink', desc: 'Create a funny monkey thinking about an image'}
-            ],
-            ai: [
-                {name: '/askai', desc: 'Ask AI anything'},
-                {name: '/translate', desc: 'Translate text to another language'},
-                {name: '/tts', desc: 'Convert text to speech (male or female voice)'},
-                {name: '/say', desc: 'Make the bot say something'},
-                {name: '/define', desc: 'Get the definition of an English word'},
-                {name: '/summarize', desc: 'Summarize long text using AI'},
-                {name: '/imagegen', desc: 'Generate an image using AI'}
-            ],
-            utility: [
-                {name: '/qrgen', desc: 'Generate QR code from URL or text'},
-                {name: '/qrscan', desc: 'Scan and decode a QR code from an image'},
-                {name: '/fakemessage', desc: 'Generate a fake Discord message from a user'},
-                {name: '/poll', desc: 'Create a poll with multiple options'},
-                {name: '/number', desc: 'Generate a random number between two values'},
-                {name: '/webhookmessage', desc: 'Send a message to a webhook'},
-                {name: '/clipboard', desc: 'Save and manage your clipboard items'},
-                {name: '/clipboardimage', desc: 'Save an image to clipboard'},
-                {name: '/clipboardtext', desc: 'Save text to clipboard'},
-                {name: '/clipboardsend', desc: 'Send items from clipboard'},
-                {name: '/timezone', desc: 'Get current time in different timezones'},
-                {name: '/passwordgen', desc: 'Generate a strong random password'},
-                {name: '/passwordstrength', desc: 'Check a strength of a password'},
-                {name: '/countcharacters', desc: 'Count characters, words, and lines in text'},
-                {name: '/base64', desc: 'Encode or decode Base64 text'},
-                {name: '/taxcalc', desc: 'Calculate amount after tax/commission'},
-                {name: '/reversetext', desc: 'Reverse any text'},
-                {name: '/asciify', desc: 'Convert text to ASCII art'},
-                {name: '/asciifyimage', desc: 'Convert an image to ASCII art'},
-                {name: '/imagetolink', desc: 'Upload image to ImgBB and get a direct link'},
-                {name: '/texttolink', desc: 'Upload text to Pastebin and get a shareable link'},
-                {name: '/virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis'},
-                {name: '/color', desc: 'Get information about a color'}
-            ],
-            media: [
-                {name: '/imagetogif', desc: 'Convert image to high-quality GIF format'},
-                {name: '/videotogif', desc: 'Convert video to GIF format'},
-                {name: '/caption', desc: 'Add caption text to top of image'},
-                {name: '/gif', desc: 'Search and send a random GIF by topic'},
-                {name: '/youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)'},
-                {name: '/blur', desc: 'Apply blur effect to an image'},
-                {name: '/avatar', desc: "Get user's avatar"},
-                {name: '/banner', desc: "Get user's banner"}
-            ],
             info: [
                 {name: '/about', desc: 'Display information about vetements'},
-                {name: '/discord', desc: 'Get Discord server invite link'},
-                {name: '/ping', desc: 'Check bot latency and connection status'},
-                {name: '/whois', desc: 'Get information about a Discord user'},
+                {name: '/avatar', desc: "Get user's avatar"},
+                {name: '/banner', desc: "Get user's banner"},
                 {name: '/invite', desc: 'Authorize the bot'},
                 {name: '/support', desc: 'Get the support for the bot'},
-                {name: '/embed', desc: 'Create a custom embed message'},
+                {name: '/discord', desc: 'Get Discord server invite link'},
+                {name: '/user', desc: 'Get information about a Discord user'},
+                {name: '/serverinfo', desc: 'Get information about the server you use the bot in'},
+                {name: '/ping', desc: 'Check bot latency and connection status'},
+                {name: '/commands', desc: 'View all available commands'},
+                {name: '/premium', desc: 'View premium information'},
+                {name: '/profile', desc: 'View user profile'},
                 {name: '/redeem', desc: 'Redeem a premium license key'},
-                {name: '/spotifysearch', desc: 'Search for a song on spotify'},
-                {name: '/robloxprofile', desc: 'Get detailed Roblox user profile with generated image and past usernames'},
-                {name: '/robloxlimiteds', desc: 'Search for a limited items or get item details'},
-                {name: '/serverinfo', desc: 'Get information about the server you use the bot in'}
+                {name: '/say', desc: 'Make the bot say something'}
+            ],
+            moderation: [
+                {name: '/moderation kick', desc: 'Kick a user from the server'},
+                {name: '/moderation ban', desc: 'Ban a user from the server'},
+                {name: '/moderation unban', desc: 'Unban a user from the server'},
+                {name: '/moderation lock', desc: 'Lock the current channel for everyone'},
+                {name: '/moderation unlock', desc: 'Unlock the current channel for everyone'},
+                {name: '/moderation role', desc: 'Add a role to a user'},
+                {name: '/moderation unrole', desc: 'Remove a role from a user'},
+                {name: '/moderation timeout', desc: 'Timeout a user'},
+                {name: '/moderation untimeout', desc: 'Remove timeout from a user'},
+                {name: '/moderation softban', desc: 'Softban a user to delete their messages (ban and unban)'},
+                {name: '/moderation giveaway', desc: 'Create a giveaway'},
+                {name: '/moderation massrole', desc: 'Add a role to all users with a specific role'},
+                {name: '/moderation massunrole', desc: 'Remove a role from all users who have it'},
+                {name: '/moderation slowmode', desc: 'Set slowmode for the current channel'},
+                {name: '/moderation vcmute', desc: 'Mute a user in voice channels'},
+                {name: '/admin vcunmute', desc: 'Unmute a user in voice channels'},
+                {name: '/moderation nick', desc: "Change a user's nickname"},
+                {name: '/moderation invites', desc: 'Check how many invites a user has'},
+                {name: '/moderation hide', desc: 'Hide the current channel from everyone except owners and admins'},
+                {name: '/moderation reveal', desc: 'Reveal the current channel to everyone'}
+            ],
+            ai: [
+                {name: '/ai ask', desc: 'Ask AI anything'},
+                {name: '/ai image', desc: 'Generate an image using AI'},
+                {name: '/ai summarize', desc: 'Summarize long text using AI'},
+                {name: '/ai tts', desc: 'Convert text to speech (male or female voice)'}
+            ],
+            asciify: [
+                {name: '/asciify image', desc: 'Convert an image to ASCII art'},
+                {name: '/asciify text', desc: 'Convert text to ASCII art'}
+            ],
+            clipboard: [
+                {name: '/clipboard info', desc: 'Save and manage your clipboard items'},
+                {name: '/clipboard text', desc: 'Save text to clipboard'},
+                {name: '/clipboard image', desc: 'Save an image to clipboard'},
+                {name: '/clipboard send', desc: 'Send items from clipboard'}
+            ],
+            count: [
+                {name: '/count characters', desc: 'Count characters, words, and lines in text'},
+                {name: '/count down', desc: 'Countdown timer'}
+            ],
+            fun: [
+                {name: '/fortnite map', desc: 'Get Fortnite map information'},
+                {name: '/fun 8ball', desc: 'Ask the magic 8-ball a question'},
+                {name: '/fun catfact', desc: 'Get a random cat fact'},
+                {name: '/fun coinflip', desc: 'Flip a coin'},
+                {name: '/fun deathdate', desc: 'Predict your death date and how you will die (just for fun)'},
+                {name: '/fun dogfact', desc: 'Get a random dog fact'},
+                {name: '/fun fact', desc: 'Get a random interesting fact'},
+                {name: '/fun howgay', desc: 'Calculate how gay someone is'},
+                {name: '/fun howlarp', desc: 'Check how much of a larper someone is'},
+                {name: '/fun hug', desc: 'Hug another user'},
+                {name: '/fun joke', desc: 'Get a random joke'},
+                {name: '/fun kiss', desc: 'Kiss another user'},
+                {name: '/fun ppsize', desc: 'Measure PP size'},
+                {name: '/fun rizz', desc: 'Rizz up a user with smooth pickup lines'},
+                {name: '/fun roast', desc: 'Roast a user with random insults'},
+                {name: '/fun roll', desc: 'Roll a dice or random number'},
+                {name: '/fun ship', desc: 'Check compatibility between two users'}
+            ],
+            media: [
+                {name: '/media blur', desc: 'Apply blur effect to an image'},
+                {name: '/media caption', desc: 'Add caption text to top of image'},
+                {name: '/media fakemessage', desc: 'Generate a fake Discord message from a user'},
+                {name: '/media gif', desc: 'Search and send a random GIF by topic'},
+                {name: '/media imagetogif', desc: 'Convert image to high-quality GIF format'},
+                {name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)'}
+            ],
+            network: [
+                {name: '/network domaininfo', desc: 'Get WHOIS and status info for a domain'},
+                {name: '/network iplookup', desc: 'Lookup IP address information'},
+                {name: '/network ping', desc: 'Check if a host is online'},
+                {name: '/network pinghost', desc: 'Check if a host is online'},
+                {name: '/network serverinfo', desc: 'Get server information'}
+            ],
+            utility: [
+                {name: '/password generate', desc: 'Generate a strong random password'},
+                {name: '/password strength', desc: 'Check a strength of a password'},
+                {name: '/qr generate', desc: 'Generate QR code from URL or text'},
+                {name: '/qr scan', desc: 'Scan and decode a QR code from an image'},
+                {name: '/spotify search', desc: 'Search for a song on spotify'},
+                {name: '/tax calc', desc: 'Calculate amount after tax/commission'},
+                {name: '/utility color', desc: 'Get information about a color'},
+                {name: '/utility define', desc: 'Get the definition of an English word'},
+                {name: '/utility embed', desc: 'Create a custom embed message'},
+                {name: '/utility imagetolink', desc: 'Upload image to ImgBB and get a direct link'},
+                {name: '/utility number', desc: 'Generate a random number between two values'},
+                {name: '/utility screenshot', desc: 'Capture website screenshot with optional delay'},
+                {name: '/utility shorten', desc: 'Shorten a URL using TinyURL'},
+                {name: '/utility texttolink', desc: 'Upload text to Pastebin and get a shareable link'},
+                {name: '/utility translate', desc: 'Translate text to another language'},
+                {name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis'},
+                {name: '/webhook delete', desc: 'Delete a webhook'},
+                {name: '/webhook message', desc: 'Send a message to a webhook'},
+                {name: '/base64 decode', desc: 'Decode Base64 text'},
+                {name: '/base64 encode', desc: 'Encode text to Base64'},
+                {name: '/crypto price', desc: 'Get current cryptocurrency price and market data'},
+                {name: '/roblox limiteds', desc: 'Search for a limited items or get item details'},
+                {name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image and past usernames'}
             ]
         };
 
