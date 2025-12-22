@@ -285,107 +285,36 @@
             transform: translateY(-2px);
         }
         
-        /* Elegant Features Section */
-        .features-section {
-            max-width: 1200px;
-            margin: 60px auto 80px;
+        /* Stats Section */
+        .stats-section {
+            max-width: 1100px;
+            margin: 0 auto 60px;
             padding: 0 40px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
         }
         
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 50px;
-            background: linear-gradient(to right, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .feature-card:hover:before {
-            opacity: 1;
-        }
-        
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: #ffffff;
-            display: block;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-        
-        .feature-card p {
-            color: #a0a0a0;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        /* Stats Section */
-        .stats-section {
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 60px 0;
-            margin: 80px 0;
-        }
-        
         .stats-container {
-            max-width: 1100px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
-            padding: 0 40px;
         }
         
         .stat-item {
             text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         .stat-number {
@@ -396,8 +325,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .stat-label {
@@ -406,23 +333,27 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0;
-            transform: translateY(10px);
         }
         
-        /* Elegant Showcase */
+        /* Showcase Section */
         .showcase-section {
             max-width: 1000px;
             margin: 0 auto 80px;
             padding: 0 40px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
         }
         
         .showcase-title {
-            font-size: 32px;
-            font-weight: 600;
+            font-size: 36px;
+            font-weight: 700;
             margin-bottom: 30px;
-            color: #ffffff;
+            background: linear-gradient(to right, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .showcase-text {
@@ -434,11 +365,12 @@
         }
         
         .highlight {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 30px;
             margin-top: 30px;
+            text-align: center;
         }
         
         .highlight-text {
@@ -447,6 +379,7 @@
             font-weight: 500;
             font-style: italic;
             margin-bottom: 15px;
+            line-height: 1.6;
         }
         
         .highlight-author {
@@ -475,7 +408,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.4s forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
         }
         
         footer a {
@@ -512,13 +445,9 @@
         }
         
         @media (max-width: 1024px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .stats-container {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
+                gap: 25px;
             }
         }
         
@@ -551,48 +480,56 @@
                 gap: 20px;
             }
             
-            .features-grid {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-                margin: 0 auto;
-            }
-            
-            .section-title {
-                font-size: 28px;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .showcase-section {
+            .stats-section {
                 padding: 0 20px;
+                margin-bottom: 40px;
             }
             
-            .features-section {
-                padding: 0 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .feature-card {
-                padding: 25px 20px;
+            .stat-item {
+                padding: 25px 15px;
             }
             
             .stat-number {
                 font-size: 36px;
             }
             
+            .showcase-section {
+                padding: 0 20px;
+                margin-bottom: 60px;
+            }
+            
+            .showcase-title {
+                font-size: 28px;
+            }
+            
+            .showcase-text {
+                font-size: 16px;
+            }
+            
             .highlight {
                 padding: 20px;
+            }
+            
+            .highlight-text {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 32px;
             }
             
             .showcase-title {
                 font-size: 24px;
             }
             
-            .showcase-text {
+            .highlight-text {
                 font-size: 16px;
             }
         }
@@ -627,64 +564,23 @@
         </div>
     </div>
 
-    <div class="features-section">
-        <h2 class="section-title">Why Choose vetements?</h2>
-        <div class="features-grid">
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Optimized for speed and efficiency with minimal latency. Commands execute instantly for a seamless experience.</p>
-            </div>
-            
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">🔧</div>
-                <h3>Powerful Tools</h3>
-                <p>Over 100 commands across 9 categories including moderation, utilities, entertainment, and creative tools.</p>
-            </div>
-            
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">🎨</div>
-                <h3>Beautiful Design</h3>
-                <p>Crafted with attention to detail. Clean, modern interface that's both functional and aesthetically pleasing.</p>
-            </div>
-            
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">🛡️</div>
-                <h3>Secure & Reliable</h3>
-                <p>Enterprise-grade security with 99.9% uptime. Your data is protected with advanced encryption protocols.</p>
-            </div>
-            
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">🤖</div>
-                <h3>AI Powered</h3>
-                <p>Intelligent features including AI chat, text-to-speech, translation, and smart automation capabilities.</p>
-            </div>
-            
-            <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">⚙️</div>
-                <h3>Easy to Use</h3>
-                <p>Intuitive commands with comprehensive documentation. Perfect for both beginners and power users.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="stats-section">
         <div class="stats-container">
             <div class="stat-item">
-                <div class="stat-number animate-on-scroll">100+</div>
-                <div class="stat-label animate-on-scroll">Commands</div>
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Commands</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number animate-on-scroll">9</div>
-                <div class="stat-label animate-on-scroll">Categories</div>
+                <div class="stat-number">9</div>
+                <div class="stat-label">Categories</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number animate-on-scroll">24/7</div>
-                <div class="stat-label animate-on-scroll">Uptime</div>
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Uptime</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number animate-on-scroll">99.9%</div>
-                <div class="stat-label animate-on-scroll">Reliability</div>
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Reliability</div>
             </div>
         </div>
     </div>
@@ -696,7 +592,7 @@
             Experience professional-grade utilities through an elegant interface that values both form and function.
         </p>
         
-        <div class="highlight animate-on-scroll">
+        <div class="highlight">
             <p class="highlight-text">
                 "We aim for perfection in both appearance and functionality - because your Discord experience deserves nothing less."
             </p>
@@ -722,14 +618,6 @@
                 // Initialize scroll animations
                 setTimeout(() => {
                     initScrollAnimations();
-                    
-                    // Animate stats with delay
-                    const stats = document.querySelectorAll('.stat-number, .stat-label');
-                    stats.forEach((stat, index) => {
-                        setTimeout(() => {
-                            stat.classList.add('visible');
-                        }, index * 200);
-                    });
                 }, 300);
             }, 800);
         });
