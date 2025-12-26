@@ -276,14 +276,11 @@
             margin: 0 auto 25px;
         }
         
-        /* Lifetime Card - with glowing effect */
+        /* Lifetime Card - with white glowing star effect */
         .pricing-card.lifetime {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             position: relative;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                0 0 30px rgba(255, 215, 0, 0.1);
         }
         
         .pricing-card.lifetime::after {
@@ -294,55 +291,103 @@
             right: -2px;
             bottom: -2px;
             background: linear-gradient(45deg, 
-                rgba(255, 215, 0, 0.1), 
                 rgba(255, 255, 255, 0.1), 
-                rgba(255, 215, 0, 0.1));
+                rgba(255, 255, 255, 0.05), 
+                rgba(255, 255, 255, 0.1));
             border-radius: 18px;
             z-index: -1;
             animation: glow 3s ease-in-out infinite alternate;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            opacity: 0.5;
         }
         
         .pricing-card.lifetime:hover::after {
-            opacity: 1;
+            opacity: 0.8;
         }
         
         .pricing-card.lifetime:hover {
-            border-color: rgba(255, 215, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 
                 0 30px 60px rgba(0, 0, 0, 0.4),
-                0 0 40px rgba(255, 215, 0, 0.2);
+                0 0 30px rgba(255, 255, 255, 0.1);
         }
         
         @keyframes glow {
             from {
                 box-shadow: 
-                    0 0 10px rgba(255, 215, 0, 0.1),
-                    0 0 20px rgba(255, 215, 0, 0.05);
+                    0 0 10px rgba(255, 255, 255, 0.1),
+                    0 0 20px rgba(255, 255, 255, 0.05);
             }
             to {
                 box-shadow: 
-                    0 0 15px rgba(255, 215, 0, 0.2),
-                    0 0 30px rgba(255, 215, 0, 0.1),
-                    0 0 40px rgba(255, 215, 0, 0.05);
+                    0 0 15px rgba(255, 255, 255, 0.2),
+                    0 0 30px rgba(255, 255, 255, 0.1),
+                    0 0 40px rgba(255, 255, 255, 0.05);
             }
         }
         
         .pricing-icon.lifetime {
-            font-size: 42px;
+            font-size: 48px;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            animation: crownGlow 2s ease-in-out infinite alternate;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            animation: starGlow 2s ease-in-out infinite alternate;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4);
         }
         
-        @keyframes crownGlow {
+        .pricing-icon.lifetime::before {
+            content: '★';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+        
+        .pricing-icon.lifetime::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            animation: starPulse 3s ease-in-out infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes starGlow {
             from {
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.8),
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(255, 255, 255, 0.4);
+                transform: scale(1);
             }
             to {
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.3);
+                text-shadow: 
+                    0 0 15px rgba(255, 255, 255, 1),
+                    0 0 25px rgba(255, 255, 255, 0.8),
+                    0 0 35px rgba(255, 255, 255, 0.6),
+                    0 0 45px rgba(255, 255, 255, 0.4);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes starPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.2);
             }
         }
         
@@ -352,6 +397,11 @@
             margin-bottom: 15px;
             color: #ffffff;
             letter-spacing: -0.5px;
+        }
+        
+        .pricing-card.lifetime .pricing-title {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
         .pricing-subtitle {
@@ -370,8 +420,8 @@
         }
         
         .pricing-card.lifetime .price {
-            color: gold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
         .price::before {
@@ -404,7 +454,7 @@
         }
         
         .pricing-card.lifetime .price-currency {
-            color: gold;
+            color: #ffffff;
         }
         
         .price-period {
@@ -415,7 +465,7 @@
         }
         
         .pricing-card.lifetime .price-period {
-            color: rgba(255, 215, 0, 0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .pricing-features {
@@ -441,7 +491,8 @@
         }
         
         .pricing-card.lifetime .pricing-features li::before {
-            color: gold;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
         
         .pricing-button {
@@ -465,9 +516,9 @@
         }
         
         .pricing-card.lifetime .pricing-button {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            color: gold;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
         }
         
         .pricing-button:hover {
@@ -477,8 +528,8 @@
         }
         
         .pricing-card.lifetime .pricing-button:hover {
-            background: rgba(255, 215, 0, 0.15);
-            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         @keyframes cardFloatIn {
@@ -557,18 +608,6 @@
             border-color: rgba(255, 255, 255, 0.15);
         }
         
-        /* Scroll reveal animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Payment Methods */
         .payment-section {
             margin: 60px 0 40px;
@@ -642,7 +681,7 @@
             filter: brightness(0) invert(1);
         }
         
-        /* Animations */
+        /* Scroll animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -688,6 +727,18 @@
         
         footer a:hover {
             color: #ffffff;
+        }
+        
+        /* Parallax scroll effects */
+        .parallax-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .parallax-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         /* Responsive */
@@ -821,7 +872,7 @@
             
             <!-- Lifetime Subscription Card -->
             <div class="pricing-card lifetime">
-                <div class="pricing-icon lifetime">👑</div>
+                <div class="pricing-icon lifetime">★</div>
                 <h3 class="pricing-title">Lifetime Subscription</h3>
                 <p class="pricing-subtitle">One-time payment for permanent premium access</p>
                 <div class="price">
@@ -848,26 +899,26 @@
             <button class="close-notification" id="closeNotification">×</button>
         </div>
         
-        <div class="payment-section reveal">
+        <div class="payment-section parallax-section">
             <h3 class="payment-title">Accepted Payment Methods</h3>
             <div class="payment-methods">
-                <div class="payment-method reveal">
+                <div class="payment-method parallax-section">
                     <img src="https://i.ibb.co/DfpGhscp/image.png" class="payment-icon" alt="BLIK">
                     <span>BLIK</span>
                 </div>
-                <div class="payment-method reveal">
+                <div class="payment-method parallax-section">
                     <img src="https://img.icons8.com/?size=80&id=AQd5OluNqpNW&format=png" class="payment-icon" alt="Cryptocurrency">
                     <span>Cryptocurrency</span>
                 </div>
-                <div class="payment-method reveal">
+                <div class="payment-method parallax-section">
                     <img src="https://img.icons8.com/?size=80&id=VOv2ShpC3Qaw&format=png" class="payment-icon" alt="Credit Card">
                     <span>Credit Card</span>
                 </div>
-                <div class="payment-method reveal">
+                <div class="payment-method parallax-section">
                     <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
                     <span>paysafecard</span>
                 </div>
-                <div class="payment-method reveal">
+                <div class="payment-method parallax-section">
                     <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
                     <span>Robux</span>
                 </div>
@@ -875,7 +926,7 @@
         </div>
         
         <div style="text-align: center; margin-top: 60px;">
-            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="reveal visible">
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="parallax-section">
                 Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
             </p>
         </div>
@@ -899,15 +950,15 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 
-                // Add reveal animations to payment methods
+                // Animate parallax sections with staggered delays
                 setTimeout(() => {
-                    const reveals = document.querySelectorAll('.reveal');
-                    reveals.forEach((el, index) => {
+                    const parallaxSections = document.querySelectorAll('.parallax-section');
+                    parallaxSections.forEach((el, index) => {
                         setTimeout(() => {
                             el.classList.add('visible');
-                        }, index * 100);
+                        }, index * 150);
                     });
-                }, 400);
+                }, 500);
                 
                 // Initialize scroll animations
                 initScrollAnimations();
@@ -916,7 +967,7 @@
         
         // Scroll animation function
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.reveal');
+            const elements = document.querySelectorAll('.parallax-section');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -931,6 +982,28 @@
             
             elements.forEach(element => {
                 observer.observe(element);
+            });
+            
+            // Parallax scroll effect
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const cards = document.querySelectorAll('.pricing-card');
+                cards.forEach((card, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    card.style.transform = `translateY(${rate * speed}px)`;
+                });
+                
+                const parallaxSections = document.querySelectorAll('.parallax-section:not(.visible)');
+                parallaxSections.forEach((section, index) => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.8) {
+                        setTimeout(() => {
+                            section.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
             });
         }
         
@@ -961,16 +1034,10 @@
             }
         });
         
-        // Add scroll reveal animation for elements
-        document.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            const cards = document.querySelectorAll('.pricing-card');
-            cards.forEach(card => {
-                card.style.transform = `translateY(${rate * 0.05}px)`;
-            });
-        });
+        // Smooth scroll reveal on load
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
     </script>
 </body>
 </html>
