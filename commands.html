@@ -525,6 +525,94 @@
             line-height: 1.4;
         }
         
+        /* Command Icons Container */
+        .command-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 15px;
+        }
+        
+        /* Icon base styles */
+        .command-icon {
+            width: 18px;
+            height: 18px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .command-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+        }
+        
+        .command-icon:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Free icon */
+        .free-icon img {
+            filter: brightness(0) invert(0.7);
+        }
+        
+        .free-icon:hover img {
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Premium icon */
+        .premium-icon img {
+            filter: brightness(0) invert(0.9) drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+        }
+        
+        .premium-icon:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+        }
+        
+        /* Tooltip */
+        .command-icon .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: #ffffff;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .command-icon .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .command-icon:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-4px);
+        }
+        
+        /* Copy button */
         .copy-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -538,6 +626,7 @@
             transition: all 0.2s ease;
             flex-shrink: 0;
             backdrop-filter: blur(5px);
+            margin-left: 8px;
         }
         
         .copy-btn:hover {
@@ -790,6 +879,16 @@
                 text-align: center;
                 justify-content: center;
             }
+            
+            .command-icons {
+                gap: 6px;
+                margin-left: 10px;
+            }
+            
+            .command-icon {
+                width: 16px;
+                height: 16px;
+            }
         }
     </style>
 </head>
@@ -868,214 +967,214 @@
     </footer>
 
     <script>
-        // Updated commands data with specified categories
+        // Command types: free = free only, premium = premium only, both = both versions available
         const commands = {
             "General": [
-                { name: '/about', desc: 'Display information about vetements' },
-                { name: '/commands', desc: 'View all available commands' },
-                { name: '/discord', desc: 'Get Discord server invite link' },
-                { name: '/invite', desc: 'Authorize the bot' },
-                { name: '/premium', desc: 'View premium information' },
-                { name: '/profile', desc: 'View user profile' },
-                { name: '/redeem', desc: 'Redeem a premium license key' },
-                { name: '/say', desc: 'Make the bot say something' },
-                { name: '/support', desc: 'Get the support for the bot' },
-                { name: '/uptime', desc: 'Check bot uptime' },
-                { name: '/user', desc: 'Get information about a Discord user' },
-                { name: '/avatar', desc: "Get user's avatar" },
-                { name: '/banner', desc: "Get user's banner" }
+                { name: '/about', desc: 'Display information about vetements', type: 'free' },
+                { name: '/commands', desc: 'View all available commands', type: 'free' },
+                { name: '/discord', desc: 'Get Discord server invite link', type: 'free' },
+                { name: '/invite', desc: 'Authorize the bot', type: 'free' },
+                { name: '/premium', desc: 'View premium information', type: 'free' },
+                { name: '/profile', desc: 'View user profile', type: 'free' },
+                { name: '/redeem', desc: 'Redeem a premium license key', type: 'free' },
+                { name: '/say', desc: 'Make the bot say something', type: 'free' },
+                { name: '/support', desc: 'Get the support for the bot', type: 'free' },
+                { name: '/uptime', desc: 'Check bot uptime', type: 'free' },
+                { name: '/user', desc: 'Get information about a Discord user', type: 'free' },
+                { name: '/avatar', desc: "Get user's avatar", type: 'free' },
+                { name: '/banner', desc: "Get user's banner", type: 'free' }
             ],
             
             "Moderation": [
-                { name: '/admin', desc: 'Admin panel and settings' },
-                { name: '/ban', desc: 'Ban a user from the server' },
-                { name: '/bans', desc: 'View all bans in the server' },
-                { name: '/kick', desc: 'Kick a user from the server' },
-                { name: '/nick', desc: "Change a user's nickname" },
-                { name: '/nuke', desc: 'Delete all messages in a channel' },
-                { name: '/softban', desc: 'Softban a user to delete their messages' },
-                { name: '/timeout', desc: 'Timeout a user' },
-                { name: '/unban', desc: 'Unban a user from the server' },
-                { name: '/untimeout', desc: 'Remove timeout from a user' },
-                { name: '/invites', desc: 'Check how many invites a user has' },
+                { name: '/admin', desc: 'Admin panel and settings', type: 'free' },
+                { name: '/ban', desc: 'Ban a user from the server', type: 'free' },
+                { name: '/bans', desc: 'View all bans in the server', type: 'free' },
+                { name: '/kick', desc: 'Kick a user from the server', type: 'free' },
+                { name: '/nick', desc: "Change a user's nickname", type: 'free' },
+                { name: '/nuke', desc: 'Delete all messages in a channel', type: 'free' },
+                { name: '/softban', desc: 'Softban a user to delete their messages', type: 'free' },
+                { name: '/timeout', desc: 'Timeout a user', type: 'free' },
+                { name: '/unban', desc: 'Unban a user from the server', type: 'free' },
+                { name: '/untimeout', desc: 'Remove timeout from a user', type: 'free' },
+                { name: '/invites', desc: 'Check how many invites a user has', type: 'free' },
                 
-                { name: '/antinuke ban', desc: 'Configure ban protection' },
-                { name: '/antinuke bot', desc: 'Configure bot join protection' },
-                { name: '/antinuke channel', desc: 'Configure channel protection' },
-                { name: '/antinuke emoji', desc: 'Configure emoji protection' },
-                { name: '/antinuke kick', desc: 'Configure kick protection' },
-                { name: '/antinuke role', desc: 'Configure role protection' },
-                { name: '/antinuke settings', desc: 'Configure antinuke settings' },
-                { name: '/antinuke webhook', desc: 'Configure webhook protection' },
-                { name: '/antinuke whitelist_add', desc: 'Add user to whitelist' },
-                { name: '/antinuke whitelist_clear', desc: 'Clear all whitelisted users' },
-                { name: '/antinuke whitelist_list', desc: 'List whitelisted users' },
-                { name: '/antinuke whitelist_remove', desc: 'Remove user from whitelist' },
+                { name: '/antinuke ban', desc: 'Configure ban protection', type: 'free' },
+                { name: '/antinuke bot', desc: 'Configure bot join protection', type: 'free' },
+                { name: '/antinuke channel', desc: 'Configure channel protection', type: 'free' },
+                { name: '/antinuke emoji', desc: 'Configure emoji protection', type: 'free' },
+                { name: '/antinuke kick', desc: 'Configure kick protection', type: 'free' },
+                { name: '/antinuke role', desc: 'Configure role protection', type: 'free' },
+                { name: '/antinuke settings', desc: 'Configure antinuke settings', type: 'free' },
+                { name: '/antinuke webhook', desc: 'Configure webhook protection', type: 'free' },
+                { name: '/antinuke whitelist_add', desc: 'Add user to whitelist', type: 'free' },
+                { name: '/antinuke whitelist_clear', desc: 'Clear all whitelisted users', type: 'free' },
+                { name: '/antinuke whitelist_list', desc: 'List whitelisted users', type: 'free' },
+                { name: '/antinuke whitelist_remove', desc: 'Remove user from whitelist', type: 'free' },
                 
-                { name: '/jail add', desc: 'Add user to jail' },
-                { name: '/jail remove', desc: 'Remove user from jail' },
+                { name: '/jail add', desc: 'Add user to jail', type: 'free' },
+                { name: '/jail remove', desc: 'Remove user from jail', type: 'free' },
                 
-                { name: '/channel clear', desc: 'Clear messages in channel' },
-                { name: '/channel hide', desc: 'Hide the current channel from everyone except staff' },
-                { name: '/channel lock', desc: 'Lock the current channel for everyone' },
-                { name: '/channel reveal', desc: 'Reveal the current channel to everyone' },
-                { name: '/channel slowmode', desc: 'Set slowmode for the current channel' },
-                { name: '/channel unlock', desc: 'Unlock the current channel for everyone' },
+                { name: '/channel clear', desc: 'Clear messages in channel', type: 'free' },
+                { name: '/channel hide', desc: 'Hide the current channel from everyone except staff', type: 'free' },
+                { name: '/channel lock', desc: 'Lock the current channel for everyone', type: 'free' },
+                { name: '/channel reveal', desc: 'Reveal the current channel to everyone', type: 'free' },
+                { name: '/channel slowmode', desc: 'Set slowmode for the current channel', type: 'free' },
+                { name: '/channel unlock', desc: 'Unlock the current channel for everyone', type: 'free' },
                 
-                { name: '/purge after', desc: 'Purge messages after a specific message' },
-                { name: '/purge before', desc: 'Purge messages before a specific message' },
-                { name: '/purge between', desc: 'Purge messages between two messages' },
-                { name: '/purge bots', desc: 'Purge messages from bots' },
-                { name: '/purge contains', desc: 'Purge messages containing specific text' },
-                { name: '/purge embeds', desc: 'Purge messages with embeds' },
-                { name: '/purge emojis', desc: 'Purge messages with emojis' },
-                { name: '/purge endswith', desc: 'Purge messages ending with specific text' },
-                { name: '/purge except', desc: 'Purge all except specific user messages' },
-                { name: '/purge files', desc: 'Purge messages with files' },
-                { name: '/purge humans', desc: 'Purge messages from humans' },
-                { name: '/purge invites', desc: 'Purge messages with invites' },
-                { name: '/purge links', desc: 'Purge messages with links' },
-                { name: '/purge mentions', desc: 'Purge messages with mentions' },
-                { name: '/purge reactions', desc: 'Purge messages with reactions' },
-                { name: '/purge startswith', desc: 'Purge messages starting with specific text' },
-                { name: '/purge stickers', desc: 'Purge messages with stickers' },
-                { name: '/purge systemmessages', desc: 'Purge system messages' },
-                { name: '/purge voicemessages', desc: 'Purge voice messages' },
-                { name: '/purge webhooks', desc: 'Purge messages from webhooks' },
+                { name: '/purge after', desc: 'Purge messages after a specific message', type: 'free' },
+                { name: '/purge before', desc: 'Purge messages before a specific message', type: 'free' },
+                { name: '/purge between', desc: 'Purge messages between two messages', type: 'free' },
+                { name: '/purge bots', desc: 'Purge messages from bots', type: 'free' },
+                { name: '/purge contains', desc: 'Purge messages containing specific text', type: 'free' },
+                { name: '/purge embeds', desc: 'Purge messages with embeds', type: 'free' },
+                { name: '/purge emojis', desc: 'Purge messages with emojis', type: 'free' },
+                { name: '/purge endswith', desc: 'Purge messages ending with specific text', type: 'free' },
+                { name: '/purge except', desc: 'Purge all except specific user messages', type: 'free' },
+                { name: '/purge files', desc: 'Purge messages with files', type: 'free' },
+                { name: '/purge humans', desc: 'Purge messages from humans', type: 'free' },
+                { name: '/purge invites', desc: 'Purge messages with invites', type: 'free' },
+                { name: '/purge links', desc: 'Purge messages with links', type: 'free' },
+                { name: '/purge mentions', desc: 'Purge messages with mentions', type: 'free' },
+                { name: '/purge reactions', desc: 'Purge messages with reactions', type: 'free' },
+                { name: '/purge startswith', desc: 'Purge messages starting with specific text', type: 'free' },
+                { name: '/purge stickers', desc: 'Purge messages with stickers', type: 'free' },
+                { name: '/purge systemmessages', desc: 'Purge system messages', type: 'free' },
+                { name: '/purge voicemessages', desc: 'Purge voice messages', type: 'free' },
+                { name: '/purge webhooks', desc: 'Purge messages from webhooks', type: 'free' },
                 
-                { name: '/role add', desc: 'Add a role to a user' },
-                { name: '/role all', desc: 'Manage all roles' },
-                { name: '/role autorole', desc: 'Configure auto-role settings' },
-                { name: '/role massadd', desc: 'Add a role to all users with a specific role' },
-                { name: '/role massremove', desc: 'Remove a role from all users who have it' },
-                { name: '/role remove', desc: 'Remove a role from a user' },
-                { name: '/role rename', desc: 'Rename a role' },
+                { name: '/role add', desc: 'Add a role to a user', type: 'free' },
+                { name: '/role all', desc: 'Manage all roles', type: 'free' },
+                { name: '/role autorole', desc: 'Configure auto-role settings', type: 'free' },
+                { name: '/role massadd', desc: 'Add a role to all users with a specific role', type: 'free' },
+                { name: '/role massremove', desc: 'Remove a role from all users who have it', type: 'free' },
+                { name: '/role remove', desc: 'Remove a role from a user', type: 'free' },
+                { name: '/role rename', desc: 'Rename a role', type: 'free' },
                 
-                { name: '/vc deafen', desc: 'Deafen a user in voice channel' },
-                { name: '/vc disconnect', desc: 'Disconnect a user from voice channel' },
-                { name: '/vc move', desc: 'Move a user to another voice channel' },
-                { name: '/vc moveall', desc: 'Move all users to another voice channel' },
-                { name: '/vc mute', desc: 'Mute a user in voice channel' },
-                { name: '/vc undeafen', desc: 'Undeafen a user in voice channel' },
-                { name: '/vc unmute', desc: 'Unmute a user in voice channel' },
+                { name: '/vc deafen', desc: 'Deafen a user in voice channel', type: 'free' },
+                { name: '/vc disconnect', desc: 'Disconnect a user from voice channel', type: 'free' },
+                { name: '/vc move', desc: 'Move a user to another voice channel', type: 'free' },
+                { name: '/vc moveall', desc: 'Move all users to another voice channel', type: 'free' },
+                { name: '/vc mute', desc: 'Mute a user in voice channel', type: 'free' },
+                { name: '/vc undeafen', desc: 'Undeafen a user in voice channel', type: 'free' },
+                { name: '/vc unmute', desc: 'Unmute a user in voice channel', type: 'free' },
                 
-                { name: '/notifications boosts', desc: 'Configure boost notifications' },
-                { name: '/notifications join', desc: 'Configure join notifications' },
-                { name: '/notifications leave', desc: 'Configure leave notifications' }
+                { name: '/notifications boosts', desc: 'Configure boost notifications', type: 'free' },
+                { name: '/notifications join', desc: 'Configure join notifications', type: 'free' },
+                { name: '/notifications leave', desc: 'Configure leave notifications', type: 'free' }
             ],
             
             "AI": [
-                { name: '/ai ask', desc: 'Ask AI anything' },
-                { name: '/ai image', desc: 'Generate an image using AI' },
-                { name: '/ai summarize', desc: 'Summarize long text using AI' },
-                { name: '/ai tts', desc: 'Convert text to speech (male or female voice)' },
+                { name: '/ai ask', desc: 'Ask AI anything', type: 'free' },
+                { name: '/ai image', desc: 'Generate an image using AI', type: 'free' },
+                { name: '/ai summarize', desc: 'Summarize long text using AI', type: 'free' },
+                { name: '/ai tts', desc: 'Convert text to speech (male or female voice)', type: 'free' },
                 
-                { name: '/asciify image', desc: 'Convert an image to ASCII art' },
-                { name: '/asciify text', desc: 'Convert text to ASCII art' }
+                { name: '/asciify image', desc: 'Convert an image to ASCII art', type: 'free' },
+                { name: '/asciify text', desc: 'Convert text to ASCII art', type: 'free' }
             ],
             
             "Utility": [
-                { name: '/base64 decode', desc: 'Decode Base64 text' },
-                { name: '/base64 encode', desc: 'Encode text to Base64' },
+                { name: '/base64 decode', desc: 'Decode Base64 text', type: 'free' },
+                { name: '/base64 encode', desc: 'Encode text to Base64', type: 'free' },
                 
-                { name: '/clipboard info', desc: 'Save and manage your clipboard items' },
-                { name: '/clipboard text', desc: 'Save text to clipboard' },
-                { name: '/clipboard image', desc: 'Save an image to clipboard' },
-                { name: '/clipboard send', desc: 'Send items from clipboard' },
+                { name: '/clipboard info', desc: 'Save and manage your clipboard items', type: 'free' },
+                { name: '/clipboard text', desc: 'Save text to clipboard', type: 'free' },
+                { name: '/clipboard image', desc: 'Save an image to clipboard', type: 'free' },
+                { name: '/clipboard send', desc: 'Send items from clipboard', type: 'free' },
                 
-                { name: '/count characters', desc: 'Count characters, words, and lines in text' },
-                { name: '/count down', desc: 'Countdown timer' },
+                { name: '/count characters', desc: 'Count characters, words, and lines in text', type: 'free' },
+                { name: '/count down', desc: 'Countdown timer', type: 'free' },
                 
-                { name: '/password generate', desc: 'Generate a strong random password' },
-                { name: '/password strength', desc: 'Check a strength of a password' },
+                { name: '/password generate', desc: 'Generate a strong random password', type: 'free' },
+                { name: '/password strength', desc: 'Check a strength of a password', type: 'free' },
                 
-                { name: '/qr generate', desc: 'Generate QR code from URL or text' },
-                { name: '/qr scan', desc: 'Scan and decode a QR code from an image' },
+                { name: '/qr generate', desc: 'Generate QR code from URL or text', type: 'free' },
+                { name: '/qr scan', desc: 'Scan and decode a QR code from an image', type: 'free' },
                 
-                { name: '/webhook delete', desc: 'Delete a webhook' },
-                { name: '/webhook message', desc: 'Send a message to a webhook' },
+                { name: '/webhook delete', desc: 'Delete a webhook', type: 'free' },
+                { name: '/webhook message', desc: 'Send a message to a webhook', type: 'free' },
                 
-                { name: '/utility color', desc: 'Get information about a color' },
-                { name: '/utility define', desc: 'Get the definition of an English word' },
-                { name: '/utility embed', desc: 'Create a custom embed message' },
-                { name: '/utility imagetolink', desc: 'Upload image to ImgBB and get a direct link' },
-                { name: '/utility number', desc: 'Generate a random number between two values' },
-                { name: '/utility screenshot', desc: 'Capture website screenshot with optional delay' },
-                { name: '/utility shorten', desc: 'Shorten a URL using TinyURL' },
-                { name: '/utility texttolink', desc: 'Upload text to Pastebin and get a shareable link' },
-                { name: '/utility translate', desc: 'Translate text to another language' },
-                { name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis' },
+                { name: '/utility color', desc: 'Get information about a color', type: 'free' },
+                { name: '/utility define', desc: 'Get the definition of an English word', type: 'free' },
+                { name: '/utility embed', desc: 'Create a custom embed message', type: 'free' },
+                { name: '/utility imagetolink', desc: 'Upload image to ImgBB and get a direct link', type: 'free' },
+                { name: '/utility number', desc: 'Generate a random number between two values', type: 'free' },
+                { name: '/utility screenshot', desc: 'Capture website screenshot with optional delay', type: 'both' },
+                { name: '/utility shorten', desc: 'Shorten a URL using TinyURL', type: 'free' },
+                { name: '/utility texttolink', desc: 'Upload text to Pastebin and get a shareable link', type: 'free' },
+                { name: '/utility translate', desc: 'Translate text to another language', type: 'free' },
+                { name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis', type: 'premium' },
                 
-                { name: '/download', desc: 'Download media content' },
-                { name: '/shazam', desc: 'Identify music from audio' }
+                { name: '/download', desc: 'Download media content', type: 'free' },
+                { name: '/shazam', desc: 'Identify music from audio', type: 'premium' }
             ],
             
             "Fun & Games": [
-                { name: '/fortnite map', desc: 'Get Fortnite map information' },
+                { name: '/fortnite map', desc: 'Get Fortnite map information', type: 'free' },
                 
-                { name: '/fun 8ball', desc: 'Ask the magic 8-ball a question' },
-                { name: '/fun catfact', desc: 'Get a random cat fact' },
-                { name: '/fun coinflip', desc: 'Flip a coin' },
-                { name: '/fun deathdate', desc: 'Predict your death date and how you will die (just for fun)' },
-                { name: '/fun dogfact', desc: 'Get a random dog fact' },
-                { name: '/fun fact', desc: 'Get a random interesting fact' },
-                { name: '/fun howgay', desc: 'Calculate how gay someone is' },
-                { name: '/fun howlarp', desc: 'Check how much of a larper someone is' },
-                { name: '/fun hug', desc: 'Hug another user' },
-                { name: '/fun joke', desc: 'Get a random joke' },
-                { name: '/fun kiss', desc: 'Kiss another user' },
-                { name: '/fun ppsize', desc: 'Measure PP size' },
-                { name: '/fun rizz', desc: 'Rizz up a user with smooth pickup lines' },
-                { name: '/fun roast', desc: 'Roast a user with random insults' },
-                { name: '/fun roll', desc: 'Roll a dice or random number' },
-                { name: '/fun ship', desc: 'Check compatibility between two users' },
+                { name: '/fun 8ball', desc: 'Ask the magic 8-ball a question', type: 'free' },
+                { name: '/fun catfact', desc: 'Get a random cat fact', type: 'free' },
+                { name: '/fun coinflip', desc: 'Flip a coin', type: 'free' },
+                { name: '/fun deathdate', desc: 'Predict your death date and how you will die (just for fun)', type: 'free' },
+                { name: '/fun dogfact', desc: 'Get a random dog fact', type: 'free' },
+                { name: '/fun fact', desc: 'Get a random interesting fact', type: 'free' },
+                { name: '/fun howgay', desc: 'Calculate how gay someone is', type: 'free' },
+                { name: '/fun howlarp', desc: 'Check how much of a larper someone is', type: 'free' },
+                { name: '/fun hug', desc: 'Hug another user', type: 'free' },
+                { name: '/fun joke', desc: 'Get a random joke', type: 'free' },
+                { name: '/fun kiss', desc: 'Kiss another user', type: 'free' },
+                { name: '/fun ppsize', desc: 'Measure PP size', type: 'free' },
+                { name: '/fun rizz', desc: 'Rizz up a user with smooth pickup lines', type: 'free' },
+                { name: '/fun roast', desc: 'Roast a user with random insults', type: 'free' },
+                { name: '/fun roll', desc: 'Roll a dice or random number', type: 'free' },
+                { name: '/fun ship', desc: 'Check compatibility between two users', type: 'free' },
                 
-                { name: '/giveaway', desc: 'Create a giveaway' }
+                { name: '/giveaway', desc: 'Create a giveaway', type: 'free' }
             ],
             
             "Media": [
-                { name: '/media blur', desc: 'Apply blur effect to an image' },
-                { name: '/media caption', desc: 'Add caption text to top of image' },
-                { name: '/media fakemessage', desc: 'Generate a fake Discord message from a user' },
-                { name: '/media gif', desc: 'Search and send a random GIF by topic' },
-                { name: '/media imagetogif', desc: 'Convert image to high-quality GIF format' },
-                { name: '/media monkeythink', desc: 'Generate thinking monkey meme' },
-                { name: '/media videotogif', desc: 'Convert video to GIF format' },
-                { name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)' }
+                { name: '/media blur', desc: 'Apply blur effect to an image', type: 'free' },
+                { name: '/media caption', desc: 'Add caption text to top of image', type: 'free' },
+                { name: '/media fakemessage', desc: 'Generate a fake Discord message from a user', type: 'free' },
+                { name: '/media gif', desc: 'Search and send a random GIF by topic', type: 'free' },
+                { name: '/media imagetogif', desc: 'Convert image to high-quality GIF format', type: 'free' },
+                { name: '/media monkeythink', desc: 'Generate thinking monkey meme', type: 'free' },
+                { name: '/media videotogif', desc: 'Convert video to GIF format', type: 'free' },
+                { name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)', type: 'free' }
             ],
             
             "Music": [
-                { name: '/spotify search', desc: 'Search for a song on spotify' },
+                { name: '/spotify search', desc: 'Search for a song on spotify', type: 'free' },
                 
-                { name: '/lastfm collage', desc: 'Create a collage of your top albums/artists' },
-                { name: '/lastfm compare', desc: 'Compare your music taste with another user' },
-                { name: '/lastfm connect', desc: 'Connect your Last.fm account' },
-                { name: '/lastfm disconnect', desc: 'Disconnect your Last.fm account' },
-                { name: '/lastfm lyrics', desc: 'Get lyrics for currently playing song' },
-                { name: '/lastfm nowplaying', desc: 'Show what you are currently listening to' },
-                { name: '/lastfm recent', desc: 'Show your recently played tracks' },
-                { name: '/lastfm sync', desc: 'Sync your Last.fm data' },
-                { name: '/lastfm topalbums', desc: 'Show your top albums' },
-                { name: '/lastfm topartists', desc: 'Show your top artists' },
-                { name: '/lastfm toptracks', desc: 'Show your top tracks' }
+                { name: '/lastfm collage', desc: 'Create a collage of your top albums/artists', type: 'free' },
+                { name: '/lastfm compare', desc: 'Compare your music taste with another user', type: 'free' },
+                { name: '/lastfm connect', desc: 'Connect your Last.fm account', type: 'free' },
+                { name: '/lastfm disconnect', desc: 'Disconnect your Last.fm account', type: 'free' },
+                { name: '/lastfm lyrics', desc: 'Get lyrics for currently playing song', type: 'free' },
+                { name: '/lastfm nowplaying', desc: 'Show what you are currently listening to', type: 'free' },
+                { name: '/lastfm recent', desc: 'Show your recently played tracks', type: 'free' },
+                { name: '/lastfm sync', desc: 'Sync your Last.fm data', type: 'free' },
+                { name: '/lastfm topalbums', desc: 'Show your top albums', type: 'free' },
+                { name: '/lastfm topartists', desc: 'Show your top artists', type: 'free' },
+                { name: '/lastfm toptracks', desc: 'Show your top tracks', type: 'free' }
             ],
             
             "Network & Web": [
-                { name: '/network domaininfo', desc: 'Get WHOIS and status info for a domain' },
-                { name: '/network iplookup', desc: 'Lookup IP address information' },
-                { name: '/network ping', desc: 'Check if a host is online' },
-                { name: '/network pinghost', desc: 'Check if a host is online' },
-                { name: '/network serverinfo', desc: 'Get server information' }
+                { name: '/network domaininfo', desc: 'Get WHOIS and status info for a domain', type: 'free' },
+                { name: '/network iplookup', desc: 'Lookup IP address information', type: 'free' },
+                { name: '/network ping', desc: 'Check if a host is online', type: 'free' },
+                { name: '/network pinghost', desc: 'Check if a host is online', type: 'free' },
+                { name: '/network serverinfo', desc: 'Get server information', type: 'free' }
             ],
             
             "Economy": [
-                { name: '/crypto price', desc: 'Get current cryptocurrency price and market data' },
-                { name: '/tax calc', desc: 'Calculate amount after tax/commission' }
+                { name: '/crypto price', desc: 'Get current cryptocurrency price and market data', type: 'free' },
+                { name: '/tax calc', desc: 'Calculate amount after tax/commission', type: 'free' }
             ],
             
             "Social": [
-                { name: '/roblox limiteds', desc: 'Search for a limited items or get item details' },
-                { name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image' }
+                { name: '/roblox limiteds', desc: 'Search for a limited items or get item details', type: 'free' },
+                { name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image', type: 'free' }
             ]
         };
 
@@ -1094,7 +1193,8 @@
                     allCommands.push({
                         name: cmd.name,
                         desc: cmd.desc,
-                        category: category
+                        category: category,
+                        type: cmd.type
                     });
                 });
             });
@@ -1217,7 +1317,7 @@
             setTimeout(() => {
                 renderCommands(category, searchTerm);
                 isLoading = false;
-            }, 200); // Reduced from 300ms
+            }, 200);
         }
 
         function renderCommands(category, searchTerm = '') {
@@ -1266,20 +1366,63 @@
             commandsToRender.forEach((section, index) => {
                 const sectionElement = document.createElement('div');
                 sectionElement.className = 'category-section';
-                sectionElement.innerHTML = `
-                    <h3 class="section-header">${section.category} <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">(${section.commands.length})</span></h3>
-                    <div class="commands-list">
-                        ${section.commands.map((cmd, cmdIndex) => `
-                            <div class="command-item" style="animation-delay: ${(index * 0.05 + cmdIndex * 0.02)}s">
-                                <div>
-                                    <div class="command-name">${cmd.name}</div>
-                                    <div class="command-desc">${cmd.desc}</div>
+                
+                const commandsHTML = section.commands.map((cmd, cmdIndex) => {
+                    let iconsHTML = '';
+                    
+                    if (cmd.type === 'free') {
+                        iconsHTML = `
+                            <div class="command-icons">
+                                <div class="command-icon free-icon">
+                                    <img src="https://i.ibb.co/Jj3XFC41/32056e299ce2.png" alt="Free">
+                                    <div class="tooltip">free version available</div>
                                 </div>
+                            </div>
+                        `;
+                    } else if (cmd.type === 'premium') {
+                        iconsHTML = `
+                            <div class="command-icons">
+                                <div class="command-icon premium-icon">
+                                    <img src="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png" alt="Premium">
+                                    <div class="tooltip">vetements+ subscription required</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (cmd.type === 'both') {
+                        iconsHTML = `
+                            <div class="command-icons">
+                                <div class="command-icon free-icon">
+                                    <img src="https://i.ibb.co/Jj3XFC41/32056e299ce2.png" alt="Free">
+                                    <div class="tooltip">free version available</div>
+                                </div>
+                                <div class="command-icon premium-icon">
+                                    <img src="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png" alt="Premium">
+                                    <div class="tooltip">vetements+ subscription required</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    return `
+                        <div class="command-item" style="animation-delay: ${(index * 0.05 + cmdIndex * 0.02)}s">
+                            <div>
+                                <div class="command-name">${cmd.name}</div>
+                                <div class="command-desc">${cmd.desc}</div>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                ${iconsHTML}
                                 <button class="copy-btn" onclick="copyCommand('${cmd.name}')">
                                     <img src="https://img.icons8.com/?size=48&id=KRskJxjVf0BS&format=png" class="copy-icon" alt="Copy">
                                 </button>
                             </div>
-                        `).join('')}
+                        </div>
+                    `;
+                }).join('');
+                
+                sectionElement.innerHTML = `
+                    <h3 class="section-header">${section.category} <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">(${section.commands.length})</span></h3>
+                    <div class="commands-list">
+                        ${commandsHTML}
                     </div>
                 `;
                 
@@ -1294,9 +1437,9 @@
                     commandItems.forEach((item, i) => {
                         setTimeout(() => {
                             item.classList.add('visible');
-                        }, i * 20); // Reduced from 50ms
+                        }, i * 20);
                     });
-                }, index * 50); // Reduced from 100ms
+                }, index * 50);
             });
 
             // Update stats
@@ -1319,12 +1462,10 @@
         }
 
         function copyCommand(commandText) {
-            // Remove any rate limiting for copy
             navigator.clipboard.writeText(commandText).then(() => {
                 showCopiedNotification();
             }).catch(err => {
                 console.error('Failed to copy: ', err);
-                // Fallback
                 const textArea = document.createElement('textarea');
                 textArea.value = commandText;
                 document.body.appendChild(textArea);
@@ -1341,7 +1482,7 @@
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 1500); // Reduced from 2000ms
+            }, 1500);
         }
 
         function initScrollAnimations() {
@@ -1376,7 +1517,8 @@
             if (!e.target.classList.contains('search-input') && 
                 !e.target.classList.contains('command-name') && 
                 !e.target.classList.contains('copy-btn') && 
-                !e.target.classList.contains('copy-icon')) {
+                !e.target.classList.contains('copy-icon') &&
+                !e.target.classList.contains('command-icon')) {
                 e.preventDefault();
             }
         });
