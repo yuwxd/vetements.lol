@@ -196,7 +196,7 @@
         .premium-subtitle {
             font-size: 20px;
             color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 40px;
+            margin-bottom: 60px;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
@@ -209,8 +209,8 @@
         .pricing-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 60px 0;
+            gap: 40px;
+            margin: 40px 0 80px;
             flex-wrap: wrap;
             perspective: 1200px;
         }
@@ -223,12 +223,20 @@
             position: relative;
             transform-style: preserve-3d;
             opacity: 0;
-            transform: translateY(40px) rotateY(-15deg);
+            transform: translateY(40px);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             overflow: hidden;
+        }
+        
+        .pricing-card.monthly {
+            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+        }
+        
+        .pricing-card.lifetime {
+            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
         }
         
         .pricing-card::before {
@@ -246,23 +254,96 @@
             left: 100%;
         }
         
-        .pricing-card:nth-child(1) {
-            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
-        }
-        
-        .pricing-card:nth-child(2) {
-            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
-        }
-        
         .pricing-card:hover {
-            transform: translateY(-10px) rotateY(0deg) scale(1.02);
+            transform: translateY(-10px) scale(1.02);
             border-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         
-        .pricing-icon {
+        /* Monthly Card - with image */
+        .pricing-card.monthly {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .pricing-icon.monthly {
+            width: 80px;
+            height: 80px;
+            background-image: url('https://i.ibb.co/mCcqPgm8/55125afe6f8b.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0 auto 25px;
+        }
+        
+        /* Lifetime Card - with glowing effect */
+        .pricing-card.lifetime {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.1);
+        }
+        
+        .pricing-card.lifetime::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 215, 0, 0.1), 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 215, 0, 0.1));
+            border-radius: 18px;
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite alternate;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .pricing-card.lifetime:hover::after {
+            opacity: 1;
+        }
+        
+        .pricing-card.lifetime:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(255, 215, 0, 0.2);
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 
+                    0 0 10px rgba(255, 215, 0, 0.1),
+                    0 0 20px rgba(255, 215, 0, 0.05);
+            }
+            to {
+                box-shadow: 
+                    0 0 15px rgba(255, 215, 0, 0.2),
+                    0 0 30px rgba(255, 215, 0, 0.1),
+                    0 0 40px rgba(255, 215, 0, 0.05);
+            }
+        }
+        
+        .pricing-icon.lifetime {
             font-size: 42px;
             margin-bottom: 25px;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: crownGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes crownGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.3);
+            }
         }
         
         .pricing-title {
@@ -286,6 +367,11 @@
             color: #ffffff;
             margin: 25px 0;
             position: relative;
+        }
+        
+        .pricing-card.lifetime .price {
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
         
         .price::before {
@@ -317,11 +403,19 @@
             color: rgba(255, 255, 255, 0.7);
         }
         
+        .pricing-card.lifetime .price-currency {
+            color: gold;
+        }
+        
         .price-period {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.5);
             font-weight: 500;
             margin-top: 8px;
+        }
+        
+        .pricing-card.lifetime .price-period {
+            color: rgba(255, 215, 0, 0.7);
         }
         
         .pricing-features {
@@ -346,6 +440,10 @@
             font-weight: 600;
         }
         
+        .pricing-card.lifetime .pricing-features li::before {
+            color: gold;
+        }
+        
         .pricing-button {
             display: inline-block;
             width: 100%;
@@ -366,16 +464,27 @@
             backdrop-filter: blur(5px);
         }
         
+        .pricing-card.lifetime .pricing-button {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            color: gold;
+        }
+        
         .pricing-button:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.1);
             transform: none;
         }
         
+        .pricing-card.lifetime .pricing-button:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
         @keyframes cardFloatIn {
             to {
                 opacity: 1;
-                transform: translateY(0) rotateY(0deg);
+                transform: translateY(0);
             }
         }
         
@@ -448,57 +557,21 @@
             border-color: rgba(255, 255, 255, 0.15);
         }
         
-        .benefits-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-            margin: 60px 0;
-        }
-        
-        .benefit-card {
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            text-align: left;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Scroll reveal animations */
+        .reveal {
             opacity: 0;
             transform: translateY(30px);
-            backdrop-filter: blur(10px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .benefit-card.visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
         
-        .benefit-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-4px);
-        }
-        
-        .benefit-icon {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 12px;
-            letter-spacing: -0.3px;
-        }
-        
-        .benefit-description {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-        
+        /* Payment Methods */
         .payment-section {
-            margin: 80px 0 60px;
+            margin: 60px 0 40px;
             padding: 40px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
@@ -633,28 +706,19 @@
             }
             
             .pricing-container {
-                gap: 25px;
+                gap: 30px;
                 padding: 0 20px;
+                margin: 30px 0 60px;
             }
             
             .pricing-card {
                 width: 100%;
                 max-width: 400px;
-                transform: translateY(30px) rotateY(-8deg);
+                transform: translateY(30px);
             }
             
             .pricing-card:hover {
-                transform: translateY(-5px) rotateY(0deg) scale(1.01);
-            }
-            
-            .benefits-container {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
-                gap: 16px;
-            }
-            
-            .benefit-card {
-                padding: 25px;
+                transform: translateY(-5px) scale(1.01);
             }
             
             .payment-section {
@@ -713,10 +777,6 @@
             .pricing-card {
                 padding: 30px 20px;
             }
-            
-            .benefit-card {
-                padding: 20px;
-            }
         }
     </style>
 </head>
@@ -741,8 +801,8 @@
         
         <div class="pricing-container">
             <!-- Monthly Subscription Card -->
-            <div class="pricing-card">
-                <div class="pricing-icon">🔁</div>
+            <div class="pricing-card monthly">
+                <div class="pricing-icon monthly"></div>
                 <h3 class="pricing-title">Monthly Subscription</h3>
                 <p class="pricing-subtitle">Perfect for users who want to test vetements app</p>
                 <div class="price">
@@ -760,8 +820,8 @@
             </div>
             
             <!-- Lifetime Subscription Card -->
-            <div class="pricing-card">
-                <div class="pricing-icon">👑</div>
+            <div class="pricing-card lifetime">
+                <div class="pricing-icon lifetime">👑</div>
                 <h3 class="pricing-title">Lifetime Subscription</h3>
                 <p class="pricing-subtitle">One-time payment for permanent premium access</p>
                 <div class="price">
@@ -788,64 +848,26 @@
             <button class="close-notification" id="closeNotification">×</button>
         </div>
         
-        <div class="benefits-container">
-            <div class="benefit-card">
-                <div class="benefit-icon">💾</div>
-                <h3 class="benefit-title">Enhanced Clipboard Limits</h3>
-                <p class="benefit-description">Store more items in your personal clipboard with increased capacity for images, text, and files. Extended retention time for saved content.</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">⚡</div>
-                <h3 class="benefit-title">Higher Generation Limits</h3>
-                <p class="benefit-description">Unlock expanded limits for AI image generation, QR code creation, and all creative commands. Generate more content without restrictions.</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">🔒</div>
-                <h3 class="benefit-title">Exclusive Premium Commands</h3>
-                <p class="benefit-description">Access to special commands and utilities available only to premium users. Advanced tools for power users and enthusiasts.</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">🚀</div>
-                <h3 class="benefit-title">Early Access & Beta Features</h3>
-                <p class="benefit-description">Be the first to test new features, experimental commands, and upcoming updates before they're released to the public.</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">🔄</div>
-                <h3 class="benefit-title">Priority Updates & Support</h3>
-                <p class="benefit-description">Guaranteed continuous development with premium-exclusive enhancements and dedicated priority support.</p>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">👑</div>
-                <h3 class="benefit-title">Lifetime Access</h3>
-                <p class="benefit-description">One-time payment for permanent premium benefits. No recurring subscriptions - unlimited access to all premium features forever.</p>
-            </div>
-        </div>
-        
-        <div class="payment-section">
+        <div class="payment-section reveal">
             <h3 class="payment-title">Accepted Payment Methods</h3>
             <div class="payment-methods">
-                <div class="payment-method">
+                <div class="payment-method reveal">
                     <img src="https://i.ibb.co/DfpGhscp/image.png" class="payment-icon" alt="BLIK">
                     <span>BLIK</span>
                 </div>
-                <div class="payment-method">
+                <div class="payment-method reveal">
                     <img src="https://img.icons8.com/?size=80&id=AQd5OluNqpNW&format=png" class="payment-icon" alt="Cryptocurrency">
                     <span>Cryptocurrency</span>
                 </div>
-                <div class="payment-method">
+                <div class="payment-method reveal">
                     <img src="https://img.icons8.com/?size=80&id=VOv2ShpC3Qaw&format=png" class="payment-icon" alt="Credit Card">
                     <span>Credit Card</span>
                 </div>
-                <div class="payment-method">
+                <div class="payment-method reveal">
                     <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
                     <span>paysafecard</span>
                 </div>
-                <div class="payment-method">
+                <div class="payment-method reveal">
                     <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
                     <span>Robux</span>
                 </div>
@@ -853,7 +875,7 @@
         </div>
         
         <div style="text-align: center; margin-top: 60px;">
-            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="visible">
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="reveal visible">
                 Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
             </p>
         </div>
@@ -877,26 +899,15 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 
-                // Animate benefit cards with staggered delays
-                const benefitCards = document.querySelectorAll('.benefit-card');
-                const paymentMethods = document.querySelectorAll('.payment-method');
-                const paymentSection = document.querySelector('.payment-section');
-                
-                benefitCards.forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 100 + 300);
-                });
-                
+                // Add reveal animations to payment methods
                 setTimeout(() => {
-                    paymentSection.classList.add('visible');
-                    
-                    paymentMethods.forEach((method, index) => {
+                    const reveals = document.querySelectorAll('.reveal');
+                    reveals.forEach((el, index) => {
                         setTimeout(() => {
-                            method.classList.add('visible');
-                        }, index * 50 + 100);
+                            el.classList.add('visible');
+                        }, index * 100);
                     });
-                }, 800);
+                }, 400);
                 
                 // Initialize scroll animations
                 initScrollAnimations();
@@ -905,7 +916,7 @@
         
         // Scroll animation function
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.benefit-card, .payment-section, .payment-method');
+            const elements = document.querySelectorAll('.reveal');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -948,6 +959,17 @@
             if (notificationClosed === 'true') {
                 notification.classList.add('hidden');
             }
+        });
+        
+        // Add scroll reveal animation for elements
+        document.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            const cards = document.querySelectorAll('.pricing-card');
+            cards.forEach(card => {
+                card.style.transform = `translateY(${rate * 0.05}px)`;
+            });
         });
     </script>
 </body>
