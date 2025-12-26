@@ -163,14 +163,14 @@
         /* Main Layout */
         .main-container {
             display: flex;
-            min-height: 100vh;
+            min-height: calc(100vh - 80px);
             padding-top: 80px;
         }
         
         /* Sidebar */
         .sidebar {
             width: 280px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -180,53 +180,136 @@
             transform: translateX(-100%);
             opacity: 0;
             animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        
+        .sidebar-header {
+            margin-bottom: 30px;
+            padding: 0 10px;
         }
         
         .sidebar-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            padding: 0 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
         }
         
         .category-list {
             list-style: none;
+            flex: 1;
+            padding-bottom: 40px;
         }
         
         .category-item {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .category-btn {
             width: 100%;
-            padding: 12px 20px;
+            padding: 14px 18px;
             background: transparent;
             border: 1px solid transparent;
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 14px;
             font-weight: 500;
             text-align: left;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .category-btn:hover::before {
+            left: 100%;
         }
         
         .category-btn:hover {
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.12);
             transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .category-btn.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.07) 100%);
             color: #ffffff;
             border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transform: translateX(8px);
+        }
+        
+        .category-btn.active::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .category-count {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover .category-count {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .category-btn.active .category-count {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
         }
         
         /* Content Area */
@@ -236,13 +319,24 @@
             padding: 40px;
             opacity: 0;
             animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+            position: relative;
         }
         
-        .content-header {
+        .category-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        }
+        
+        .header-left {
+            flex: 1;
+            min-width: 300px;
         }
         
         .page-title {
@@ -250,10 +344,11 @@
             font-weight: 700;
             margin-bottom: 10px;
             letter-spacing: -1px;
-            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.2;
         }
         
         .page-subtitle {
@@ -261,6 +356,45 @@
             color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
             max-width: 600px;
+        }
+        
+        .category-info {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 25px;
+            text-align: center;
+            min-width: 180px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-info:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .category-info-title {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .category-info-count {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1;
+        }
+        
+        .category-info-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
         }
         
         /* Search */
@@ -326,13 +460,24 @@
             transform: translateY(0);
         }
         
-        .category-header {
+        .section-header {
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
             color: #ffffff;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), transparent);
         }
         
         .commands-list {
@@ -347,12 +492,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
+            padding: 14px 16px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            border-radius: 10px;
             margin-bottom: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             animation: fadeIn 0.5s ease forwards;
             opacity: 0;
             transform: translateY(10px);
@@ -364,8 +509,9 @@
         
         .command-item:hover {
             background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
         
         .command-name {
@@ -373,20 +519,22 @@
             font-size: 14px;
             color: #ffffff;
             font-weight: 500;
+            letter-spacing: -0.3px;
         }
         
         .command-desc {
             font-size: 13px;
             color: rgba(255, 255, 255, 0.6);
-            margin-top: 4px;
+            margin-top: 6px;
+            line-height: 1.4;
         }
         
         .copy-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            width: 32px;
-            height: 32px;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -399,7 +547,7 @@
         .copy-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
         }
         
         .copy-icon {
@@ -411,6 +559,7 @@
         
         .copy-btn:hover .copy-icon {
             filter: brightness(0) invert(1);
+            transform: scale(1.1);
         }
         
         /* Stats */
@@ -500,6 +649,10 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
         }
         
         footer a {
@@ -556,6 +709,7 @@
                 animation: none;
                 padding: 20px;
                 margin-bottom: 20px;
+                max-height: 400px;
             }
             
             .content {
@@ -565,6 +719,15 @@
             
             .commands-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .category-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .category-info {
+                align-self: flex-start;
             }
         }
         
@@ -594,6 +757,15 @@
                 text-align: center;
                 justify-content: center;
             }
+            
+            .category-info {
+                min-width: 150px;
+                padding: 15px 20px;
+            }
+            
+            .category-info-count {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -614,17 +786,27 @@
 
     <div class="main-container">
         <aside class="sidebar">
-            <h3 class="sidebar-title">Categories</h3>
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">Categories</h2>
+                <p class="sidebar-subtitle">Browse commands by category</p>
+            </div>
             <ul class="category-list" id="categoryList">
                 <!-- Categories will be generated by JavaScript -->
             </ul>
         </aside>
 
         <main class="content">
-            <header class="content-header">
-                <h1 class="page-title">Commands</h1>
-                <p class="page-subtitle">Browse through all available commands. Use the search to find specific commands or filter by category.</p>
-            </header>
+            <div class="category-header-container">
+                <div class="header-left">
+                    <h1 class="page-title" id="pageTitle">All Commands</h1>
+                    <p class="page-subtitle" id="pageSubtitle">Browse through all available commands. Use the search to find specific commands or filter by category.</p>
+                </div>
+                <div class="category-info" id="categoryInfo">
+                    <div class="category-info-title">Commands</div>
+                    <div class="category-info-count" id="categoryCount">0</div>
+                    <div class="category-info-subtitle" id="categorySubtitle">in this category</div>
+                </div>
+            </div>
 
             <div class="stats-container">
                 <div class="stat-card">
@@ -667,12 +849,10 @@
     </footer>
 
     <script>
-        // Updated commands data with new organization
+        // Updated commands data with specified categories
         const commands = {
             "General": [
                 { name: '/about', desc: 'Display information about vetements' },
-                { name: '/avatar', desc: "Get user's avatar" },
-                { name: '/banner', desc: "Get user's banner" },
                 { name: '/commands', desc: 'View all available commands' },
                 { name: '/discord', desc: 'Get Discord server invite link' },
                 { name: '/invite', desc: 'Authorize the bot' },
@@ -682,7 +862,9 @@
                 { name: '/say', desc: 'Make the bot say something' },
                 { name: '/support', desc: 'Get the support for the bot' },
                 { name: '/uptime', desc: 'Check bot uptime' },
-                { name: '/user', desc: 'Get information about a Discord user' }
+                { name: '/user', desc: 'Get information about a Discord user' },
+                { name: '/avatar', desc: "Get user's avatar" },
+                { name: '/banner', desc: "Get user's banner" }
             ],
             
             "Moderation": [
@@ -712,10 +894,8 @@
                 { name: '/antinuke whitelist_remove', desc: 'Remove user from whitelist' },
                 
                 { name: '/jail add', desc: 'Add user to jail' },
-                { name: '/jail remove', desc: 'Remove user from jail' }
-            ],
-            
-            "Channel Management": [
+                { name: '/jail remove', desc: 'Remove user from jail' },
+                
                 { name: '/channel clear', desc: 'Clear messages in channel' },
                 { name: '/channel hide', desc: 'Hide the current channel from everyone except staff' },
                 { name: '/channel lock', desc: 'Lock the current channel for everyone' },
@@ -742,38 +922,40 @@
                 { name: '/purge stickers', desc: 'Purge messages with stickers' },
                 { name: '/purge systemmessages', desc: 'Purge system messages' },
                 { name: '/purge voicemessages', desc: 'Purge voice messages' },
-                { name: '/purge webhooks', desc: 'Purge messages from webhooks' }
-            ],
-            
-            "Role Management": [
+                { name: '/purge webhooks', desc: 'Purge messages from webhooks' },
+                
                 { name: '/role add', desc: 'Add a role to a user' },
                 { name: '/role all', desc: 'Manage all roles' },
                 { name: '/role autorole', desc: 'Configure auto-role settings' },
                 { name: '/role massadd', desc: 'Add a role to all users with a specific role' },
                 { name: '/role massremove', desc: 'Remove a role from all users who have it' },
                 { name: '/role remove', desc: 'Remove a role from a user' },
-                { name: '/role rename', desc: 'Rename a role' }
-            ],
-            
-            "Voice & VC": [
+                { name: '/role rename', desc: 'Rename a role' },
+                
                 { name: '/vc deafen', desc: 'Deafen a user in voice channel' },
                 { name: '/vc disconnect', desc: 'Disconnect a user from voice channel' },
                 { name: '/vc move', desc: 'Move a user to another voice channel' },
                 { name: '/vc moveall', desc: 'Move all users to another voice channel' },
                 { name: '/vc mute', desc: 'Mute a user in voice channel' },
                 { name: '/vc undeafen', desc: 'Undeafen a user in voice channel' },
-                { name: '/vc unmute', desc: 'Unmute a user in voice channel' }
+                { name: '/vc unmute', desc: 'Unmute a user in voice channel' },
+                
+                { name: '/notifications boosts', desc: 'Configure boost notifications' },
+                { name: '/notifications join', desc: 'Configure join notifications' },
+                { name: '/notifications leave', desc: 'Configure leave notifications' }
             ],
             
-            "AI & Tools": [
+            "AI": [
                 { name: '/ai ask', desc: 'Ask AI anything' },
                 { name: '/ai image', desc: 'Generate an image using AI' },
                 { name: '/ai summarize', desc: 'Summarize long text using AI' },
                 { name: '/ai tts', desc: 'Convert text to speech (male or female voice)' },
                 
                 { name: '/asciify image', desc: 'Convert an image to ASCII art' },
-                { name: '/asciify text', desc: 'Convert text to ASCII art' },
-                
+                { name: '/asciify text', desc: 'Convert text to ASCII art' }
+            ],
+            
+            "Utility": [
                 { name: '/base64 decode', desc: 'Decode Base64 text' },
                 { name: '/base64 encode', desc: 'Encode text to Base64' },
                 
@@ -785,6 +967,15 @@
                 { name: '/count characters', desc: 'Count characters, words, and lines in text' },
                 { name: '/count down', desc: 'Countdown timer' },
                 
+                { name: '/password generate', desc: 'Generate a strong random password' },
+                { name: '/password strength', desc: 'Check a strength of a password' },
+                
+                { name: '/qr generate', desc: 'Generate QR code from URL or text' },
+                { name: '/qr scan', desc: 'Scan and decode a QR code from an image' },
+                
+                { name: '/webhook delete', desc: 'Delete a webhook' },
+                { name: '/webhook message', desc: 'Send a message to a webhook' },
+                
                 { name: '/utility color', desc: 'Get information about a color' },
                 { name: '/utility define', desc: 'Get the definition of an English word' },
                 { name: '/utility embed', desc: 'Create a custom embed message' },
@@ -794,7 +985,10 @@
                 { name: '/utility shorten', desc: 'Shorten a URL using TinyURL' },
                 { name: '/utility texttolink', desc: 'Upload text to Pastebin and get a shareable link' },
                 { name: '/utility translate', desc: 'Translate text to another language' },
-                { name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis' }
+                { name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis' },
+                
+                { name: '/download', desc: 'Download media content' },
+                { name: '/shazam', desc: 'Identify music from audio' }
             ],
             
             "Fun & Games": [
@@ -820,9 +1014,7 @@
                 { name: '/giveaway', desc: 'Create a giveaway' }
             ],
             
-            "Media & Entertainment": [
-                { name: '/download', desc: 'Download media content' },
-                
+            "Media": [
                 { name: '/media blur', desc: 'Apply blur effect to an image' },
                 { name: '/media caption', desc: 'Add caption text to top of image' },
                 { name: '/media fakemessage', desc: 'Generate a fake Discord message from a user' },
@@ -830,12 +1022,7 @@
                 { name: '/media imagetogif', desc: 'Convert image to high-quality GIF format' },
                 { name: '/media monkeythink', desc: 'Generate thinking monkey meme' },
                 { name: '/media videotogif', desc: 'Convert video to GIF format' },
-                { name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)' },
-                
-                { name: '/qr generate', desc: 'Generate QR code from URL or text' },
-                { name: '/qr scan', desc: 'Scan and decode a QR code from an image' },
-                
-                { name: '/shazam', desc: 'Identify music from audio' }
+                { name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)' }
             ],
             
             "Music": [
@@ -859,28 +1046,14 @@
                 { name: '/network iplookup', desc: 'Lookup IP address information' },
                 { name: '/network ping', desc: 'Check if a host is online' },
                 { name: '/network pinghost', desc: 'Check if a host is online' },
-                { name: '/network serverinfo', desc: 'Get server information' },
-                
-                { name: '/webhook delete', desc: 'Delete a webhook' },
-                { name: '/webhook message', desc: 'Send a message to a webhook' }
+                { name: '/network serverinfo', desc: 'Get server information' }
             ],
             
-            "Security & Utils": [
-                { name: '/password generate', desc: 'Generate a strong random password' },
-                { name: '/password strength', desc: 'Check a strength of a password' },
-                
-                { name: '/notifications boosts', desc: 'Configure boost notifications' },
-                { name: '/notifications join', desc: 'Configure join notifications' },
-                { name: '/notifications leave', desc: 'Configure leave notifications' }
-            ],
-            
-            "Crypto & Economy": [
+            "Economy": [
                 { name: '/crypto price', desc: 'Get current cryptocurrency price and market data' },
                 
-                { name: '/tax calc', desc: 'Calculate amount after tax/commission' }
-            ],
-            
-            "Roblox": [
+                { name: '/tax calc', desc: 'Calculate amount after tax/commission' },
+                
                 { name: '/roblox limiteds', desc: 'Search for a limited items or get item details' },
                 { name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image' }
             ]
@@ -930,20 +1103,24 @@
             // Add "All" category
             const allCategory = document.createElement('li');
             allCategory.className = 'category-item';
+            const allCount = allCommands.length;
             allCategory.innerHTML = `
                 <button class="category-btn active" onclick="filterCategory('all')">
-                    All Commands
+                    <span>All Commands</span>
+                    <span class="category-count">${allCount}</span>
                 </button>
             `;
             categoryList.appendChild(allCategory);
 
-            // Add other categories
+            // Add other categories with counts
             Object.keys(commands).forEach(category => {
                 const li = document.createElement('li');
                 li.className = 'category-item';
+                const categoryCount = commands[category].length;
                 li.innerHTML = `
                     <button class="category-btn" onclick="filterCategory('${category}')">
-                        ${category}
+                        <span>${category}</span>
+                        <span class="category-count">${categoryCount}</span>
                     </button>
                 `;
                 categoryList.appendChild(li);
@@ -962,7 +1139,28 @@
             if (category === 'all') {
                 buttons[0].classList.add('active');
             } else {
-                Array.from(buttons).find(btn => btn.textContent.trim() === category).classList.add('active');
+                Array.from(buttons).find(btn => {
+                    const span = btn.querySelector('span:first-child');
+                    return span && span.textContent.trim() === category;
+                }).classList.add('active');
+            }
+
+            // Update page title and info
+            const pageTitle = document.getElementById('pageTitle');
+            const pageSubtitle = document.getElementById('pageSubtitle');
+            const categoryCount = document.getElementById('categoryCount');
+            const categorySubtitle = document.getElementById('categorySubtitle');
+            
+            if (category === 'all') {
+                pageTitle.textContent = 'All Commands';
+                pageSubtitle.textContent = 'Browse through all available commands. Use the search to find specific commands or filter by category.';
+                categoryCount.textContent = allCommands.length;
+                categorySubtitle.textContent = 'total commands';
+            } else {
+                pageTitle.textContent = category;
+                pageSubtitle.textContent = `Browse all ${category.toLowerCase()} commands. Use the search to filter within this category.`;
+                categoryCount.textContent = commands[category].length;
+                categorySubtitle.textContent = 'in this category';
             }
 
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -974,6 +1172,7 @@
             container.innerHTML = '';
 
             let commandsToRender = [];
+            let totalVisible = 0;
             
             if (category === 'all') {
                 // Show all categories
@@ -988,6 +1187,7 @@
                             category: cat,
                             commands: filteredCommands
                         });
+                        totalVisible += filteredCommands.length;
                     }
                 });
             } else {
@@ -1002,7 +1202,16 @@
                         category: category,
                         commands: filteredCommands
                     });
+                    totalVisible = filteredCommands.length;
                 }
+            }
+
+            // Update visible count
+            document.getElementById('visibleCommands').textContent = totalVisible;
+
+            // Update category info if showing all
+            if (category === 'all') {
+                document.getElementById('categoryCount').textContent = totalVisible;
             }
 
             // Render each category section
@@ -1010,7 +1219,7 @@
                 const sectionElement = document.createElement('div');
                 sectionElement.className = 'category-section';
                 sectionElement.innerHTML = `
-                    <h3 class="category-header">${section.category}</h3>
+                    <h3 class="section-header">${section.category} <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">(${section.commands.length})</span></h3>
                     <div class="commands-list">
                         ${section.commands.map((cmd, cmdIndex) => `
                             <div class="command-item" style="animation-delay: ${(index * 0.1 + cmdIndex * 0.05)}s">
@@ -1034,17 +1243,20 @@
                 }, index * 100);
             });
 
-            updateStats(commandsToRender.reduce((total, section) => total + section.commands.length, 0));
+            // Update stats
+            updateStats(totalVisible);
         }
 
         function updateStats(visibleCount = null) {
             const totalEl = document.getElementById('totalCommands');
             const categoriesEl = document.getElementById('totalCategories');
-            const visibleEl = document.getElementById('visibleCommands');
             
             totalEl.textContent = totalCommandCount;
             categoriesEl.textContent = Object.keys(commands).length;
-            visibleEl.textContent = visibleCount !== null ? visibleCount : totalCommandCount;
+            
+            if (visibleCount !== null) {
+                document.getElementById('visibleCommands').textContent = visibleCount;
+            }
         }
 
         function copyCommand(commandText) {
