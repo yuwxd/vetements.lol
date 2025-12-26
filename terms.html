@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vetements / terms</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
     <meta property="og:title" content="vetements">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
     <meta property="og:url" content="https://vetements.lol">
@@ -23,14 +23,47 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            cursor: default;
+        }
+        
+        /* Background with blur overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: -1;
         }
         
         /* Loading animation */
@@ -56,7 +89,7 @@
         .loading-logo {
             width: 90px;
             height: 90px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-radius: 22px;
             display: flex;
             align-items: center;
@@ -64,15 +97,16 @@
             font-size: 42px;
             font-weight: 700;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             animation: logoPulse 1.5s ease-in-out infinite;
         }
         
         @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
         }
         
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -81,9 +115,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
             transform: translateY(-100%);
             opacity: 0;
@@ -97,15 +131,19 @@
         }
         
         .nav-links a {
-            color: #a0a0a0;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             letter-spacing: 0.3px;
             opacity: 0;
             transform: translateY(-10px);
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .nav-links a:nth-child(1) { animation-delay: 0.6s; }
@@ -116,16 +154,22 @@
         
         .nav-links a:hover {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
         
         .nav-links a.active {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
         }
         
+        /* Content Page */
         .content-page {
             min-height: 100vh;
             padding: 120px 40px 80px;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             opacity: 0;
             animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
@@ -136,44 +180,95 @@
             font-weight: 700;
             margin-bottom: 30px;
             letter-spacing: -1px;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
         }
         
-        .terms-section {
+        .update-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
             margin-bottom: 40px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        }
+        
+        .warning-box {
+            background: rgba(255, 87, 87, 0.1);
+            border: 1px solid rgba(255, 87, 87, 0.2);
+            border-left: 3px solid #ff5757;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+            backdrop-filter: blur(10px);
+        }
+
+        .warning-box p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            opacity: 1;
+            transform: none;
+        }
+
+        .warning-box p strong {
+            color: #ff5757;
+        }
+        
+        .terms-section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .terms-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .terms-section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
         .content-page h3 {
             font-size: 24px;
             font-weight: 600;
-            margin: 40px 0 20px;
+            margin-bottom: 20px;
             color: #ffffff;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page p {
             font-size: 16px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page ul {
             list-style-type: none;
             margin: 20px 0;
             padding: 0;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page ul li {
             font-size: 16px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 10px;
             padding-left: 20px;
@@ -187,84 +282,25 @@
             left: 0;
         }
         
-        .update-date {
-            color: #808080;
-            font-size: 14px;
-            margin-bottom: 30px;
-            font-style: italic;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        .content-page strong {
+            color: #ffffff;
+            font-weight: 600;
         }
         
-        .warning-box {
-            background: rgba(255, 87, 87, 0.1);
-            border-left: 3px solid #ff5757;
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 30px 0;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
-        }
-
-        /* Naprawa: Tekst wewnątrz warning-box ma być widoczny */
-        .warning-box p {
-            opacity: 1 !important;
-            transform: none !important;
-            color: #e5e5e5 !important;
-            animation: none !important;
-            margin-bottom: 10px;
-        }
-
-        .warning-box p strong {
-            color: #ff5757;
-        }
-        
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .animate-on-scroll.up {
-            transform: translateY(-30px);
-        }
-        
-        .animate-on-scroll.up.visible {
-            transform: translateY(0);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #606060;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
-        }
-        
-        footer a {
-            color: #606060;
+        .content-page a {
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            margin: 0 10px;
             transition: color 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1px;
         }
         
-        footer a:hover {
-            color: #808080;
+        .content-page a:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
         }
         
-        /* Keyframes */
+        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -285,6 +321,34 @@
             }
         }
         
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ffffff;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .content-page {
                 padding: 100px 20px 40px;
@@ -298,8 +362,44 @@
                 font-size: 20px;
             }
             
+            .terms-section {
+                padding: 20px;
+            }
+            
+            .warning-box {
+                padding: 15px;
+            }
+            
             .nav-links {
-                gap: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            
+            .content-page h2 {
+                font-size: 32px;
+            }
+            
+            .content-page h3 {
+                font-size: 18px;
+            }
+            
+            .terms-section {
+                padding: 15px;
             }
         }
     </style>
@@ -328,12 +428,12 @@
             <p><strong>Important:</strong> By using vetements ("the Bot"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Bot.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section1">
             <h3>1. Acceptance of Terms</h3>
             <p>Your access to and use of the Bot is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all users, visitors, and others who access or use the Bot.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section2">
             <h3>2. Description of Service</h3>
             <p>vetements is a Discord utility bot that provides various features including but not limited to:</p>
             <ul>
@@ -346,7 +446,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section3">
             <h3>3. Acceptable Use</h3>
             <p>You agree not to use the Bot for any unlawful purposes or in violation of these Terms. Prohibited activities include:</p>
             <ul>
@@ -362,7 +462,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section4">
             <h3>4. Service Availability</h3>
             <p>We strive to maintain 24/7 availability but do not guarantee uninterrupted service. We reserve the right to:</p>
             <ul>
@@ -374,7 +474,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section5">
             <h3>5. Premium Features</h3>
             <p>Premium features are offered subject to the following terms:</p>
             <ul>
@@ -386,7 +486,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section6">
             <h3>6. Limitation of Liability</h3>
             <p>THE BOT IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, WE ARE NOT RESPONSIBLE FOR:</p>
             <ul>
@@ -400,7 +500,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section7">
             <h3>7. User Content and Responsibility</h3>
             <p>Some commands process user-provided content. You are solely responsible for:</p>
             <ul>
@@ -412,7 +512,7 @@
             <p>You retain rights to your original content, but grant us limited rights to process it for command functionality.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section8">
             <h3>8. Intellectual Property</h3>
             <p>The vetements bot, website, and associated content are protected by copyright, trademark, and other laws. You may not:</p>
             <ul>
@@ -422,7 +522,7 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section9">
             <h3>9. Termination</h3>
             <p>We reserve the right to terminate or suspend access to the Bot immediately, without prior notice or liability, for any reason, including but not limited to:</p>
             <ul>
@@ -433,24 +533,24 @@
             </ul>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section10">
             <h3>10. Changes to Terms</h3>
             <p>We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section11">
             <h3>11. Governing Law</h3>
             <p>These Terms shall be governed by and construed in accordance with the laws of the European Union, without regard to its conflict of law provisions. Any disputes shall be resolved through our Discord server support system initially, and if necessary, through appropriate legal channels.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section12">
             <h3>12. Severability</h3>
             <p>If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect.</p>
         </div>
         
-        <div class="terms-section animate-on-scroll">
+        <div class="terms-section" id="section13">
             <h3>13. Contact</h3>
-            <p>For questions about these Terms, contact us on our Discord server: <a href="https://discord.gg/larpfunds" style="color: #808080;">discord.gg/larpfunds</a></p>
+            <p>For questions about these Terms, contact us on our Discord server: <a href="https://discord.gg/larpfunds">discord.gg/larpfunds</a></p>
             <p>By using vetements, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
         </div>
     </div>
@@ -470,27 +570,12 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 
-                // Add initial animations
+                // Animate terms sections with staggered delays
                 const termsSections = document.querySelectorAll('.terms-section');
                 termsSections.forEach((section, index) => {
-                    const h3 = section.querySelector('h3');
-                    const p = section.querySelectorAll('p');
-                    const ul = section.querySelector('ul');
-                    
-                    if (h3) {
-                        h3.style.animationDelay = `${index * 0.1 + 0.5}s`;
-                        h3.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }
-                    
-                    p.forEach((paragraph, pIndex) => {
-                        paragraph.style.animationDelay = `${index * 0.1 + 0.6 + pIndex * 0.05}s`;
-                        paragraph.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    });
-                    
-                    if (ul) {
-                        ul.style.animationDelay = `${index * 0.1 + 0.7}s`;
-                        ul.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }
+                    setTimeout(() => {
+                        section.classList.add('visible');
+                    }, index * 80 + 400); // 80ms delay between sections
                 });
                 
                 // Initialize scroll animations
@@ -500,7 +585,7 @@
         
         // Scroll animation function
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
+            const elements = document.querySelectorAll('.terms-section');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -517,6 +602,13 @@
                 observer.observe(element);
             });
         }
+        
+        // Prevent text selection on page
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.closest('a')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
