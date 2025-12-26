@@ -1201,6 +1201,9 @@
 
             totalCommandCount = allCommands.length;
 
+            // Update stats
+            updateStats();
+
             // Create category list
             createCategoryList();
 
@@ -1357,7 +1360,7 @@
             }
 
             // Update visible count
-            updateVisibleCount(totalVisible);
+            document.getElementById('visibleCommands').textContent = totalVisible;
 
             // Render each category section
             commandsToRender.forEach((section, index) => {
@@ -1447,66 +1450,15 @@
         }
 
         function updateStats(visibleCount = null) {
-            // Calculate totals
-            const totalCommands = allCommands.length;
-            const totalCategories = Object.keys(commands).length;
+            const totalEl = document.getElementById('totalCommands');
+            const categoriesEl = document.getElementById('totalCategories');
             
-            // Animate total commands (160)
-            animateNumber('totalCommands', 0, totalCommands, 0.3, 1.0);
-            
-            // Animate total categories (10)
-            animateNumber('totalCategories', 0, totalCategories, 0.2, 0.8);
+            totalEl.textContent = totalCommandCount;
+            categoriesEl.textContent = Object.keys(commands).length;
             
             if (visibleCount !== null) {
-                // Animate visible commands
-                updateVisibleCount(visibleCount);
+                document.getElementById('visibleCommands').textContent = visibleCount;
             }
-        }
-
-        function updateVisibleCount(visibleCount) {
-            const currentVisible = parseInt(document.getElementById('visibleCommands').textContent) || 0;
-            animateNumber('visibleCommands', currentVisible, visibleCount, 0.1, 0.4);
-        }
-
-        // Function to animate numbers with easing
-        function animateNumber(elementId, start, end, startSpeed = 0.3, endSpeed = 1.0) {
-            const element = document.getElementById(elementId);
-            const duration = 1000; // 1 second total
-            
-            let current = start;
-            const increment = (end - start) / (duration / 16); // 60fps
-            let startTime = null;
-            
-            // Easing function: starts fast, slows down at the end
-            function easeOutQuart(t) {
-                return 1 - Math.pow(1 - t, 4);
-            }
-            
-            function animate(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const progress = (timestamp - startTime) / duration;
-                
-                if (progress < 1) {
-                    // Apply easing to the progress
-                    const easedProgress = easeOutQuart(progress);
-                    // Interpolate value
-                    current = start + (end - start) * easedProgress;
-                    
-                    // Update element text with rounding
-                    element.textContent = Math.round(current);
-                    
-                    // Adjust speed based on progress
-                    const currentSpeed = startSpeed + (endSpeed - startSpeed) * progress;
-                    setTimeout(() => {
-                        requestAnimationFrame(animate);
-                    }, 16 / currentSpeed); // Adjust frame rate based on speed
-                } else {
-                    // Final value
-                    element.textContent = end;
-                }
-            }
-            
-            requestAnimationFrame(animate);
         }
 
         function copyCommand(commandText) {
@@ -1572,22 +1524,7 @@
         });
 
         // Initialize on load
-        window.addEventListener('load', function() {
-            // First hide loading screen
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('fade-out');
-            }, 800);
-            
-            // Then initialize the page
-            setTimeout(() => {
-                initialize();
-                
-                // Then animate the stats
-                setTimeout(() => {
-                    updateStats();
-                }, 500);
-            }, 100);
-        });
+        window.addEventListener('load', initialize);
         
         // Re-run animations on resize
         window.addEventListener('resize', () => {
