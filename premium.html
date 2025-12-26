@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vetements / premium</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -26,14 +26,47 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            cursor: default;
+        }
+        
+        /* Background with blur overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: -1;
         }
         
         /* Loading animation */
@@ -59,7 +92,7 @@
         .loading-logo {
             width: 90px;
             height: 90px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-radius: 22px;
             display: flex;
             align-items: center;
@@ -67,15 +100,16 @@
             font-size: 42px;
             font-weight: 700;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             animation: logoPulse 1.5s ease-in-out infinite;
         }
         
         @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
         }
         
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -84,9 +118,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
             transform: translateY(-100%);
             opacity: 0;
@@ -100,15 +134,19 @@
         }
         
         .nav-links a {
-            color: #a0a0a0;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             letter-spacing: 0.3px;
             opacity: 0;
             transform: translateY(-10px);
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .nav-links a:nth-child(1) { animation-delay: 0.6s; }
@@ -119,12 +157,18 @@
         
         .nav-links a:hover {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
         
         .nav-links a.active {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
         }
         
+        /* Premium Hero */
         .premium-hero {
             min-height: 100vh;
             padding: 140px 40px 80px;
@@ -140,7 +184,7 @@
             font-weight: 700;
             margin-bottom: 20px;
             letter-spacing: -1.5px;
-            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -151,7 +195,7 @@
         
         .premium-subtitle {
             font-size: 20px;
-            color: #808080;
+            color: rgba(255, 255, 255, 0.6);
             margin-bottom: 40px;
             max-width: 700px;
             margin-left: auto;
@@ -165,7 +209,7 @@
         .pricing-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             margin: 60px 0;
             flex-wrap: wrap;
             perspective: 1200px;
@@ -173,8 +217,8 @@
         
         .pricing-card {
             width: 320px;
-            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             padding: 40px 30px;
             position: relative;
             transform-style: preserve-3d;
@@ -182,10 +226,24 @@
             transform: translateY(40px) rotateY(-15deg);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
             overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .pricing-card:hover::before {
+            left: 100%;
         }
         
         .pricing-card:nth-child(1) {
@@ -198,11 +256,8 @@
         
         .pricing-card:hover {
             transform: translateY(-10px) rotateY(0deg) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         
         .pricing-icon {
@@ -220,7 +275,7 @@
         
         .pricing-subtitle {
             font-size: 15px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.6);
             margin-bottom: 30px;
             line-height: 1.5;
         }
@@ -241,10 +296,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.2) 50%, 
-                transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
         }
         
         .price::after {
@@ -255,22 +307,19 @@
             transform: translateX(-50%);
             width: 80px;
             height: 1px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.2) 50%, 
-                transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
         }
         
         .price-currency {
             font-size: 24px;
             vertical-align: top;
             margin-right: 4px;
-            color: #a0a0a0;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .price-period {
             font-size: 16px;
-            color: #808080;
+            color: rgba(255, 255, 255, 0.5);
             font-weight: 500;
             margin-top: 8px;
         }
@@ -283,7 +332,7 @@
         
         .pricing-features li {
             padding: 10px 0;
-            color: #b0b0b0;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 14.5px;
             position: relative;
             padding-left: 28px;
@@ -314,6 +363,7 @@
             overflow: hidden;
             cursor: not-allowed;
             opacity: 0.7;
+            backdrop-filter: blur(5px);
         }
         
         .pricing-button:hover {
@@ -344,6 +394,7 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+            backdrop-filter: blur(10px);
         }
         
         .notification.hidden {
@@ -368,7 +419,7 @@
         
         .notification-text {
             font-size: 15px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.6);
             line-height: 1.5;
         }
         
@@ -376,9 +427,9 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: none;
-            border: none;
-            color: #808080;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 20px;
             cursor: pointer;
             width: 30px;
@@ -386,13 +437,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
         .close-notification:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.15);
         }
         
         .benefits-container {
@@ -404,17 +457,23 @@
         
         .benefit-card {
             padding: 30px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             text-align: left;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
             transform: translateY(30px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .benefit-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .benefit-card:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-4px);
         }
@@ -434,18 +493,24 @@
         
         .benefit-description {
             font-size: 15px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.6;
         }
         
         .payment-section {
             margin: 80px 0 60px;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             opacity: 0;
             transform: translateY(30px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .payment-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .payment-title {
@@ -471,13 +536,19 @@
             border-radius: 10px;
             font-size: 15px;
             font-weight: 500;
-            color: #b0b0b0;
+            color: rgba(255, 255, 255, 0.7);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 12px;
             opacity: 0;
             transform: translateY(20px);
+            backdrop-filter: blur(5px);
+        }
+        
+        .payment-method.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .payment-method:hover {
@@ -490,7 +561,7 @@
             width: 24px;
             height: 24px;
             object-fit: contain;
-            filter: brightness(0) invert(0.8);
+            filter: brightness(0) invert(0.7);
             transition: all 0.3s ease;
         }
         
@@ -498,67 +569,7 @@
             filter: brightness(0) invert(1);
         }
         
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 32px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
-        }
-        
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #606060;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.7s forwards;
-        }
-        
-        footer a {
-            color: #606060;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        
-        footer a:hover {
-            color: #808080;
-        }
-        
-        /* Keyframes */
+        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -579,6 +590,34 @@
             }
         }
         
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.7s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ffffff;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .premium-hero {
                 padding: 120px 20px 40px;
@@ -643,12 +682,40 @@
             }
             
             .nav-links {
-                gap: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px;
+                font-size: 13px;
             }
             
             .notification {
                 padding: 20px 45px 20px 25px;
                 margin: 0 20px 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            
+            .premium-title {
+                font-size: 36px;
+            }
+            
+            .pricing-card {
+                padding: 30px 20px;
+            }
+            
+            .benefit-card {
+                padding: 20px;
             }
         }
     </style>
@@ -722,63 +789,63 @@
         </div>
         
         <div class="benefits-container">
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">💾</div>
                 <h3 class="benefit-title">Enhanced Clipboard Limits</h3>
                 <p class="benefit-description">Store more items in your personal clipboard with increased capacity for images, text, and files. Extended retention time for saved content.</p>
             </div>
             
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">⚡</div>
                 <h3 class="benefit-title">Higher Generation Limits</h3>
                 <p class="benefit-description">Unlock expanded limits for AI image generation, QR code creation, and all creative commands. Generate more content without restrictions.</p>
             </div>
             
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">🔒</div>
                 <h3 class="benefit-title">Exclusive Premium Commands</h3>
                 <p class="benefit-description">Access to special commands and utilities available only to premium users. Advanced tools for power users and enthusiasts.</p>
             </div>
             
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">🚀</div>
                 <h3 class="benefit-title">Early Access & Beta Features</h3>
                 <p class="benefit-description">Be the first to test new features, experimental commands, and upcoming updates before they're released to the public.</p>
             </div>
             
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">🔄</div>
                 <h3 class="benefit-title">Priority Updates & Support</h3>
                 <p class="benefit-description">Guaranteed continuous development with premium-exclusive enhancements and dedicated priority support.</p>
             </div>
             
-            <div class="benefit-card animate-on-scroll">
+            <div class="benefit-card">
                 <div class="benefit-icon">👑</div>
                 <h3 class="benefit-title">Lifetime Access</h3>
                 <p class="benefit-description">One-time payment for permanent premium benefits. No recurring subscriptions - unlimited access to all premium features forever.</p>
             </div>
         </div>
         
-        <div class="payment-section animate-on-scroll">
+        <div class="payment-section">
             <h3 class="payment-title">Accepted Payment Methods</h3>
             <div class="payment-methods">
-                <div class="payment-method animate-on-scroll" style="animation-delay: 0.1s">
+                <div class="payment-method">
                     <img src="https://i.ibb.co/DfpGhscp/image.png" class="payment-icon" alt="BLIK">
                     <span>BLIK</span>
                 </div>
-                <div class="payment-method animate-on-scroll" style="animation-delay: 0.2s">
+                <div class="payment-method">
                     <img src="https://img.icons8.com/?size=80&id=AQd5OluNqpNW&format=png" class="payment-icon" alt="Cryptocurrency">
                     <span>Cryptocurrency</span>
                 </div>
-                <div class="payment-method animate-on-scroll" style="animation-delay: 0.3s">
+                <div class="payment-method">
                     <img src="https://img.icons8.com/?size=80&id=VOv2ShpC3Qaw&format=png" class="payment-icon" alt="Credit Card">
                     <span>Credit Card</span>
                 </div>
-                <div class="payment-method animate-on-scroll" style="animation-delay: 0.4s">
+                <div class="payment-method">
                     <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
                     <span>paysafecard</span>
                 </div>
-                <div class="payment-method animate-on-scroll" style="animation-delay: 0.5s">
+                <div class="payment-method">
                     <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
                     <span>Robux</span>
                 </div>
@@ -786,8 +853,8 @@
         </div>
         
         <div style="text-align: center; margin-top: 60px;">
-            <p style="color: #909090; font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="animate-on-scroll">
-                Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 6px; border-radius: 4px;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="visible">
+                Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
             </p>
         </div>
     </div>
@@ -810,6 +877,27 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 
+                // Animate benefit cards with staggered delays
+                const benefitCards = document.querySelectorAll('.benefit-card');
+                const paymentMethods = document.querySelectorAll('.payment-method');
+                const paymentSection = document.querySelector('.payment-section');
+                
+                benefitCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100 + 300);
+                });
+                
+                setTimeout(() => {
+                    paymentSection.classList.add('visible');
+                    
+                    paymentMethods.forEach((method, index) => {
+                        setTimeout(() => {
+                            method.classList.add('visible');
+                        }, index * 50 + 100);
+                    });
+                }, 800);
+                
                 // Initialize scroll animations
                 initScrollAnimations();
             }, 800);
@@ -817,7 +905,7 @@
         
         // Scroll animation function
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
+            const elements = document.querySelectorAll('.benefit-card, .payment-section, .payment-method');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -835,23 +923,18 @@
             });
         }
         
-        // Add hover effect for pricing cards
-        document.querySelectorAll('.pricing-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px) rotateY(0deg) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
-            });
+        // Prevent text selection on page
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.classList.contains('pricing-button') && 
+                !e.target.classList.contains('close-notification')) {
+                e.preventDefault();
+            }
         });
         
         // Disable button clicks
         document.querySelectorAll('.pricing-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Optional: Show a tooltip or notification
-                // alert('Premium is coming soon! Join our Discord for updates.');
             });
         });
         
