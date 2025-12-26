@@ -23,6 +23,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
@@ -32,6 +36,15 @@
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
+            cursor: default;
+        }
+        
+        /* Enable selection for specific elements */
+        .command-name, input, button {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         /* Background with blur overlay */
@@ -185,16 +198,22 @@
         }
         
         .sidebar::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
         
         .sidebar::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.03);
+            border-radius: 3px;
         }
         
         .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
         }
         
         .sidebar-header {
@@ -285,20 +304,20 @@
             transform: translateY(-50%);
             width: 8px;
             height: 8px;
-            background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            background: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5), 0 0 25px rgba(0, 204, 255, 0.3);
-            animation: dotPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: whiteDotPulse 1.5s ease-in-out infinite;
         }
         
-        @keyframes dotPulse {
+        @keyframes whiteDotPulse {
             0%, 100% { 
-                box-shadow: 0 0 15px rgba(0, 255, 136, 0.5), 0 0 25px rgba(0, 204, 255, 0.3);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
                 transform: translateY(-50%) scale(1);
             }
             50% { 
-                box-shadow: 0 0 20px rgba(0, 255, 136, 0.8), 0 0 30px rgba(0, 204, 255, 0.5);
-                transform: translateY(-50%) scale(1.1);
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+                transform: translateY(-50%) scale(1.2);
             }
         }
         
@@ -425,7 +444,7 @@
         .category-section {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
         .category-section.visible {
@@ -470,7 +489,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             margin-bottom: 10px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
             transform: translateY(10px);
         }
@@ -1065,6 +1084,7 @@
         let totalCommandCount = 0;
         let isLoading = false;
         let lastScrollTop = 0;
+        let clickCooldown = false;
 
         // Initialize
         function initialize() {
@@ -1092,9 +1112,6 @@
 
             // Initialize scroll animations
             initScrollAnimations();
-
-            // Initialize scroll detection for loading animations
-            initScrollDetection();
 
             // Hide loading screen
             setTimeout(() => {
@@ -1134,15 +1151,22 @@
         }
 
         function filterCategory(category) {
-            if (isLoading) return;
+            if (isLoading || clickCooldown) return;
             
-            currentCategory = category;
+            // Set cooldown to prevent rapid clicking
+            clickCooldown = true;
+            setTimeout(() => {
+                clickCooldown = false;
+            }, 150);
             
-            // Update active button
+            // Remove active class from all buttons
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
+            currentCategory = category;
+            
+            // Find and activate the clicked button
             const buttons = document.querySelectorAll('.category-btn');
             if (category === 'all') {
                 buttons[0].classList.add('active');
@@ -1193,7 +1217,7 @@
             setTimeout(() => {
                 renderCommands(category, searchTerm);
                 isLoading = false;
-            }, 300);
+            }, 200); // Reduced from 300ms
         }
 
         function renderCommands(category, searchTerm = '') {
@@ -1246,7 +1270,7 @@
                     <h3 class="section-header">${section.category} <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">(${section.commands.length})</span></h3>
                     <div class="commands-list">
                         ${section.commands.map((cmd, cmdIndex) => `
-                            <div class="command-item" style="animation-delay: ${(index * 0.1 + cmdIndex * 0.05)}s">
+                            <div class="command-item" style="animation-delay: ${(index * 0.05 + cmdIndex * 0.02)}s">
                                 <div>
                                     <div class="command-name">${cmd.name}</div>
                                     <div class="command-desc">${cmd.desc}</div>
@@ -1261,25 +1285,25 @@
                 
                 container.appendChild(sectionElement);
                 
-                // Animate in with delay
+                // Animate in with shorter delay
                 setTimeout(() => {
                     sectionElement.classList.add('visible');
                     
-                    // Animate individual command items
+                    // Animate individual command items with shorter delays
                     const commandItems = sectionElement.querySelectorAll('.command-item');
                     commandItems.forEach((item, i) => {
                         setTimeout(() => {
                             item.classList.add('visible');
-                        }, i * 50);
+                        }, i * 20); // Reduced from 50ms
                     });
-                }, index * 100);
+                }, index * 50); // Reduced from 100ms
             });
 
             // Update stats
             updateStats(totalVisible);
             
             // Re-initialize scroll animations
-            setTimeout(initScrollAnimations, 100);
+            setTimeout(initScrollAnimations, 50);
         }
 
         function updateStats(visibleCount = null) {
@@ -1295,6 +1319,7 @@
         }
 
         function copyCommand(commandText) {
+            // Remove any rate limiting for copy
             navigator.clipboard.writeText(commandText).then(() => {
                 showCopiedNotification();
             }).catch(err => {
@@ -1316,7 +1341,7 @@
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 2000);
+            }, 1500); // Reduced from 2000ms
         }
 
         function initScrollAnimations() {
@@ -1340,20 +1365,20 @@
             });
         }
 
-        function initScrollDetection() {
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const direction = scrollTop > lastScrollTop ? 'down' : 'up';
-                lastScrollTop = scrollTop;
-                
-                // You can add more scroll-based animations here if needed
-            });
-        }
-
         // Event Listeners
         document.getElementById('searchInput').addEventListener('input', (e) => {
             if (isLoading) return;
             filterCategory(currentCategory, e.target.value.toLowerCase());
+        });
+
+        // Prevent text selection on page (except for inputs and command names)
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.classList.contains('search-input') && 
+                !e.target.classList.contains('command-name') && 
+                !e.target.classList.contains('copy-btn') && 
+                !e.target.classList.contains('copy-icon')) {
+                e.preventDefault();
+            }
         });
 
         // Initialize on load
