@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vetements / faq</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
 
     <meta property="og:title" content="vetements">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
@@ -18,7 +18,6 @@
     <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
 
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -26,14 +25,47 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            cursor: default;
+        }
+        
+        /* Background with blur overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: -1;
         }
         
         /* Loading animation */
@@ -59,7 +91,7 @@
         .loading-logo {
             width: 90px;
             height: 90px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-radius: 22px;
             display: flex;
             align-items: center;
@@ -67,15 +99,16 @@
             font-size: 42px;
             font-weight: 700;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             animation: logoPulse 1.5s ease-in-out infinite;
         }
         
         @keyframes logoPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
         }
         
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -84,9 +117,9 @@
             justify-content: center;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
             transform: translateY(-100%);
             opacity: 0;
@@ -100,15 +133,19 @@
         }
         
         .nav-links a {
-            color: #a0a0a0;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             letter-spacing: 0.3px;
             opacity: 0;
             transform: translateY(-10px);
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         .nav-links a:nth-child(1) { animation-delay: 0.6s; }
@@ -119,16 +156,22 @@
         
         .nav-links a:hover {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
         
         .nav-links a.active {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
         }
         
+        /* Content Page */
         .content-page {
             min-height: 100vh;
             padding: 120px 40px 80px;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             opacity: 0;
             animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
@@ -137,46 +180,63 @@
         .content-page h2 {
             font-size: 48px;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             letter-spacing: -1px;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
         }
         
         .faq-section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .faq-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .faq-section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
         .content-page h3 {
             font-size: 24px;
             font-weight: 600;
-            margin: 40px 0 20px;
+            margin-bottom: 20px;
             color: #ffffff;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page p {
             font-size: 16px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page ul {
             list-style-type: none;
             margin: 20px 0;
             padding: 0;
-            opacity: 0;
-            transform: translateY(20px);
         }
         
         .content-page ul li {
             font-size: 16px;
-            color: #909090;
+            color: rgba(255, 255, 255, 0.7);
             line-height: 1.8;
             margin-bottom: 10px;
             padding-left: 20px;
@@ -192,10 +252,25 @@
         
         .content-page code {
             background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 8px;
+            border-radius: 6px;
             font-family: 'Courier New', monospace;
-            font-size: 15px;
+            font-size: 14px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content-page a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1px;
+        }
+        
+        .content-page a:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
         }
         
         .command-list {
@@ -209,17 +284,23 @@
         .command-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            gap: 20px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .command-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
         }
         
         .command-item:last-child {
             margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
         }
         
         .command-name {
@@ -227,62 +308,19 @@
             color: #ffffff;
             font-weight: 500;
             white-space: nowrap;
-            flex-shrink: 0;
-            min-width: 120px;
+            font-size: 14px;
         }
         
         .command-desc {
-            color: #808080;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             text-align: right;
             flex: 1;
+            margin-left: 20px;
             line-height: 1.5;
         }
         
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
-                       transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .animate-on-scroll.up {
-            transform: translateY(-30px);
-        }
-        
-        .animate-on-scroll.up.visible {
-            transform: translateY(0);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #606060;
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
-        }
-        
-        footer a {
-            color: #606060;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        
-        footer a:hover {
-            color: #808080;
-        }
-        
-        /* Keyframes */
+        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -303,6 +341,34 @@
             }
         }
         
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ffffff;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .content-page {
                 padding: 100px 20px 40px;
@@ -316,8 +382,17 @@
                 font-size: 20px;
             }
             
+            .faq-section {
+                padding: 20px;
+            }
+            
             .nav-links {
-                gap: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px;
+                font-size: 13px;
             }
             
             .command-item {
@@ -328,11 +403,31 @@
             
             .command-desc {
                 text-align: left;
+                margin-left: 0;
                 max-width: 100%;
             }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
             
-            .command-name {
-                min-width: auto;
+            .nav-links a {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            
+            .content-page h2 {
+                font-size: 32px;
+            }
+            
+            .content-page h3 {
+                font-size: 18px;
+            }
+            
+            .faq-section {
+                padding: 15px;
             }
         }
     </style>
@@ -355,21 +450,21 @@
     <div class="content-page">
         <h2>Frequently Asked Questions</h2>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section1">
             <h3>What is vetements?</h3>
             <p>vetements is an advanced all-in-one Discord bot designed to provide powerful utilities directly in your DMs and servers. No need to download external tools or visit multiple websites - everything is accessible through Discord commands.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section2">
             <h3>How do I use the bot?</h3>
             <p>Simply add vetements to your server or add it to your apps, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> anywhere to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section3">
             <h3>Does vetements have moderation commands?</h3>
             <p>Yes! vetements includes a comprehensive set of moderation commands to help manage your Discord server effectively. These commands are designed for server administrators and moderators:</p>
             
-            <div class="command-list animate-on-scroll">
+            <div class="command-list">
                 <div class="command-item">
                     <span class="command-name">/kick</span>
                     <span class="command-desc">Kick a user from the server</span>
@@ -451,42 +546,42 @@
             <p>All moderation commands require appropriate permissions and include confirmation steps to prevent accidental actions. You can find these commands under the "Moderation" category in the commands page.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section4">
             <h3>Is vetements free?</h3>
             <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section5">
             <h3>Where can I get support?</h3>
             <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section6">
             <h3>How do I add vetements to my server?</h3>
             <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section7">
             <h3>What permissions does the bot need?</h3>
             <p>vetements requires basic permissions like Send Messages, Embed Links, and Attach Files. Some commands may require additional permissions which are clearly indicated when you try to use them. For moderation commands, the bot needs appropriate admin/moderator permissions.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section8">
             <h3>Can I use vetements in DMs?</h3>
             <p>Yes! Most commands work in direct messages. Simply start a DM with vetements and use slash commands as you would in a server. Note that moderation commands only work in servers where you have appropriate permissions.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section9">
             <h3>How often is vetements updated?</h3>
             <p>We release regular updates with new features, improvements, and bug fixes. Premium users get early access to new features.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section10">
             <h3>Is my data safe?</h3>
-            <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: #808080;">Privacy Policy</a> for details.</p>
+            <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> for details.</p>
         </div>
         
-        <div class="faq-section animate-on-scroll">
+        <div class="faq-section" id="section11">
             <h3>Can I suggest new features?</h3>
             <p>Absolutely! Join our Discord server and share your ideas in the suggestions channel. We value community feedback.</p>
         </div>
@@ -507,41 +602,23 @@
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 
-                // Add initial animations
+                // Animate FAQ sections with staggered delays
                 const faqSections = document.querySelectorAll('.faq-section');
                 faqSections.forEach((section, index) => {
-                    const h3 = section.querySelector('h3');
-                    const p = section.querySelectorAll('p');
-                    const ul = section.querySelector('ul');
-                    const commandList = section.querySelector('.command-list');
-                    
-                    if (h3) {
-                        h3.style.animationDelay = `${index * 0.1 + 0.5}s`;
-                        h3.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }
-                    
-                    p.forEach((paragraph, pIndex) => {
-                        paragraph.style.animationDelay = `${index * 0.1 + 0.5 + (pIndex * 0.05)}s`;
-                        paragraph.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    });
-                    
-                    if (ul) {
-                        ul.style.animationDelay = `${index * 0.1 + 0.7}s`;
-                        ul.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }
-                    
-                    if (commandList) {
-                        commandList.style.animationDelay = `${index * 0.1 + 0.6}s`;
-                        commandList.style.animation = 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    setTimeout(() => {
+                        section.classList.add('visible');
                         
-                        // Animate command items with delay
-                        const commandItems = commandList.querySelectorAll('.command-item');
-                        commandItems.forEach((item, itemIndex) => {
-                            item.style.opacity = '0';
-                            item.style.transform = 'translateY(20px)';
-                            item.style.animation = `fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1 + 0.7 + (itemIndex * 0.05)}s forwards`;
-                        });
-                    }
+                        // Animate command items inside section 3
+                        if (section.id === 'section3') {
+                            const commandItems = section.querySelectorAll('.command-item');
+                            commandItems.forEach((item, itemIndex) => {
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateY(0)';
+                                }, itemIndex * 30); // 30ms delay between each item
+                            });
+                        }
+                    }, index * 100 + 300); // 100ms delay between sections
                 });
                 
                 // Initialize scroll animations
@@ -551,7 +628,7 @@
         
         // Scroll animation function
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
+            const elements = document.querySelectorAll('.faq-section');
             
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -568,6 +645,15 @@
                 observer.observe(element);
             });
         }
+        
+        // Prevent text selection on page
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.classList.contains('command-name') && 
+                !e.target.classList.contains('command-desc') &&
+                !e.target.closest('a')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
