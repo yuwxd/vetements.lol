@@ -283,11 +283,23 @@
             right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            background: #ffffff;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5), 0 0 25px rgba(0, 204, 255, 0.3);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(0, 255, 136, 0.5), 0 0 25px rgba(0, 204, 255, 0.3);
+                transform: translateY(-50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.8), 0 0 30px rgba(0, 204, 255, 0.5);
+                transform: translateY(-50%) scale(1.1);
+            }
         }
         
         .category-count {
@@ -356,45 +368,6 @@
             color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
             max-width: 600px;
-        }
-        
-        .category-info {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px 25px;
-            text-align: center;
-            min-width: 180px;
-            transition: all 0.3s ease;
-        }
-        
-        .category-info:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-        
-        .category-info-title {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .category-info-count {
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1;
-        }
-        
-        .category-info-subtitle {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 5px;
         }
         
         /* Search */
@@ -498,9 +471,13 @@
             border-radius: 10px;
             margin-bottom: 10px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: fadeIn 0.5s ease forwards;
             opacity: 0;
             transform: translateY(10px);
+        }
+        
+        .command-item.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .command-item:last-child {
@@ -603,6 +580,42 @@
             letter-spacing: 1px;
         }
         
+        /* Command Loading Animation */
+        .command-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .command-loading.visible {
+            opacity: 1;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .loading-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: loadingDot 1.4s ease-in-out infinite;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes loadingDot {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
         /* Notification */
         .copied-notification {
             position: fixed;
@@ -653,6 +666,7 @@
             z-index: 1;
             background: rgba(10, 10, 10, 0.3);
             backdrop-filter: blur(5px);
+            margin-left: 280px;
         }
         
         footer a {
@@ -717,6 +731,10 @@
                 padding: 20px;
             }
             
+            footer {
+                margin-left: 0;
+            }
+            
             .commands-grid {
                 grid-template-columns: 1fr;
             }
@@ -724,10 +742,6 @@
             .category-header-container {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-            
-            .category-info {
-                align-self: flex-start;
             }
         }
         
@@ -756,15 +770,6 @@
                 left: 20px;
                 text-align: center;
                 justify-content: center;
-            }
-            
-            .category-info {
-                min-width: 150px;
-                padding: 15px 20px;
-            }
-            
-            .category-info-count {
-                font-size: 28px;
             }
         }
     </style>
@@ -800,11 +805,6 @@
                 <div class="header-left">
                     <h1 class="page-title" id="pageTitle">All Commands</h1>
                     <p class="page-subtitle" id="pageSubtitle">Browse through all available commands. Use the search to find specific commands or filter by category.</p>
-                </div>
-                <div class="category-info" id="categoryInfo">
-                    <div class="category-info-title">Commands</div>
-                    <div class="category-info-count" id="categoryCount">0</div>
-                    <div class="category-info-subtitle" id="categorySubtitle">in this category</div>
                 </div>
             </div>
 
@@ -1051,9 +1051,10 @@
             
             "Economy": [
                 { name: '/crypto price', desc: 'Get current cryptocurrency price and market data' },
-                
-                { name: '/tax calc', desc: 'Calculate amount after tax/commission' },
-                
+                { name: '/tax calc', desc: 'Calculate amount after tax/commission' }
+            ],
+            
+            "Social": [
                 { name: '/roblox limiteds', desc: 'Search for a limited items or get item details' },
                 { name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image' }
             ]
@@ -1062,6 +1063,8 @@
         let currentCategory = 'all';
         let allCommands = [];
         let totalCommandCount = 0;
+        let isLoading = false;
+        let lastScrollTop = 0;
 
         // Initialize
         function initialize() {
@@ -1089,6 +1092,9 @@
 
             // Initialize scroll animations
             initScrollAnimations();
+
+            // Initialize scroll detection for loading animations
+            initScrollDetection();
 
             // Hide loading screen
             setTimeout(() => {
@@ -1128,6 +1134,8 @@
         }
 
         function filterCategory(category) {
+            if (isLoading) return;
+            
             currentCategory = category;
             
             // Update active button
@@ -1148,23 +1156,44 @@
             // Update page title and info
             const pageTitle = document.getElementById('pageTitle');
             const pageSubtitle = document.getElementById('pageSubtitle');
-            const categoryCount = document.getElementById('categoryCount');
-            const categorySubtitle = document.getElementById('categorySubtitle');
             
             if (category === 'all') {
                 pageTitle.textContent = 'All Commands';
                 pageSubtitle.textContent = 'Browse through all available commands. Use the search to find specific commands or filter by category.';
-                categoryCount.textContent = allCommands.length;
-                categorySubtitle.textContent = 'total commands';
             } else {
                 pageTitle.textContent = category;
                 pageSubtitle.textContent = `Browse all ${category.toLowerCase()} commands. Use the search to filter within this category.`;
-                categoryCount.textContent = commands[category].length;
-                categorySubtitle.textContent = 'in this category';
             }
 
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            renderCommands(category, searchTerm);
+            renderCommandsWithLoading(category, searchTerm);
+        }
+
+        function renderCommandsWithLoading(category, searchTerm = '') {
+            isLoading = true;
+            
+            const container = document.getElementById('commandsContainer');
+            
+            // Show loading animation
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'command-loading visible';
+            loadingDiv.id = 'commandsLoading';
+            loadingDiv.innerHTML = `
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            `;
+            
+            container.innerHTML = '';
+            container.appendChild(loadingDiv);
+            
+            // Simulate loading delay for smooth transition
+            setTimeout(() => {
+                renderCommands(category, searchTerm);
+                isLoading = false;
+            }, 300);
         }
 
         function renderCommands(category, searchTerm = '') {
@@ -1209,11 +1238,6 @@
             // Update visible count
             document.getElementById('visibleCommands').textContent = totalVisible;
 
-            // Update category info if showing all
-            if (category === 'all') {
-                document.getElementById('categoryCount').textContent = totalVisible;
-            }
-
             // Render each category section
             commandsToRender.forEach((section, index) => {
                 const sectionElement = document.createElement('div');
@@ -1237,14 +1261,25 @@
                 
                 container.appendChild(sectionElement);
                 
-                // Animate in
+                // Animate in with delay
                 setTimeout(() => {
                     sectionElement.classList.add('visible');
+                    
+                    // Animate individual command items
+                    const commandItems = sectionElement.querySelectorAll('.command-item');
+                    commandItems.forEach((item, i) => {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, i * 50);
+                    });
                 }, index * 100);
             });
 
             // Update stats
             updateStats(totalVisible);
+            
+            // Re-initialize scroll animations
+            setTimeout(initScrollAnimations, 100);
         }
 
         function updateStats(visibleCount = null) {
@@ -1299,10 +1334,25 @@
             document.querySelectorAll('.category-section').forEach(el => {
                 observer.observe(el);
             });
+            
+            document.querySelectorAll('.command-item').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        function initScrollDetection() {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const direction = scrollTop > lastScrollTop ? 'down' : 'up';
+                lastScrollTop = scrollTop;
+                
+                // You can add more scroll-based animations here if needed
+            });
         }
 
         // Event Listeners
         document.getElementById('searchInput').addEventListener('input', (e) => {
+            if (isLoading) return;
             filterCategory(currentCategory, e.target.value.toLowerCase());
         });
 
