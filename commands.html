@@ -483,7 +483,7 @@
         .command-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             padding: 14px 16px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -523,6 +523,74 @@
             color: rgba(255, 255, 255, 0.6);
             margin-top: 6px;
             line-height: 1.4;
+        }
+
+        .command-prefix-row {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .command-prefix-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-right: 4px;
+        }
+
+        .prefix-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .prefix-tag:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        .last-updated.stale {
+            color: rgba(255, 200, 100, 0.8);
+        }
+
+        .command-usage-row {
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .command-usage-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .command-usage-text {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.5;
+            word-break: break-word;
         }
         
         /* Command Icons Container */
@@ -940,6 +1008,7 @@
                     <div class="stat-label">Currently Showing</div>
                 </div>
             </div>
+            <p class="last-updated" id="lastUpdated">—</p>
 
             <div class="search-container">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
@@ -988,16 +1057,36 @@
             }
         };
 
+        const STALE_MINUTES = 10;
+        const REFRESH_INTERVAL_MS = 60000; // 60s
         let currentCategory = 'all';
         let allCommands = [];
         let totalCommandCount = 0;
         let totalCategoriesCount = 0;
+        let lastUpdatedAt = null;
         let isLoading = false;
         let clickCooldown = false;
 
-        async function fetchCommands() {
-            isLoading = true;
-            showLoading();
+        function setLastUpdated(isoString) {
+            lastUpdatedAt = isoString ? new Date(isoString) : null;
+            const el = document.getElementById('lastUpdated');
+            if (!el) return;
+            if (!lastUpdatedAt) {
+                el.textContent = '—';
+                el.classList.remove('stale');
+                return;
+            }
+            const now = new Date();
+            const diffMin = (now - lastUpdatedAt) / 60000;
+            el.textContent = 'Last updated ' + lastUpdatedAt.toLocaleString();
+            el.classList.toggle('stale', diffMin > STALE_MINUTES);
+        }
+
+        async function fetchCommands(silent = false) {
+            if (!silent) {
+                isLoading = true;
+                showLoading();
+            }
             try {
                 const res = await fetch(COMMANDS_ENDPOINT, { cache: 'no-store', headers: { 'Accept': 'application/json' } });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1009,26 +1098,34 @@
                     category: cmd.category || 'General',
                     type: cmd.type || 'free',
                     icon: cmd.icon,
-                    tooltip: cmd.tooltip
+                    tooltip: cmd.tooltip,
+                    prefixForms: Array.isArray(cmd.prefixForms) ? cmd.prefixForms : [],
+                    usage: cmd.usage ?? ''
                 })) : [];
 
                 const categories = [...new Set(allCommands.map(c => c.category))];
                 totalCommandCount = data.totals?.commands ?? allCommands.length;
                 totalCategoriesCount = data.totals?.categories ?? categories.length;
+                setLastUpdated(data.updatedAt || null);
 
                 updateStats(allCommands.length);
                 createCategoryList(categories);
                 renderCommands('all');
             } catch (err) {
-                console.error('Failed to fetch commands:', err);
-                document.getElementById('commandsContainer').innerHTML = `
-                    <div style="padding:24px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.03);color:#f88;">
-                        Failed to load commands. Please try again later.
-                    </div>
-                `;
+                if (!silent) {
+                    console.error('Failed to fetch commands:', err);
+                    document.getElementById('commandsContainer').innerHTML = `
+                        <div style="padding:24px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.03);color:#f88;">
+                            Failed to load commands. Please try again later.
+                        </div>
+                    `;
+                    setLastUpdated(null);
+                }
             } finally {
-                isLoading = false;
-                hideLoading();
+                if (!silent) {
+                    isLoading = false;
+                    hideLoading();
+                }
             }
         }
 
@@ -1141,7 +1238,7 @@
                         <div class="command-icons">
                             <div class="command-icon ${type === 'premium' ? 'premium-icon' : 'free-icon'}">
                                 <img src="${iconUrl}" alt="${type}">
-                                <div class="tooltip">${tooltip}</div>
+                                <div class="tooltip">${escapeHtml(tooltip)}</div>
                             </div>
                             ${type === 'both' ? `
                                 <div class="command-icon premium-icon">
@@ -1151,15 +1248,33 @@
                         </div>
                     ` : '';
 
+                    const prefixTags = (cmd.prefixForms && cmd.prefixForms.length) ? cmd.prefixForms : [];
+                    const fallbackPrefix = cmd.name.startsWith('/') ? ',' + cmd.name.slice(1) : ',' + cmd.name;
+                    const displayPrefixes = prefixTags.length ? prefixTags : [fallbackPrefix];
+                    const prefixRowHTML = `
+                        <div class="command-prefix-row">
+                            <span class="command-prefix-label">Prefix / Aliases</span>
+                            ${displayPrefixes.map(p => `<span class="prefix-tag" data-copy="${escapeAttr(p)}" onclick="copyFromTag(this)">${escapeHtml(p)}</span>`).join('')}
+                        </div>
+                    `;
+                    const usageHTML = (cmd.usage && String(cmd.usage).trim()) ? `
+                        <div class="command-usage-row">
+                            <span class="command-usage-label">Usage</span>
+                            <div class="command-usage-text">${escapeHtml(cmd.usage)}</div>
+                        </div>
+                    ` : '';
+
                     return `
                         <div class="command-item" style="animation-delay: ${(idx * 0.05 + cmdIdx * 0.02)}s">
-                            <div>
-                                <div class="command-name">${cmd.name}</div>
-                                <div class="command-desc">${cmd.desc}</div>
+                            <div style="flex:1;min-width:0;">
+                                <div class="command-name">${escapeHtml(cmd.name)}</div>
+                                <div class="command-desc">${escapeHtml(cmd.desc)}</div>
+                                ${prefixRowHTML}
+                                ${usageHTML}
                             </div>
-                            <div style="display: flex; align-items: center;">
+                            <div style="display: flex; align-items: center; flex-shrink: 0;">
                                 ${iconsHTML}
-                                <button class="copy-btn" onclick="copyCommand('${cmd.name}')">
+                                <button class="copy-btn" data-command="${escapeAttr(cmd.name)}" onclick="copyFromBtn(this)" title="Copy slash command">
                                     <img src="https://img.icons8.com/?size=48&id=KRskJxjVf0BS&format=png" class="copy-icon" alt="Copy">
                                 </button>
                             </div>
@@ -1187,10 +1302,38 @@
             setTimeout(initScrollAnimations, 50);
         }
 
+        function escapeHtml(s) {
+            if (s == null) return '';
+            const div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML;
+        }
+
+        function escapeAttr(s) {
+            if (s == null) return '';
+            return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function copyFromBtn(btn) {
+            const cmd = btn.getAttribute('data-command');
+            if (cmd) copyCommand(cmd);
+        }
+
+        function copyFromTag(tag) {
+            const text = tag.getAttribute('data-copy');
+            if (text) copyCommand(text);
+        }
+
         function filterList(list, category, term) {
             return list
                 .filter(c => c.category === category)
-                .filter(c => c.name.toLowerCase().includes(term) || c.desc.toLowerCase().includes(term));
+                .filter(c => {
+                    if (!term) return true;
+                    const t = term.toLowerCase();
+                    const prefixMatch = (c.prefixForms && c.prefixForms.length) && c.prefixForms.some(p => p.toLowerCase().includes(t));
+                    const usageMatch = (c.usage && String(c.usage).toLowerCase().includes(t));
+                    return c.name.toLowerCase().includes(t) || c.desc.toLowerCase().includes(t) || prefixMatch || usageMatch;
+                });
         }
 
         function updateStats(visibleCount = null) {
@@ -1243,7 +1386,10 @@
             }
         });
 
-        window.addEventListener('load', fetchCommands);
+        window.addEventListener('load', () => {
+            fetchCommands();
+            setInterval(() => fetchCommands(true), REFRESH_INTERVAL_MS);
+        });
         window.addEventListener('resize', () => initScrollAnimations());
     </script>
     <script>
