@@ -1246,5 +1246,9 @@
         window.addEventListener('load', fetchCommands);
         window.addEventListener('resize', () => initScrollAnimations());
     </script>
+    <script>
+        // Wymuś workers.dev aby ominąć blokady/WAF na vetements.lol
+        window.VETEMENTS_COMMANDS_URL = 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands';
+    </script>
 </body>
 </html>
