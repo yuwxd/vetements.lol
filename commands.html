@@ -967,283 +967,108 @@
     </footer>
 
     <script>
-        // Command types: free = free only, premium = premium only, both = both versions available
-        const commands = {
-            "General": [
-                { name: '/about', desc: 'Display information about vetements', type: 'free' },
-                { name: '/commands', desc: 'View all available commands', type: 'free' },
-                { name: '/discord', desc: 'Get Discord server invite link', type: 'free' },
-                { name: '/invite', desc: 'Authorize the bot', type: 'free' },
-                { name: '/premium', desc: 'View premium information', type: 'free' },
-                { name: '/profile', desc: 'View user profile', type: 'free' },
-                { name: '/redeem', desc: 'Redeem a premium license key', type: 'free' },
-                { name: '/say', desc: 'Make the bot say something', type: 'free' },
-                { name: '/support', desc: 'Get the support for the bot', type: 'free' },
-                { name: '/uptime', desc: 'Check bot uptime', type: 'free' },
-                { name: '/user', desc: 'Get information about a Discord user', type: 'free' },
-                { name: '/avatar', desc: "Get user's avatar", type: 'free' },
-                { name: '/banner', desc: "Get user's banner", type: 'free' }
-            ],
-            
-            "Moderation": [
-                { name: '/admin', desc: 'Admin panel and settings', type: 'free' },
-                { name: '/ban', desc: 'Ban a user from the server', type: 'free' },
-                { name: '/bans', desc: 'View all bans in the server', type: 'free' },
-                { name: '/kick', desc: 'Kick a user from the server', type: 'free' },
-                { name: '/nick', desc: "Change a user's nickname", type: 'free' },
-                { name: '/nuke', desc: 'Delete all messages in a channel', type: 'free' },
-                { name: '/softban', desc: 'Softban a user to delete their messages', type: 'free' },
-                { name: '/timeout', desc: 'Timeout a user', type: 'free' },
-                { name: '/unban', desc: 'Unban a user from the server', type: 'free' },
-                { name: '/untimeout', desc: 'Remove timeout from a user', type: 'free' },
-                { name: '/invites', desc: 'Check how many invites a user has', type: 'free' },
-                
-                { name: '/antinuke ban', desc: 'Configure ban protection', type: 'free' },
-                { name: '/antinuke bot', desc: 'Configure bot join protection', type: 'free' },
-                { name: '/antinuke channel', desc: 'Configure channel protection', type: 'free' },
-                { name: '/antinuke emoji', desc: 'Configure emoji protection', type: 'free' },
-                { name: '/antinuke kick', desc: 'Configure kick protection', type: 'free' },
-                { name: '/antinuke role', desc: 'Configure role protection', type: 'free' },
-                { name: '/antinuke settings', desc: 'Configure antinuke settings', type: 'free' },
-                { name: '/antinuke webhook', desc: 'Configure webhook protection', type: 'free' },
-                { name: '/antinuke whitelist_add', desc: 'Add user to whitelist', type: 'free' },
-                { name: '/antinuke whitelist_clear', desc: 'Clear all whitelisted users', type: 'free' },
-                { name: '/antinuke whitelist_list', desc: 'List whitelisted users', type: 'free' },
-                { name: '/antinuke whitelist_remove', desc: 'Remove user from whitelist', type: 'free' },
-                
-                { name: '/jail add', desc: 'Add user to jail', type: 'free' },
-                { name: '/jail remove', desc: 'Remove user from jail', type: 'free' },
-                
-                { name: '/channel clear', desc: 'Clear messages in channel', type: 'free' },
-                { name: '/channel hide', desc: 'Hide the current channel from everyone except staff', type: 'free' },
-                { name: '/channel lock', desc: 'Lock the current channel for everyone', type: 'free' },
-                { name: '/channel reveal', desc: 'Reveal the current channel to everyone', type: 'free' },
-                { name: '/channel slowmode', desc: 'Set slowmode for the current channel', type: 'free' },
-                { name: '/channel unlock', desc: 'Unlock the current channel for everyone', type: 'free' },
-                
-                { name: '/purge after', desc: 'Purge messages after a specific message', type: 'free' },
-                { name: '/purge before', desc: 'Purge messages before a specific message', type: 'free' },
-                { name: '/purge between', desc: 'Purge messages between two messages', type: 'free' },
-                { name: '/purge bots', desc: 'Purge messages from bots', type: 'free' },
-                { name: '/purge contains', desc: 'Purge messages containing specific text', type: 'free' },
-                { name: '/purge embeds', desc: 'Purge messages with embeds', type: 'free' },
-                { name: '/purge emojis', desc: 'Purge messages with emojis', type: 'free' },
-                { name: '/purge endswith', desc: 'Purge messages ending with specific text', type: 'free' },
-                { name: '/purge except', desc: 'Purge all except specific user messages', type: 'free' },
-                { name: '/purge files', desc: 'Purge messages with files', type: 'free' },
-                { name: '/purge humans', desc: 'Purge messages from humans', type: 'free' },
-                { name: '/purge invites', desc: 'Purge messages with invites', type: 'free' },
-                { name: '/purge links', desc: 'Purge messages with links', type: 'free' },
-                { name: '/purge mentions', desc: 'Purge messages with mentions', type: 'free' },
-                { name: '/purge reactions', desc: 'Purge messages with reactions', type: 'free' },
-                { name: '/purge startswith', desc: 'Purge messages starting with specific text', type: 'free' },
-                { name: '/purge stickers', desc: 'Purge messages with stickers', type: 'free' },
-                { name: '/purge systemmessages', desc: 'Purge system messages', type: 'free' },
-                { name: '/purge voicemessages', desc: 'Purge voice messages', type: 'free' },
-                { name: '/purge webhooks', desc: 'Purge messages from webhooks', type: 'free' },
-                
-                { name: '/role add', desc: 'Add a role to a user', type: 'free' },
-                { name: '/role all', desc: 'Manage all roles', type: 'free' },
-                { name: '/role autorole', desc: 'Configure auto-role settings', type: 'free' },
-                { name: '/role massadd', desc: 'Add a role to all users with a specific role', type: 'free' },
-                { name: '/role massremove', desc: 'Remove a role from all users who have it', type: 'free' },
-                { name: '/role remove', desc: 'Remove a role from a user', type: 'free' },
-                { name: '/role rename', desc: 'Rename a role', type: 'free' },
-                
-                { name: '/vc deafen', desc: 'Deafen a user in voice channel', type: 'free' },
-                { name: '/vc disconnect', desc: 'Disconnect a user from voice channel', type: 'free' },
-                { name: '/vc move', desc: 'Move a user to another voice channel', type: 'free' },
-                { name: '/vc moveall', desc: 'Move all users to another voice channel', type: 'free' },
-                { name: '/vc mute', desc: 'Mute a user in voice channel', type: 'free' },
-                { name: '/vc undeafen', desc: 'Undeafen a user in voice channel', type: 'free' },
-                { name: '/vc unmute', desc: 'Unmute a user in voice channel', type: 'free' },
-                
-                { name: '/notifications boosts', desc: 'Configure boost notifications', type: 'free' },
-                { name: '/notifications join', desc: 'Configure join notifications', type: 'free' },
-                { name: '/notifications leave', desc: 'Configure leave notifications', type: 'free' }
-            ],
-            
-            "AI": [
-                { name: '/ai ask', desc: 'Ask AI anything', type: 'free' },
-                { name: '/ai image', desc: 'Generate an image using AI', type: 'free' },
-                { name: '/ai summarize', desc: 'Summarize long text using AI', type: 'free' },
-                { name: '/ai tts', desc: 'Convert text to speech (male or female voice)', type: 'free' },
-                
-                { name: '/asciify image', desc: 'Convert an image to ASCII art', type: 'free' },
-                { name: '/asciify text', desc: 'Convert text to ASCII art', type: 'free' }
-            ],
-            
-            "Utility": [
-                { name: '/base64 decode', desc: 'Decode Base64 text', type: 'free' },
-                { name: '/base64 encode', desc: 'Encode text to Base64', type: 'free' },
-                
-                { name: '/clipboard info', desc: 'Save and manage your clipboard items', type: 'free' },
-                { name: '/clipboard text', desc: 'Save text to clipboard', type: 'free' },
-                { name: '/clipboard image', desc: 'Save an image to clipboard', type: 'free' },
-                { name: '/clipboard send', desc: 'Send items from clipboard', type: 'free' },
-                
-                { name: '/count characters', desc: 'Count characters, words, and lines in text', type: 'free' },
-                { name: '/count down', desc: 'Countdown timer', type: 'free' },
-                
-                { name: '/password generate', desc: 'Generate a strong random password', type: 'free' },
-                { name: '/password strength', desc: 'Check a strength of a password', type: 'free' },
-                
-                { name: '/qr generate', desc: 'Generate QR code from URL or text', type: 'free' },
-                { name: '/qr scan', desc: 'Scan and decode a QR code from an image', type: 'free' },
-                
-                { name: '/webhook delete', desc: 'Delete a webhook', type: 'free' },
-                { name: '/webhook message', desc: 'Send a message to a webhook', type: 'free' },
-                
-                { name: '/utility color', desc: 'Get information about a color', type: 'free' },
-                { name: '/utility define', desc: 'Get the definition of an English word', type: 'free' },
-                { name: '/utility embed', desc: 'Create a custom embed message', type: 'free' },
-                { name: '/utility imagetolink', desc: 'Upload image to ImgBB and get a direct link', type: 'free' },
-                { name: '/utility number', desc: 'Generate a random number between two values', type: 'free' },
-                { name: '/utility screenshot', desc: 'Capture website screenshot with optional delay', type: 'both' },
-                { name: '/utility shorten', desc: 'Shorten a URL using TinyURL', type: 'free' },
-                { name: '/utility texttolink', desc: 'Upload text to Pastebin and get a shareable link', type: 'free' },
-                { name: '/utility translate', desc: 'Translate text to another language', type: 'free' },
-                { name: '/utility virustotal', desc: 'Scan a file or URL with VirusTotal for security analysis', type: 'premium' },
-                
-                { name: '/download', desc: 'Download media content', type: 'free' },
-                { name: '/shazam', desc: 'Identify music from audio', type: 'premium' }
-            ],
-            
-            "Fun & Games": [
-                { name: '/fortnite map', desc: 'Get Fortnite map information', type: 'free' },
-                
-                { name: '/fun 8ball', desc: 'Ask the magic 8-ball a question', type: 'free' },
-                { name: '/fun catfact', desc: 'Get a random cat fact', type: 'free' },
-                { name: '/fun coinflip', desc: 'Flip a coin', type: 'free' },
-                { name: '/fun deathdate', desc: 'Predict your death date and how you will die (just for fun)', type: 'free' },
-                { name: '/fun dogfact', desc: 'Get a random dog fact', type: 'free' },
-                { name: '/fun fact', desc: 'Get a random interesting fact', type: 'free' },
-                { name: '/fun howgay', desc: 'Calculate how gay someone is', type: 'free' },
-                { name: '/fun howlarp', desc: 'Check how much of a larper someone is', type: 'free' },
-                { name: '/fun hug', desc: 'Hug another user', type: 'free' },
-                { name: '/fun joke', desc: 'Get a random joke', type: 'free' },
-                { name: '/fun kiss', desc: 'Kiss another user', type: 'free' },
-                { name: '/fun ppsize', desc: 'Measure PP size', type: 'free' },
-                { name: '/fun rizz', desc: 'Rizz up a user with smooth pickup lines', type: 'free' },
-                { name: '/fun roast', desc: 'Roast a user with random insults', type: 'free' },
-                { name: '/fun roll', desc: 'Roll a dice or random number', type: 'free' },
-                { name: '/fun ship', desc: 'Check compatibility between two users', type: 'free' },
-                
-                { name: '/giveaway', desc: 'Create a giveaway', type: 'free' }
-            ],
-            
-            "Media": [
-                { name: '/media blur', desc: 'Apply blur effect to an image', type: 'free' },
-                { name: '/media caption', desc: 'Add caption text to top of image', type: 'free' },
-                { name: '/media fakemessage', desc: 'Generate a fake Discord message from a user', type: 'free' },
-                { name: '/media gif', desc: 'Search and send a random GIF by topic', type: 'free' },
-                { name: '/media imagetogif', desc: 'Convert image to high-quality GIF format', type: 'free' },
-                { name: '/media monkeythink', desc: 'Generate thinking monkey meme', type: 'free' },
-                { name: '/media videotogif', desc: 'Convert video to GIF format', type: 'free' },
-                { name: '/media youtubetomp3', desc: 'Convert YouTube video to MP3 audio (max 1 hour)', type: 'free' }
-            ],
-            
-            "Music": [
-                { name: '/spotify search', desc: 'Search for a song on spotify', type: 'free' },
-                
-                { name: '/lastfm collage', desc: 'Create a collage of your top albums/artists', type: 'free' },
-                { name: '/lastfm compare', desc: 'Compare your music taste with another user', type: 'free' },
-                { name: '/lastfm connect', desc: 'Connect your Last.fm account', type: 'free' },
-                { name: '/lastfm disconnect', desc: 'Disconnect your Last.fm account', type: 'free' },
-                { name: '/lastfm lyrics', desc: 'Get lyrics for currently playing song', type: 'free' },
-                { name: '/lastfm nowplaying', desc: 'Show what you are currently listening to', type: 'free' },
-                { name: '/lastfm recent', desc: 'Show your recently played tracks', type: 'free' },
-                { name: '/lastfm sync', desc: 'Sync your Last.fm data', type: 'free' },
-                { name: '/lastfm topalbums', desc: 'Show your top albums', type: 'free' },
-                { name: '/lastfm topartists', desc: 'Show your top artists', type: 'free' },
-                { name: '/lastfm toptracks', desc: 'Show your top tracks', type: 'free' }
-            ],
-            
-            "Network & Web": [
-                { name: '/network domaininfo', desc: 'Get WHOIS and status info for a domain', type: 'free' },
-                { name: '/network iplookup', desc: 'Lookup IP address information', type: 'free' },
-                { name: '/network ping', desc: 'Check if a host is online', type: 'free' },
-                { name: '/network pinghost', desc: 'Check if a host is online', type: 'free' },
-                { name: '/network serverinfo', desc: 'Get server information', type: 'free' }
-            ],
-            
-            "Economy": [
-                { name: '/crypto price', desc: 'Get current cryptocurrency price and market data', type: 'free' },
-                { name: '/tax calc', desc: 'Calculate amount after tax/commission', type: 'free' }
-            ],
-            
-            "Social": [
-                { name: '/roblox limiteds', desc: 'Search for a limited items or get item details', type: 'free' },
-                { name: '/roblox user', desc: 'Get detailed Roblox user profile with generated image', type: 'free' }
-            ]
+        const COMMANDS_ENDPOINT = window.VETEMENTS_COMMANDS_URL || '/api/commands';
+        const iconDefaults = {
+            free: {
+                url: 'https://i.ibb.co/Jj3XFC41/32056e299ce2.png',
+                tooltip: 'free version available'
+            },
+            premium: {
+                url: 'https://i.ibb.co/mCcqPgm8/55125afe6f8b.png',
+                tooltip: 'vetements+ subscription required'
+            },
+            both: {
+                url: '',
+                tooltip: 'free & vetements+ versions'
+            }
         };
 
         let currentCategory = 'all';
         let allCommands = [];
         let totalCommandCount = 0;
+        let totalCategoriesCount = 0;
         let isLoading = false;
-        let lastScrollTop = 0;
         let clickCooldown = false;
 
-        // Initialize
-        function initialize() {
-            // Flatten commands for search
-            Object.keys(commands).forEach(category => {
-                commands[category].forEach(cmd => {
-                    allCommands.push({
-                        name: cmd.name,
-                        desc: cmd.desc,
-                        category: category,
-                        type: cmd.type
-                    });
-                });
-            });
+        async function fetchCommands() {
+            isLoading = true;
+            showLoading();
+            try {
+                const res = await fetch(COMMANDS_ENDPOINT, { cache: 'no-store', headers: { 'Accept': 'application/json' } });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
 
-            totalCommandCount = allCommands.length;
+                allCommands = Array.isArray(data.commands) ? data.commands.map(cmd => ({
+                    name: cmd.name,
+                    desc: cmd.description || cmd.desc || '',
+                    category: cmd.category || 'General',
+                    type: cmd.type || 'free',
+                    icon: cmd.icon,
+                    tooltip: cmd.tooltip
+                })) : [];
 
-            // Update stats
-            updateStats();
+                const categories = [...new Set(allCommands.map(c => c.category))];
+                totalCommandCount = data.totals?.commands ?? allCommands.length;
+                totalCategoriesCount = data.totals?.categories ?? categories.length;
 
-            // Create category list
-            createCategoryList();
+                updateStats(allCommands.length);
+                createCategoryList(categories);
+                renderCommands('all');
+            } catch (err) {
+                console.error('Failed to fetch commands:', err);
+                document.getElementById('commandsContainer').innerHTML = `
+                    <div style="padding:24px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;background:rgba(255,255,255,0.03);color:#f88;">
+                        Failed to load commands. Please try again later.
+                    </div>
+                `;
+            } finally {
+                isLoading = false;
+                hideLoading();
+            }
+        }
 
-            // Render all commands initially
-            renderCommands('all');
+        function showLoading() {
+            const container = document.getElementById('commandsContainer');
+            container.innerHTML = `
+                <div class="command-loading visible">
+                    <div class="loading-dots">
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                        <div class="loading-dot"></div>
+                    </div>
+                </div>
+            `;
+        }
 
-            // Initialize scroll animations
-            initScrollAnimations();
-
-            // Hide loading screen
+        function hideLoading() {
             setTimeout(() => {
                 document.getElementById('loadingScreen').classList.add('fade-out');
             }, 800);
         }
 
-        function createCategoryList() {
+        function createCategoryList(categories) {
             const categoryList = document.getElementById('categoryList');
             categoryList.innerHTML = '';
 
-            // Add "All" category
-            const allCategory = document.createElement('li');
-            allCategory.className = 'category-item';
             const allCount = allCommands.length;
-            allCategory.innerHTML = `
+            const allLi = document.createElement('li');
+            allLi.className = 'category-item';
+            allLi.innerHTML = `
                 <button class="category-btn active" onclick="filterCategory('all')">
                     <span>All Commands</span>
                     <span class="category-count">${allCount}</span>
                 </button>
             `;
-            categoryList.appendChild(allCategory);
+            categoryList.appendChild(allLi);
 
-            // Add other categories with counts
-            Object.keys(commands).forEach(category => {
+            categories.forEach(cat => {
+                const count = allCommands.filter(c => c.category === cat).length;
                 const li = document.createElement('li');
                 li.className = 'category-item';
-                const categoryCount = commands[category].length;
                 li.innerHTML = `
-                    <button class="category-btn" onclick="filterCategory('${category}')">
-                        <span>${category}</span>
-                        <span class="category-count">${categoryCount}</span>
+                    <button class="category-btn" onclick="filterCategory('${cat}')">
+                        <span>${cat}</span>
+                        <span class="category-count">${count}</span>
                     </button>
                 `;
                 categoryList.appendChild(li);
@@ -1252,21 +1077,10 @@
 
         function filterCategory(category) {
             if (isLoading || clickCooldown) return;
-            
-            // Set cooldown to prevent rapid clicking
             clickCooldown = true;
-            setTimeout(() => {
-                clickCooldown = false;
-            }, 150);
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            currentCategory = category;
-            
-            // Find and activate the clicked button
+            setTimeout(() => (clickCooldown = false), 150);
+
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
             const buttons = document.querySelectorAll('.category-btn');
             if (category === 'all') {
                 buttons[0].classList.add('active');
@@ -1274,13 +1088,12 @@
                 Array.from(buttons).find(btn => {
                     const span = btn.querySelector('span:first-child');
                     return span && span.textContent.trim() === category;
-                }).classList.add('active');
+                })?.classList.add('active');
             }
 
-            // Update page title and info
+            currentCategory = category;
             const pageTitle = document.getElementById('pageTitle');
             const pageSubtitle = document.getElementById('pageSubtitle');
-            
             if (category === 'all') {
                 pageTitle.textContent = 'All Commands';
                 pageSubtitle.textContent = 'Browse through all available commands. Use the search to find specific commands or filter by category.';
@@ -1290,121 +1103,51 @@
             }
 
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            renderCommandsWithLoading(category, searchTerm);
-        }
-
-        function renderCommandsWithLoading(category, searchTerm = '') {
-            isLoading = true;
-            
-            const container = document.getElementById('commandsContainer');
-            
-            // Show loading animation
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'command-loading visible';
-            loadingDiv.id = 'commandsLoading';
-            loadingDiv.innerHTML = `
-                <div class="loading-dots">
-                    <div class="loading-dot"></div>
-                    <div class="loading-dot"></div>
-                    <div class="loading-dot"></div>
-                </div>
-            `;
-            
-            container.innerHTML = '';
-            container.appendChild(loadingDiv);
-            
-            // Simulate loading delay for smooth transition
-            setTimeout(() => {
-                renderCommands(category, searchTerm);
-                isLoading = false;
-            }, 200);
+            renderCommands(category, searchTerm);
         }
 
         function renderCommands(category, searchTerm = '') {
             const container = document.getElementById('commandsContainer');
             container.innerHTML = '';
 
-            let commandsToRender = [];
-            let totalVisible = 0;
-            
+            const groups = [];
             if (category === 'all') {
-                // Show all categories
-                Object.keys(commands).forEach(cat => {
-                    const filteredCommands = commands[cat].filter(cmd => 
-                        cmd.name.toLowerCase().includes(searchTerm) || 
-                        cmd.desc.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    if (filteredCommands.length > 0) {
-                        commandsToRender.push({
-                            category: cat,
-                            commands: filteredCommands
-                        });
-                        totalVisible += filteredCommands.length;
-                    }
+                const cats = [...new Set(allCommands.map(c => c.category))];
+                cats.forEach(cat => {
+                    const filtered = filterList(allCommands, cat, searchTerm);
+                    if (filtered.length) groups.push({ category: cat, commands: filtered });
                 });
             } else {
-                // Filter specific category
-                const filteredCommands = commands[category].filter(cmd => 
-                    cmd.name.toLowerCase().includes(searchTerm) || 
-                    cmd.desc.toLowerCase().includes(searchTerm)
-                );
-                
-                if (filteredCommands.length > 0) {
-                    commandsToRender.push({
-                        category: category,
-                        commands: filteredCommands
-                    });
-                    totalVisible = filteredCommands.length;
-                }
+                const filtered = filterList(allCommands, category, searchTerm);
+                if (filtered.length) groups.push({ category, commands: filtered });
             }
 
-            // Update visible count
+            const totalVisible = groups.reduce((sum, g) => sum + g.commands.length, 0);
             document.getElementById('visibleCommands').textContent = totalVisible;
 
-            // Render each category section
-            commandsToRender.forEach((section, index) => {
-                const sectionElement = document.createElement('div');
-                sectionElement.className = 'category-section';
-                
-                const commandsHTML = section.commands.map((cmd, cmdIndex) => {
-                    let iconsHTML = '';
-                    
-                    if (cmd.type === 'free') {
-                        iconsHTML = `
-                            <div class="command-icons">
-                                <div class="command-icon free-icon">
-                                    <img src="https://i.ibb.co/Jj3XFC41/32056e299ce2.png" alt="Free">
-                                    <div class="tooltip">free version available</div>
-                                </div>
+            groups.forEach((section, idx) => {
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'category-section';
+                const commandsHTML = section.commands.map((cmd, cmdIdx) => {
+                    const type = cmd.type || 'free';
+                    const iconUrl = cmd.icon?.url || iconDefaults[type]?.url || '';
+                    const tooltip = cmd.tooltip || cmd.icon?.tooltip || iconDefaults[type]?.tooltip || '';
+                    const iconsHTML = iconUrl ? `
+                        <div class="command-icons">
+                            <div class="command-icon ${type === 'premium' ? 'premium-icon' : 'free-icon'}">
+                                <img src="${iconUrl}" alt="${type}">
+                                <div class="tooltip">${tooltip}</div>
                             </div>
-                        `;
-                    } else if (cmd.type === 'premium') {
-                        iconsHTML = `
-                            <div class="command-icons">
+                            ${type === 'both' ? `
                                 <div class="command-icon premium-icon">
-                                    <img src="https://i.ibb.co/mCcqPgm8/55125afe6f8b.png" alt="Premium">
-                                    <div class="tooltip">vetements+ subscription required</div>
-                                </div>
-                            </div>
-                        `;
-                    } else if (cmd.type === 'both') {
-                        iconsHTML = `
-                            <div class="command-icons">
-                                <div class="command-icon free-icon">
-                                    <img src="https://i.ibb.co/Jj3XFC41/32056e299ce2.png" alt="Free">
-                                    <div class="tooltip">free version available</div>
-                                </div>
-                                <div class="command-icon premium-icon">
-                                    <img src="https://i.ibb.co/mCcqPgm8/55125afe6f8b.png" alt="Premium">
-                                    <div class="tooltip">vetements+ subscription required</div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    
+                                    <img src="${iconDefaults.premium.url}" alt="premium">
+                                    <div class="tooltip">${iconDefaults.premium.tooltip}</div>
+                                </div>` : ''}
+                        </div>
+                    ` : '';
+
                     return `
-                        <div class="command-item" style="animation-delay: ${(index * 0.05 + cmdIndex * 0.02)}s">
+                        <div class="command-item" style="animation-delay: ${(idx * 0.05 + cmdIdx * 0.02)}s">
                             <div>
                                 <div class="command-name">${cmd.name}</div>
                                 <div class="command-desc">${cmd.desc}</div>
@@ -1418,54 +1161,43 @@
                         </div>
                     `;
                 }).join('');
-                
-                sectionElement.innerHTML = `
+
+                sectionEl.innerHTML = `
                     <h3 class="section-header">${section.category} <span style="font-size: 14px; color: rgba(255, 255, 255, 0.5);">(${section.commands.length})</span></h3>
                     <div class="commands-list">
                         ${commandsHTML}
                     </div>
                 `;
-                
-                container.appendChild(sectionElement);
-                
-                // Animate in with shorter delay
+
+                container.appendChild(sectionEl);
                 setTimeout(() => {
-                    sectionElement.classList.add('visible');
-                    
-                    // Animate individual command items with shorter delays
-                    const commandItems = sectionElement.querySelectorAll('.command-item');
-                    commandItems.forEach((item, i) => {
-                        setTimeout(() => {
-                            item.classList.add('visible');
-                        }, i * 20);
+                    sectionEl.classList.add('visible');
+                    sectionEl.querySelectorAll('.command-item').forEach((item, i) => {
+                        setTimeout(() => item.classList.add('visible'), i * 20);
                     });
-                }, index * 50);
+                }, idx * 50);
             });
 
-            // Update stats
             updateStats(totalVisible);
-            
-            // Re-initialize scroll animations
             setTimeout(initScrollAnimations, 50);
         }
 
+        function filterList(list, category, term) {
+            return list
+                .filter(c => c.category === category)
+                .filter(c => c.name.toLowerCase().includes(term) || c.desc.toLowerCase().includes(term));
+        }
+
         function updateStats(visibleCount = null) {
-            const totalEl = document.getElementById('totalCommands');
-            const categoriesEl = document.getElementById('totalCategories');
-            
-            totalEl.textContent = totalCommandCount;
-            categoriesEl.textContent = Object.keys(commands).length;
-            
+            document.getElementById('totalCommands').textContent = totalCommandCount;
+            document.getElementById('totalCategories').textContent = totalCategoriesCount || [...new Set(allCommands.map(c => c.category))].length;
             if (visibleCount !== null) {
                 document.getElementById('visibleCommands').textContent = visibleCount;
             }
         }
 
         function copyCommand(commandText) {
-            navigator.clipboard.writeText(commandText).then(() => {
-                showCopiedNotification();
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
+            navigator.clipboard.writeText(commandText).then(showCopiedNotification).catch(() => {
                 const textArea = document.createElement('textarea');
                 textArea.value = commandText;
                 document.body.appendChild(textArea);
@@ -1479,40 +1211,23 @@
         function showCopiedNotification() {
             const notification = document.getElementById('copiedNotification');
             notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 1500);
+            setTimeout(() => notification.classList.remove('show'), 1500);
         }
 
         function initScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            document.querySelectorAll('.category-section').forEach(el => {
-                observer.observe(el);
-            });
-            
-            document.querySelectorAll('.command-item').forEach(el => {
-                observer.observe(el);
-            });
+                entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible'));
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.category-section').forEach(el => observer.observe(el));
+            document.querySelectorAll('.command-item').forEach(el => observer.observe(el));
         }
 
-        // Event Listeners
         document.getElementById('searchInput').addEventListener('input', (e) => {
             if (isLoading) return;
             filterCategory(currentCategory, e.target.value.toLowerCase());
         });
 
-        // Prevent text selection on page (except for inputs and command names)
         document.addEventListener('mousedown', function(e) {
             if (!e.target.classList.contains('search-input') && 
                 !e.target.classList.contains('command-name') && 
@@ -1523,13 +1238,8 @@
             }
         });
 
-        // Initialize on load
-        window.addEventListener('load', initialize);
-        
-        // Re-run animations on resize
-        window.addEventListener('resize', () => {
-            initScrollAnimations();
-        });
+        window.addEventListener('load', fetchCommands);
+        window.addEventListener('resize', () => initScrollAnimations());
     </script>
 </body>
 </html>
