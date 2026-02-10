@@ -967,10 +967,11 @@
     </footer>
 
     <script>
+        // Domyślnie korzystaj z workers.dev aby ominąć WAF; można nadpisać VETEMENTS_COMMANDS_URL
         const DEFAULT_COMMANDS_ENDPOINT =
             window.location.protocol === 'https:'
-                ? '/api/commands'        // produkcja: unikamy mixed content
-                : 'http://127.0.0.1:8787/commands'; // lokalny serwer statystyk
+                ? 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands'
+                : 'http://127.0.0.1:8787/commands';
         const COMMANDS_ENDPOINT = window.VETEMENTS_COMMANDS_URL || DEFAULT_COMMANDS_ENDPOINT;
         const iconDefaults = {
             free: {
@@ -1247,4 +1248,3 @@
     </script>
 </body>
 </html>
-
