@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dbbf</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            max-width: 400px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        
+        .spinner-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 30px 0 40px;
+        }
+        
+        .spinner {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+        
+        .redirect-text {
+            font-size: 16px;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        
+        .animated-dots {
+            display: inline-block;
+            width: 30px;
+            text-align: left;
+        }
+        
+        .animated-dots::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .bot-ad {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 28px;
+            max-width: 480px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+        
+        .bot-ad h2 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+        
+        .bot-ad p {
+            color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 13px 26px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+        }
+        
+        .btn-primary {
+            background: #ffffff;
+            color: #0a0a0a;
+        }
+        
+        .btn-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.06);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            pointer-events: none;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .url-display {
+            color: #808080;
+            font-size: 14px;
+            margin-top: 15px;
+            font-weight: 400;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+                border-radius: 16px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .spinner-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .countdown {
+                font-size: 18px;
+            }
+            
+            .redirect-text {
+                font-size: 15px;
+            }
+            
+            .bot-ad {
+                padding: 22px;
+            }
+            
+            .bot-ad h2 {
+                font-size: 18px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 220px;
+                justify-content: center;
+                display: flex;
+                padding: 12px 20px;
+            }
+            
+            .watermark {
+                font-size: 12px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">V</div>
+        <h1>vetements / dbbf</h1>
+        <p class="subtitle">Powered by vetements infrastructure</p>
+        
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="countdown" id="countdown">4s</div>
+        </div>
+        
+        <p class="redirect-text">
+            Redirecting to guns.lol/dbbf<span class="animated-dots"></span>
+        </p>
+        
+        <div class="bot-ad">
+            <h2>vetements Bot</h2>
+            <p>Advanced Discord utility bot with 100+ commands, AI features, moderation tools, and creative utilities.</p>
+            
+            <div class="buttons">
+                <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="btn btn-primary" target="_blank">
+                    Add to Discord
+                </a>
+                <a href="https://discord.gg/larpfunds" class="btn btn-secondary" target="_blank">
+                    Join Server
+                </a>
+            </div>
+        </div>
+        
+        <p class="url-display">guns.lol/dbbf</p>
+    </div>
+    
+    <div class="watermark">vetements.lol</div>
+
+    <script>
+        let timeLeft = 4;
+        const countdownElement = document.getElementById('countdown');
+        
+        // Update countdown every second
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft + 's';
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'https://guns.lol/ibb';
+            }
+        }, 1000);
+        
+        setTimeout(() => {
+            window.location.href = 'https://guns.lol/ibb';
+        }, 4000);
+        
+        // Click anywhere to redirect immediately
+        document.addEventListener('click', function() {
+            clearInterval(countdownInterval);
+            window.location.href = 'https://guns.lol/ibb';
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                clearInterval(countdownInterval);
+                window.location.href = 'https://guns.lol/ibb';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>invite</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
+    <meta property="og:title" content="vetements / invite">
+    <meta property="og:description" content="Add vetements to your Discord server">
+    <meta property="og:url" content="https://vetements.lol/invite">
+    <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="vetements">
+    <meta name="theme-color" content="#1e1f22">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="vetements / invite">
+    <meta name="twitter:description" content="Add vetements to your Discord server">
+    <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 20px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .message {
+            font-size: 16px;
+            color: #808080;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .redirecting {
+            color: #a0a0a0;
+            font-weight: 500;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .discord-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: #ffffff;
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .discord-link:hover {
+            background: #e5e5e5;
+            transform: translateY(-2px);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top-color: #5865f2; /* Discord blue for reference */
+            border-radius: 50%;
+            margin: 30px auto;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+                font-size: 32px;
+            }
+            
+            .discord-link {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">V</div>
+        <h1>vetements</h1>
+        <p class="message">Redirecting to Discord authorization...</p>
+        
+        <div class="spinner" id="loadingSpinner"></div>
+        
+        <p class="redirecting">If you're not redirected automatically, click below:</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="discord-link">
+            Add vetements to Discord
+        </a>
+    </div>
+
+    <script>
+        // Zmiana koloru kołka na ciemno szaro-niebieski
+        document.addEventListener('DOMContentLoaded', function() {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.style.borderTopColor = '#2a2d4a'; // Ciemno szaro-niebieski
+        });
+        
+        // Immediate redirect after a short delay for visual feedback
+        setTimeout(() => {
+            window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
+        }, 1500); // 1.5 second delay
+        
+        // Fallback redirect after 5 seconds
+        setTimeout(() => {
+            window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
+        }, 5000);
+    </script>
+</body>
+</html>

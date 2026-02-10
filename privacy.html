@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>privacy</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
+    <meta property="og:title" content="vetements">
+    <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
+    <meta property="og:url" content="https://vetements.lol">
+    <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="vetements">
+    <meta name="theme-color" content="#1e1f22">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="vetements">
+    <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
+    <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            cursor: default;
+        }
+        
+        /* Background with blur overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+        
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .nav-links a:nth-child(1) { animation-delay: 0.6s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.7s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.8s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.9s; }
+        .nav-links a:nth-child(5) { animation-delay: 1.0s; }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* Content Page */
+        .content-page {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        }
+        
+        .content-page h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+        }
+        
+        .update-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 50px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        }
+        
+        .policy-section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .policy-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .policy-section:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .content-page h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .content-page p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .content-page ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+        
+        .content-page ul li {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .content-page ul li:before {
+            content: "•";
+            color: #ffffff;
+            position: absolute;
+            left: 0;
+        }
+        
+        .content-page strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .content-page a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1px;
+        }
+        
+        .content-page a:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        
+        /* Animations */
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.6s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ffffff;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-page {
+                padding: 100px 20px 40px;
+            }
+            
+            .content-page h2 {
+                font-size: 36px;
+            }
+            
+            .content-page h3 {
+                font-size: 20px;
+            }
+            
+            .policy-section {
+                padding: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            
+            .content-page h2 {
+                font-size: 32px;
+            }
+            
+            .content-page h3 {
+                font-size: 18px;
+            }
+            
+            .policy-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">V</div>
+    </div>
+
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="commands.html">Commands</a>
+            <a href="faq.html">FAQ</a>
+            <a href="premium.html">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
+
+    <div class="content-page">
+        <h2>Privacy Policy</h2>
+        
+        <div class="update-date">Last Updated: December 14, 2025</div>
+        
+        <div class="policy-section" id="section1">
+            <h3>1. Data Collection</h3>
+            <p>We collect minimal data necessary for bot functionality:</p>
+            <ul>
+                <li><strong>User IDs:</strong> To identify users for command functionality and settings</li>
+                <li><strong>Server IDs:</strong> To provide server-specific features and settings</li>
+                <li><strong>Command Usage:</strong> To improve bot performance, fix issues, and understand usage patterns</li>
+                <li><strong>Temporary Data:</strong> Some commands may temporarily process data (like images or text) but this is not stored permanently</li>
+                <li><strong>Premium Status:</strong> To track premium feature access for users with valid licenses</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section" id="section2">
+            <h3>2. What We Do NOT Collect</h3>
+            <ul>
+                <li>We do NOT store your Discord messages or conversation history</li>
+                <li>We do NOT collect personal information beyond Discord IDs</li>
+                <li>We do NOT share your data with third parties for marketing purposes</li>
+                <li>We do NOT use cookies or tracking technologies on our website</li>
+                <li>We do NOT collect payment information directly (handled by payment processors)</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section" id="section3">
+            <h3>3. Data Usage</h3>
+            <p>Collected data is used solely for:</p>
+            <ul>
+                <li>Providing and improving bot functionality</li>
+                <li>Fixing bugs and technical issues</li>
+                <li>Understanding usage patterns to enhance user experience</li>
+                <li>Ensuring compliance with our Terms of Service</li>
+                <li>Preventing abuse and malicious activity</li>
+                <li>Providing premium features to eligible users</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section" id="section4">
+            <h3>4. Data Storage and Security</h3>
+            <p>We implement appropriate technical and organizational measures to protect your data:</p>
+            <ul>
+                <li>Data is stored on secure servers with limited access</li>
+                <li>Access is restricted to authorized personnel only</li>
+                <li>Regular security assessments are conducted</li>
+                <li>Data is encrypted in transit using SSL/TLS</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section" id="section5">
+            <h3>5. Third-Party Services</h3>
+            <p>Some commands may interact with third-party services (like cryptocurrency APIs, image processing services, or AI providers). These services have their own privacy policies, and we encourage you to review them. We only share necessary data with these services for command functionality.</p>
+        </div>
+        
+        <div class="policy-section" id="section6">
+            <h3>6. Data Retention</h3>
+            <p>We retain data only as long as necessary for the purposes outlined in this policy:</p>
+            <ul>
+                <li>User IDs and server IDs are retained while the bot is in use</li>
+                <li>Command usage logs are retained for up to 90 days for debugging purposes</li>
+                <li>Temporary processing data is deleted immediately after command execution</li>
+                <li>You can request deletion of your data at any time</li>
+            </ul>
+        </div>
+        
+        <div class="policy-section" id="section7">
+            <h3>7. Your Rights</h3>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Request access to your data</li>
+                <li>Request correction of inaccurate data</li>
+                <li>Request deletion of your data</li>
+                <li>Opt-out of data collection (by ceasing to use the bot)</li>
+                <li>Withdraw consent where applicable</li>
+            </ul>
+            <p>To exercise these rights, contact us through our Discord server.</p>
+        </div>
+        
+        <div class="policy-section" id="section8">
+            <h3>8. Children's Privacy</h3>
+            <p>Our services are not directed to individuals under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.</p>
+        </div>
+        
+        <div class="policy-section" id="section9">
+            <h3>9. International Data Transfers</h3>
+            <p>Our servers are located in the European Union. If you are accessing our services from outside the EU, your data may be transferred to and processed in the EU.</p>
+        </div>
+        
+        <div class="policy-section" id="section10">
+            <h3>10. Changes to This Policy</h3>
+            <p>We may update this privacy policy from time to time. We will notify users of significant changes through our Discord server and by updating the "Last Updated" date at the top of this policy.</p>
+        </div>
+        
+        <div class="policy-section" id="section11">
+            <h3>11. Contact Us</h3>
+            <p>For privacy-related questions, requests, or concerns, contact us on our Discord server: <a href="https://discord.gg/larpfunds">discord.gg/larpfunds</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="faq.html">FAQ</a>
+        </p>
+    </footer>
+
+    <script>
+        // Initial loading animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('fade-out');
+                
+                // Animate policy sections with staggered delays
+                const policySections = document.querySelectorAll('.policy-section');
+                policySections.forEach((section, index) => {
+                    setTimeout(() => {
+                        section.classList.add('visible');
+                    }, index * 80 + 300); // 80ms delay between sections
+                });
+                
+                // Initialize scroll animations
+                initScrollAnimations();
+            }, 800);
+        });
+        
+        // Scroll animation function
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.policy-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Prevent text selection on page
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.closest('a')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vetements+</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta property="og:title" content="vetements">
+    <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
+    <meta property="og:url" content="https://vetements.lol">
+    <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="vetements">
+    <meta name="theme-color" content="#1e1f22">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="vetements">
+    <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
+    <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            cursor: default;
+        }
+        
+        /* Background with blur overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+        
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transform: translateY(-100%);
+            opacity: 0;
+            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .nav-links a:nth-child(1) { animation-delay: 0.6s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.7s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.8s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.9s; }
+        .nav-links a:nth-child(5) { animation-delay: 1.0s; }
+        
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* Premium Hero */
+        .premium-hero {
+            min-height: 100vh;
+            padding: 140px 40px 80px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+        }
+        
+        .premium-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+        }
+        
+        .premium-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+        }
+        
+        /* Pricing Cards */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0 80px;
+            flex-wrap: wrap;
+            perspective: 1200px;
+        }
+        
+        .pricing-card {
+            width: 320px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 40px 30px;
+            position: relative;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .pricing-card.monthly {
+            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+        }
+        
+        .pricing-card.lifetime {
+            animation: cardFloatIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .pricing-card:hover::before {
+            left: 100%;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Monthly Card - with image */
+        .pricing-card.monthly {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .pricing-icon.monthly {
+            width: 80px;
+            height: 80px;
+            background-image: url('https://i.ibb.co/mCcqPgm8/55125afe6f8b.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0 auto 25px;
+        }
+        
+        /* Lifetime Card - with white glowing star effect */
+        .pricing-card.lifetime {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+        }
+        
+        .pricing-card.lifetime::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.05), 
+                rgba(255, 255, 255, 0.1));
+            border-radius: 18px;
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite alternate;
+            opacity: 0.5;
+        }
+        
+        .pricing-card.lifetime:hover::after {
+            opacity: 0.8;
+        }
+        
+        .pricing-card.lifetime:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.1),
+                    0 0 20px rgba(255, 255, 255, 0.05);
+            }
+            to {
+                box-shadow: 
+                    0 0 15px rgba(255, 255, 255, 0.2),
+                    0 0 30px rgba(255, 255, 255, 0.1),
+                    0 0 40px rgba(255, 255, 255, 0.05);
+            }
+        }
+        
+        .pricing-icon.lifetime {
+            font-size: 48px;
+            margin-bottom: 25px;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            animation: starGlow 2s ease-in-out infinite alternate;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.4);
+        }
+        
+        .pricing-icon.lifetime::before {
+            content: '★';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+        
+        .pricing-icon.lifetime::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            animation: starPulse 3s ease-in-out infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes starGlow {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(255, 255, 255, 0.8),
+                    0 0 20px rgba(255, 255, 255, 0.6),
+                    0 0 30px rgba(255, 255, 255, 0.4);
+                transform: scale(1);
+            }
+            to {
+                text-shadow: 
+                    0 0 15px rgba(255, 255, 255, 1),
+                    0 0 25px rgba(255, 255, 255, 0.8),
+                    0 0 35px rgba(255, 255, 255, 0.6),
+                    0 0 45px rgba(255, 255, 255, 0.4);
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes starPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        
+        .pricing-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        
+        .pricing-card.lifetime .pricing-title {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .pricing-subtitle {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .pricing-card.lifetime .price {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .price::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        }
+        
+        .price::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        }
+        
+        .price-currency {
+            font-size: 24px;
+            vertical-align: top;
+            margin-right: 4px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .pricing-card.lifetime .price-currency {
+            color: #ffffff;
+        }
+        
+        .price-period {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        
+        .pricing-card.lifetime .price-period {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 30px 0 35px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14.5px;
+            position: relative;
+            padding-left: 28px;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+        
+        .pricing-card.lifetime .pricing-features li::before {
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        .pricing-button {
+            display: inline-block;
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+            cursor: not-allowed;
+            opacity: 0.7;
+            backdrop-filter: blur(5px);
+        }
+        
+        .pricing-card.lifetime .pricing-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        .pricing-button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: none;
+        }
+        
+        .pricing-card.lifetime .pricing-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        @keyframes cardFloatIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .notification {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px 50px 20px 30px;
+            margin: 0 auto 50px;
+            max-width: 700px;
+            position: relative;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification.hidden {
+            display: none;
+        }
+        
+        .notification-icon {
+            font-size: 24px;
+            margin-top: 2px;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .notification-text {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+        
+        .close-notification {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .close-notification:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Payment Methods */
+        .payment-section {
+            margin: 60px 0 40px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transform: translateY(30px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .payment-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .payment-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .payment-method {
+            padding: 14px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            backdrop-filter: blur(5px);
+        }
+        
+        .payment-method.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        
+        .payment-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: brightness(0) invert(0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover .payment-icon {
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Scroll animations */
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.7s forwards;
+            position: relative;
+            z-index: 1;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ffffff;
+        }
+        
+        /* Parallax scroll effects */
+        .parallax-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .parallax-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .premium-hero {
+                padding: 120px 20px 40px;
+            }
+            
+            .premium-title {
+                font-size: 42px;
+            }
+            
+            .premium-subtitle {
+                font-size: 18px;
+                padding: 0 20px;
+            }
+            
+            .pricing-container {
+                gap: 30px;
+                padding: 0 20px;
+                margin: 30px 0 60px;
+            }
+            
+            .pricing-card {
+                width: 100%;
+                max-width: 400px;
+                transform: translateY(30px);
+            }
+            
+            .pricing-card:hover {
+                transform: translateY(-5px) scale(1.01);
+            }
+            
+            .payment-section {
+                padding: 30px 20px;
+                margin: 40px 20px;
+            }
+            
+            .payment-title {
+                font-size: 24px;
+            }
+            
+            .payment-methods {
+                gap: 10px;
+            }
+            
+            .payment-method {
+                padding: 12px 18px;
+                font-size: 14px;
+                gap: 10px;
+            }
+            
+            .payment-icon {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .notification {
+                padding: 20px 45px 20px 25px;
+                margin: 0 20px 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            
+            .premium-title {
+                font-size: 36px;
+            }
+            
+            .pricing-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">V</div>
+    </div>
+
+    <nav>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="commands.html">Commands</a>
+            <a href="faq.html">FAQ</a>
+            <a href="premium.html" class="active">Premium</a>
+            <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+    </nav>
+
+    <div class="premium-hero">
+        <h1 class="premium-title">Premium</h1>
+        <p class="premium-subtitle">Unlock the full potential of vetements with enhanced capabilities, priority features, and exclusive tools designed to elevate your Discord experience to the next level.</p>
+        
+        <div class="pricing-container">
+            <!-- Monthly Subscription Card -->
+            <div class="pricing-card monthly">
+                <div class="pricing-icon monthly"></div>
+                <h3 class="pricing-title">Monthly Subscription</h3>
+                <p class="pricing-subtitle">Perfect for users who want to test vetements app</p>
+                <div class="price">
+                    <span class="price-currency">$</span>3.99
+                </div>
+                <div class="price-period">per month</div>
+                <ul class="pricing-features">
+                    <li>Enhanced Clipboard Limits</li>
+                    <li>Higher Generation Limits</li>
+                    <li>Exclusive Premium Commands</li>
+                    <li>Priority Support</li>
+                    <li>All Premium Features</li>
+                </ul>
+                <a href="#" class="pricing-button">Coming Soon</a>
+            </div>
+            
+            <!-- Lifetime Subscription Card -->
+            <div class="pricing-card lifetime">
+                <div class="pricing-icon lifetime">★</div>
+                <h3 class="pricing-title">Lifetime Subscription</h3>
+                <p class="pricing-subtitle">One-time payment for permanent premium access</p>
+                <div class="price">
+                    <span class="price-currency">$</span>9.99
+                </div>
+                <div class="price-period">one-time payment</div>
+                <ul class="pricing-features">
+                    <li>Everything in Monthly</li>
+                    <li>Lifetime Access Forever</li>
+                    <li>Early Access to Beta Features</li>
+                    <li>Priority Updates</li>
+                    <li>No Recurring Payments</li>
+                </ul>
+                <a href="#" class="pricing-button">Coming Soon</a>
+            </div>
+        </div>
+        
+        <div class="notification" id="launchNotification">
+            <div class="notification-icon">🚀</div>
+            <div class="notification-content">
+                <div class="notification-title">Premium Launching Soon</div>
+                <div class="notification-text">We're currently developing our premium tier with exclusive features. Join our Discord to stay updated and be the first to know when it's available.</div>
+            </div>
+            <button class="close-notification" id="closeNotification">×</button>
+        </div>
+        
+        <div class="payment-section parallax-section">
+            <h3 class="payment-title">Accepted Payment Methods</h3>
+            <div class="payment-methods">
+                <div class="payment-method parallax-section">
+                    <img src="https://i.ibb.co/DfpGhscp/image.png" class="payment-icon" alt="BLIK">
+                    <span>BLIK</span>
+                </div>
+                <div class="payment-method parallax-section">
+                    <img src="https://img.icons8.com/?size=80&id=AQd5OluNqpNW&format=png" class="payment-icon" alt="Cryptocurrency">
+                    <span>Cryptocurrency</span>
+                </div>
+                <div class="payment-method parallax-section">
+                    <img src="https://img.icons8.com/?size=80&id=VOv2ShpC3Qaw&format=png" class="payment-icon" alt="Credit Card">
+                    <span>Credit Card</span>
+                </div>
+                <div class="payment-method parallax-section">
+                    <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
+                    <span>paysafecard</span>
+                </div>
+                <div class="payment-method parallax-section">
+                    <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
+                    <span>Robux</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 60px;">
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="parallax-section">
+                Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 vetements • Developed by @yuw</p>
+        <p style="margin-top: 10px;">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="faq.html">FAQ</a>
+        </p>
+    </footer>
+
+    <script>
+        const closeButton = document.getElementById('closeNotification');
+        const notification = document.getElementById('launchNotification');
+        
+        // Initial loading animation
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('fade-out');
+                
+                // Animate parallax sections with staggered delays
+                setTimeout(() => {
+                    const parallaxSections = document.querySelectorAll('.parallax-section');
+                    parallaxSections.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.classList.add('visible');
+                        }, index * 150);
+                    });
+                }, 500);
+                
+                // Initialize scroll animations
+                initScrollAnimations();
+            }, 800);
+        });
+        
+        // Scroll animation function
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.parallax-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Parallax scroll effect
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                const cards = document.querySelectorAll('.pricing-card');
+                cards.forEach((card, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    card.style.transform = `translateY(${rate * speed}px)`;
+                });
+                
+                const parallaxSections = document.querySelectorAll('.parallax-section:not(.visible)');
+                parallaxSections.forEach((section, index) => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.8) {
+                        setTimeout(() => {
+                            section.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            });
+        }
+        
+        // Prevent text selection on page
+        document.addEventListener('mousedown', function(e) {
+            if (!e.target.classList.contains('pricing-button') && 
+                !e.target.classList.contains('close-notification')) {
+                e.preventDefault();
+            }
+        });
+        
+        // Disable button clicks
+        document.querySelectorAll('.pricing-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+        
+        closeButton.addEventListener('click', function() {
+            notification.classList.add('hidden');
+            localStorage.setItem('premiumNotificationClosed', 'true');
+        });
+        
+        window.addEventListener('load', function() {
+            const notificationClosed = localStorage.getItem('premiumNotificationClosed');
+            if (notificationClosed === 'true') {
+                notification.classList.add('hidden');
+            }
+        });
+        
+        // Smooth scroll reveal on load
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+    </script>
+</body>
+</html>
