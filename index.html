@@ -800,7 +800,11 @@
         });
 
         // Live stats (pulls from secure backend endpoint)
-        const STATS_ENDPOINT = window.VETEMENTS_STATS_URL || 'http://127.0.0.1:8787/stats';
+        const DEFAULT_STATS_ENDPOINT =
+            window.location.protocol === 'https:'
+                ? '/api/stats' // avoid mixed-content on https
+                : 'http://127.0.0.1:8787/stats';
+        const STATS_ENDPOINT = window.VETEMENTS_STATS_URL || DEFAULT_STATS_ENDPOINT;
         const STAT_REFRESH_MS = 12000;
         const statEls = {
             servers: document.getElementById('stat-servers'),
