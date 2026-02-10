@@ -1092,16 +1092,20 @@
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
 
-                allCommands = Array.isArray(data.commands) ? data.commands.map(cmd => ({
-                    name: cmd.name,
-                    desc: cmd.description || cmd.desc || '',
-                    category: cmd.category || 'General',
-                    type: cmd.type || 'free',
-                    icon: cmd.icon,
-                    tooltip: cmd.tooltip,
-                    prefixForms: Array.isArray(cmd.prefixForms) ? cmd.prefixForms : [],
-                    usage: cmd.usage ?? ''
-                })) : [];
+                allCommands = Array.isArray(data.commands) ? data.commands.map(cmd => {
+                    const raw = cmd.prefixForms;
+                    const prefixForms = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? [raw] : []);
+                    return {
+                        name: cmd.name,
+                        desc: cmd.description || cmd.desc || '',
+                        category: cmd.category || 'General',
+                        type: cmd.type || 'free',
+                        icon: cmd.icon,
+                        tooltip: cmd.tooltip,
+                        prefixForms,
+                        usage: cmd.usage ?? ''
+                    };
+                }) : [];
 
                 const categories = [...new Set(allCommands.map(c => c.category))];
                 totalCommandCount = data.totals?.commands ?? allCommands.length;
@@ -1248,13 +1252,15 @@
                         </div>
                     ` : '';
 
-                    const prefixTags = (cmd.prefixForms && cmd.prefixForms.length) ? cmd.prefixForms : [];
+                    // Pełna tablica prefixForms z API – wyświetlamy WSZYSTKIE aliasy (pętla po całej tablicy, nie tylko pierwszy)
+                    const rawForms = cmd.prefixForms;
+                    const allPrefixForms = Array.isArray(rawForms) ? [...rawForms] : (typeof rawForms === 'string' && rawForms ? [rawForms] : []);
                     const fallbackPrefix = cmd.name.startsWith('/') ? ',' + cmd.name.slice(1) : ',' + cmd.name;
-                    const displayPrefixes = prefixTags.length ? prefixTags : [fallbackPrefix];
+                    const formsToShow = allPrefixForms.length ? allPrefixForms : [fallbackPrefix];
                     const prefixRowHTML = `
                         <div class="command-prefix-row">
-                            <span class="command-prefix-label">Prefix / Aliases</span>
-                            ${displayPrefixes.map(p => `<span class="prefix-tag" data-copy="${escapeAttr(p)}" onclick="copyFromTag(this)">${escapeHtml(p)}</span>`).join('')}
+                            <span class="command-prefix-label">PREFIX / ALIASES</span>
+                            ${formsToShow.map(form => `<span class="prefix-tag" data-copy="${escapeAttr(form)}" onclick="copyFromTag(this)">${escapeHtml(form)}</span>`).join('')}
                         </div>
                     `;
                     const usageHTML = (cmd.usage && String(cmd.usage).trim()) ? `
