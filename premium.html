@@ -42,7 +42,6 @@
             cursor: default;
         }
         
-        /* Background with blur overlay */
         body::before {
             content: '';
             position: fixed;
@@ -69,7 +68,6 @@
             z-index: -1;
         }
         
-        /* Loading animation */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -109,7 +107,6 @@
             50% { transform: scale(1.05); opacity: 0.8; }
         }
         
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -168,7 +165,6 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
         
-        /* Premium Hero */
         .premium-hero {
             min-height: 100vh;
             padding: 140px 40px 80px;
@@ -205,7 +201,6 @@
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
         }
         
-        /* Pricing Cards */
         .pricing-container {
             display: flex;
             justify-content: center;
@@ -260,7 +255,6 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
         
-        /* Monthly Card - with image */
         .pricing-card.monthly {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -276,7 +270,6 @@
             margin: 0 auto 25px;
         }
         
-        /* Lifetime Card - with white glowing star effect */
         .pricing-card.lifetime {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -483,16 +476,18 @@
         }
         
         .pricing-features li::before {
-            content: '✓';
+            content: '';
             position: absolute;
             left: 0;
-            color: #FFFFFF;
-            font-weight: 600;
+            top: 12px;
+            width: 14px;
+            height: 14px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") no-repeat center;
+            background-size: contain;
         }
         
         .pricing-card.lifetime .pricing-features li::before {
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            filter: drop-shadow(0 0 4px rgba(255,255,255,0.4));
         }
         
         .pricing-button {
@@ -562,8 +557,15 @@
         }
         
         .notification-icon {
-            font-size: 24px;
             margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .notification-icon img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
         }
         
         .notification-content {
@@ -608,7 +610,6 @@
             border-color: rgba(255, 255, 255, 0.15);
         }
         
-        /* Payment Methods */
         .payment-section {
             margin: 60px 0 40px;
             padding: 40px;
@@ -681,7 +682,6 @@
             filter: brightness(0) invert(1);
         }
         
-        /* Scroll animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -702,7 +702,6 @@
             }
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px;
@@ -729,7 +728,6 @@
             color: #ffffff;
         }
         
-        /* Parallax scroll effects */
         .parallax-section {
             opacity: 0;
             transform: translateY(50px);
@@ -741,7 +739,6 @@
             transform: translateY(0);
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .premium-hero {
                 padding: 120px 20px 40px;
@@ -801,8 +798,12 @@
             }
             
             .nav-links a {
-                padding: 6px 12px;
+                padding: 10px 14px;
                 font-size: 13px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .notification {
@@ -851,7 +852,6 @@
         <p class="premium-subtitle">Unlock the full potential of vetements with enhanced capabilities, priority features, and exclusive tools designed to elevate your Discord experience to the next level.</p>
         
         <div class="pricing-container">
-            <!-- Monthly Subscription Card -->
             <div class="pricing-card monthly">
                 <div class="pricing-icon monthly"></div>
                 <h3 class="pricing-title">Monthly Subscription</h3>
@@ -869,8 +869,6 @@
                 </ul>
                 <a href="#" class="pricing-button">Coming Soon</a>
             </div>
-            
-            <!-- Lifetime Subscription Card -->
             <div class="pricing-card lifetime">
                 <div class="pricing-icon lifetime">★</div>
                 <h3 class="pricing-title">Lifetime Subscription</h3>
@@ -891,7 +889,7 @@
         </div>
         
         <div class="notification" id="launchNotification">
-            <div class="notification-icon">🚀</div>
+            <div class="notification-icon"><img src="https://img.icons8.com/?size=32&id=60984&format=png" alt="" width="24" height="24" style="filter:brightness(0) invert(1);"></div>
             <div class="notification-content">
                 <div class="notification-title">Premium Launching Soon</div>
                 <div class="notification-text">We're currently developing our premium tier with exclusive features. Join our Discord to stay updated and be the first to know when it's available.</div>
@@ -942,30 +940,24 @@
     </footer>
 
     <script>
-        const closeButton = document.getElementById('closeNotification');
-        const notification = document.getElementById('launchNotification');
+        var closeButton = document.getElementById('closeNotification');
+        var notification = document.getElementById('launchNotification');
         
-        // Initial loading animation
         window.addEventListener('load', function() {
-            setTimeout(() => {
+            setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
-                
-                // Animate parallax sections with staggered delays
-                setTimeout(() => {
-                    const parallaxSections = document.querySelectorAll('.parallax-section');
-                    parallaxSections.forEach((el, index) => {
-                        setTimeout(() => {
-                            el.classList.add('visible');
-                        }, index * 150);
-                    });
+                setTimeout(function() {
+                    var parallaxSections = document.querySelectorAll('.parallax-section');
+                    for (var i = 0; i < parallaxSections.length; i++) {
+                        (function(idx, el) {
+                            setTimeout(function() { el.classList.add('visible'); }, idx * 150);
+                        })(i, parallaxSections[i]);
+                    }
                 }, 500);
-                
-                // Initialize scroll animations
                 initScrollAnimations();
             }, 800);
         });
         
-        // Scroll animation function
         function initScrollAnimations() {
             const elements = document.querySelectorAll('.parallax-section');
             
@@ -980,11 +972,10 @@
                 rootMargin: '0px 0px -50px 0px'
             });
             
-            elements.forEach(element => {
+            elements.forEach(function(element) {
                 observer.observe(element);
             });
             
-            // Parallax scroll effect
             window.addEventListener('scroll', function() {
                 const scrolled = window.pageYOffset;
                 const rate = scrolled * -0.5;
@@ -1007,7 +998,6 @@
             });
         }
         
-        // Prevent text selection on page
         document.addEventListener('mousedown', function(e) {
             if (!e.target.classList.contains('pricing-button') && 
                 !e.target.classList.contains('close-notification')) {
@@ -1015,9 +1005,8 @@
             }
         });
         
-        // Disable button clicks
-        document.querySelectorAll('.pricing-button').forEach(button => {
-            button.addEventListener('click', (e) => {
+        document.querySelectorAll('.pricing-button').forEach(function(button) {
+            button.addEventListener('click', function(e) {
                 e.preventDefault();
             });
         });
@@ -1034,8 +1023,7 @@
             }
         });
         
-        // Smooth scroll reveal on load
-        setTimeout(() => {
+        setTimeout(function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 100);
     </script>
