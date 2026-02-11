@@ -39,7 +39,6 @@
             cursor: default;
         }
         
-        /* Background with blur overlay */
         body::before {
             content: '';
             position: fixed;
@@ -66,7 +65,6 @@
             z-index: -1;
         }
         
-        /* Loading animation */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -106,7 +104,6 @@
             50% { transform: scale(1.05); opacity: 0.8; }
         }
         
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -165,7 +162,6 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
         
-        /* Content Page */
         .content-page {
             min-height: 100vh;
             padding: 120px 40px 80px;
@@ -300,7 +296,6 @@
             border-bottom-color: #ffffff;
         }
         
-        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -321,7 +316,6 @@
             }
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px;
@@ -348,7 +342,6 @@
             color: #ffffff;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .content-page {
                 padding: 100px 20px 40px;
@@ -375,8 +368,12 @@
             }
             
             .nav-links a {
-                padding: 6px 12px;
+                padding: 10px 14px;
                 font-size: 13px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
         }
         
@@ -565,25 +562,19 @@
     </footer>
 
     <script>
-        // Initial loading animation
         window.addEventListener('load', function() {
-            setTimeout(() => {
+            setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
-                
-                // Animate terms sections with staggered delays
-                const termsSections = document.querySelectorAll('.terms-section');
-                termsSections.forEach((section, index) => {
-                    setTimeout(() => {
+                var termsSections = document.querySelectorAll('.terms-section');
+                termsSections.forEach(function(section, index) {
+                    setTimeout(function() {
                         section.classList.add('visible');
-                    }, index * 80 + 400); // 80ms delay between sections
+                    }, index * 80 + 400);
                 });
-                
-                // Initialize scroll animations
                 initScrollAnimations();
             }, 800);
         });
         
-        // Scroll animation function
         function initScrollAnimations() {
             const elements = document.querySelectorAll('.terms-section');
             
@@ -603,7 +594,6 @@
             });
         }
         
-        // Prevent text selection on page
         document.addEventListener('mousedown', function(e) {
             if (!e.target.closest('a')) {
                 e.preventDefault();
