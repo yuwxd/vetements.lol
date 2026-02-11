@@ -1402,14 +1402,19 @@
             if (text) copyCommand(text);
         }
 
+        function normalizeSearch(s) {
+            if (s == null) return '';
+            return String(s).replace(/^\//, '').replace(/\s+/g, '').toLowerCase().trim();
+        }
+        
         function filterList(list, category, term) {
+            var normTerm = normalizeSearch(term);
             return list
                 .filter(c => c.category === category)
                 .filter(c => {
-                    if (!term) return true;
-                    const t = term.toLowerCase().trim();
-                    var nameOnly = (c.name || '').replace(/^\//, '').toLowerCase();
-                    return nameOnly.includes(t);
+                    if (!normTerm) return true;
+                    var normName = normalizeSearch(c.name || '');
+                    return normName.indexOf(normTerm) === 0;
                 });
         }
 
