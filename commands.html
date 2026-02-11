@@ -1252,6 +1252,13 @@
             clickCooldown = true;
             setTimeout(() => (clickCooldown = false), 150);
 
+            var searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.blur();
+                if (typeof updateSearchActiveState === 'function') updateSearchActiveState();
+            }
+
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
             const buttons = document.querySelectorAll('.category-btn');
             if (category === 'all') {
@@ -1274,8 +1281,7 @@
                 pageSubtitle.textContent = `Browse all ${category.toLowerCase()} commands. Use the search to filter within this category.`;
             }
 
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            renderCommands(category, searchTerm);
+            renderCommands(category, '');
         }
 
         function renderCommands(category, searchTerm = '') {
