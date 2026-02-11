@@ -118,7 +118,7 @@
             right: 0;
             width: 100%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 20px 40px;
             background: rgba(255, 255, 255, 0.05);
@@ -128,54 +128,6 @@
             transform: translateY(-100%);
             opacity: 0;
             animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
-        }
-        
-        .nav-spacer {
-            flex: 1;
-            min-width: 0;
-        }
-        
-        .nav-search-slot {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-left: 20px;
-            pointer-events: none;
-        }
-        
-        .nav-search-slot .search-sticky {
-            pointer-events: auto;
-        }
-        
-        .search-sticky {
-            max-width: 280px;
-            width: 100%;
-            margin: 0;
-            position: fixed;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            animation: none;
-            transition: left 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), top 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), width 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), opacity 0.25s ease, visibility 0s linear 0.25s;
-        }
-        
-        .search-sticky.no-transition {
-            transition: none;
-        }
-        
-        .search-sticky.is-visible {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transition: left 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), top 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), width 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), opacity 0.25s ease, visibility 0s;
-        }
-        
-        .search-sticky.is-visible .search-input {
-            height: 100%;
-            min-height: 0;
         }
         
         .nav-links {
@@ -260,23 +212,85 @@
             background: rgba(255, 255, 255, 0.25);
         }
         
-        .sidebar-header {
-            margin-bottom: 30px;
-            padding: 0 10px;
+        .sidebar-search-block {
+            margin-bottom: 24px;
+            padding: 14px 12px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
         
-        .sidebar-title {
+        .sidebar-search-block:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .sidebar-search-block.active {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.07) 100%);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .sidebar-search-block.active::after {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: whiteDotPulse 1.5s ease-in-out infinite;
+        }
+        
+        .sidebar-search-block .sidebar-title {
             font-size: 16px;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             letter-spacing: -0.5px;
         }
         
-        .sidebar-subtitle {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 400;
+        .sidebar-search-wrap {
+            position: relative;
+            width: 100%;
+        }
+        
+        .sidebar-search-input {
+            width: 100%;
+            padding: 10px 36px 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.25s ease;
+        }
+        
+        .sidebar-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .sidebar-search-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .sidebar-search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            filter: brightness(0) invert(0.6);
+            pointer-events: none;
         }
         
         .category-list {
@@ -951,12 +965,6 @@
             }
         }
         
-        @media (max-width: 900px) {
-            .nav-search-slot {
-                display: none;
-            }
-        }
-        
         @media (max-width: 768px) {
             .page-title {
                 font-size: 36px;
@@ -980,9 +988,9 @@
                 gap: 10px;
             }
             
-            .search-input {
-                min-height: 48px;
-                padding: 14px 48px 14px 18px;
+            .sidebar-search-input {
+                min-height: 44px;
+                padding: 12px 40px 12px 14px;
             }
             
             .category-btn {
@@ -1028,7 +1036,6 @@
     </div>
 
     <nav>
-        <div class="nav-spacer"></div>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="commands.html" class="active">Commands</a>
@@ -1036,19 +1043,16 @@
             <a href="premium.html">Premium</a>
             <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
         </div>
-        <div class="nav-search-slot">
-            <div class="search-container search-sticky" id="searchStickyWrap" aria-hidden="true">
-                <input type="text" class="search-input" id="searchInputSticky" placeholder="Search commands..." tabindex="-1">
-                <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="">
-            </div>
-        </div>
     </nav>
 
     <div class="main-container">
         <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2 class="sidebar-title">Categories</h2>
-                <p class="sidebar-subtitle">Browse commands by category</p>
+            <div class="sidebar-search-block" id="sidebarSearchBlock">
+                <h2 class="sidebar-title">Search commands</h2>
+                <div class="sidebar-search-wrap">
+                    <input type="text" class="sidebar-search-input" id="searchInput" placeholder="Search by command name..." autocomplete="off">
+                    <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="sidebar-search-icon" alt="">
+                </div>
             </div>
             <ul class="category-list" id="categoryList"></ul>
         </aside>
@@ -1074,10 +1078,6 @@
                     <div class="stat-number" id="visibleCommands">0</div>
                     <div class="stat-label">Currently Showing</div>
                 </div>
-            </div>
-            <div class="search-container" id="searchContainer">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
-                <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="Search">
             </div>
 
             <div id="commandsContainer"></div>
@@ -1442,9 +1442,7 @@
         }
 
         var searchInputEl = document.getElementById('searchInput');
-        var searchInputStickyEl = document.getElementById('searchInputSticky');
-        var searchStickyWrap = document.getElementById('searchStickyWrap');
-        var searchContainerEl = document.getElementById('searchContainer');
+        var sidebarSearchBlock = document.getElementById('sidebarSearchBlock');
         var searchRAF = null;
         
         function applySearchFilter() {
@@ -1455,134 +1453,50 @@
             });
         }
         
-        function syncSearchToSticky() {
-            if (searchInputStickyEl) searchInputStickyEl.value = searchInputEl ? searchInputEl.value : '';
+        function updateSearchActiveState() {
+            if (!sidebarSearchBlock) return;
+            var hasFocus = document.activeElement === searchInputEl;
+            var hasValue = searchInputEl && searchInputEl.value.trim().length > 0;
+            sidebarSearchBlock.classList.toggle('active', hasFocus || hasValue);
         }
         
-        function syncSearchFromSticky() {
-            if (searchInputEl) searchInputEl.value = searchInputStickyEl ? searchInputStickyEl.value : '';
-        }
-        
-        searchInputEl.addEventListener('input', function() {
-            if (isLoading) return;
-            syncSearchToSticky();
-            applySearchFilter();
-        });
-        
-        if (searchInputStickyEl) {
-            searchInputStickyEl.addEventListener('input', function() {
+        if (searchInputEl) {
+            searchInputEl.addEventListener('input', function() {
                 if (isLoading) return;
-                syncSearchFromSticky();
+                updateSearchActiveState();
                 applySearchFilter();
             });
+            searchInputEl.addEventListener('focus', updateSearchActiveState);
+            searchInputEl.addEventListener('blur', updateSearchActiveState);
         }
         
-        var navEl = document.querySelector('nav');
-        var navSearchSlot = document.querySelector('.nav-search-slot');
-        var stickyVisible = false;
-        var stickyAnimating = false;
-        var STICKY_ANIM_MS = 320;
-        var HYSTERESIS_PX = 18;
-        
-        function getStickyTarget(contentRect) {
-            if (!navEl) return null;
-            var navRect = navEl.getBoundingClientRect();
-            var barH = contentRect.height;
-            var barW = Math.min(contentRect.width, 280);
-            var rightHalfCenter = navRect.left + (navRect.right - navRect.left) * 0.75;
-            var targetLeft = rightHalfCenter - barW / 2;
-            var targetTop = navRect.top + (navRect.height - barH) / 2 + 2;
-            targetLeft = Math.max(navRect.left + 12, Math.min(navRect.right - barW - 12, targetLeft));
-            return { left: targetLeft, top: targetTop, width: barW, height: barH };
-        }
-        
-        function updateStickyState() {
-            if (!searchContainerEl || !searchStickyWrap || !navEl) return;
-            var contentRect = searchContainerEl.getBoundingClientRect();
-            var top = contentRect.top;
-            var navHeight = navEl.getBoundingClientRect().height;
-            var showThreshold = navHeight;
-            var hideThreshold = navHeight + HYSTERESIS_PX;
-            
-            if (top <= showThreshold && !stickyVisible && !stickyAnimating) {
-                var target = getStickyTarget(contentRect);
-                if (!target) return;
-                stickyVisible = true;
-                stickyAnimating = true;
-                syncSearchToSticky();
-                searchStickyWrap.setAttribute('aria-hidden', 'false');
-                if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '0');
-                
-                searchStickyWrap.classList.add('no-transition');
-                searchStickyWrap.style.left = contentRect.left + 'px';
-                searchStickyWrap.style.top = contentRect.top + 'px';
-                searchStickyWrap.style.width = contentRect.width + 'px';
-                searchStickyWrap.style.height = contentRect.height + 'px';
-                searchStickyWrap.classList.add('is-visible');
-                
-                requestAnimationFrame(function() {
-                    requestAnimationFrame(function() {
-                        searchStickyWrap.classList.remove('no-transition');
-                        searchStickyWrap.style.left = target.left + 'px';
-                        searchStickyWrap.style.top = target.top + 'px';
-                        searchStickyWrap.style.width = target.width + 'px';
-                        searchStickyWrap.style.height = target.height + 'px';
-                        setTimeout(function() {
-                            stickyAnimating = false;
-                        }, STICKY_ANIM_MS);
-                    });
-                });
-            } else if (top > hideThreshold && stickyVisible && !stickyAnimating) {
-                stickyVisible = false;
-                stickyAnimating = true;
-                var contentRectNow = searchContainerEl.getBoundingClientRect();
-                searchStickyWrap.style.left = contentRectNow.left + 'px';
-                searchStickyWrap.style.top = contentRectNow.top + 'px';
-                searchStickyWrap.style.width = contentRectNow.width + 'px';
-                searchStickyWrap.style.height = contentRectNow.height + 'px';
-                var hideDone = false;
-                function finishHide() {
-                    if (hideDone) return;
-                    hideDone = true;
-                    searchStickyWrap.classList.remove('is-visible');
-                    searchStickyWrap.setAttribute('aria-hidden', 'true');
-                    if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '-1');
-                    searchStickyWrap.style.left = '';
-                    searchStickyWrap.style.top = '';
-                    searchStickyWrap.style.width = '';
-                    searchStickyWrap.style.height = '';
-                    stickyAnimating = false;
-                }
-                setTimeout(finishHide, STICKY_ANIM_MS);
+        document.addEventListener('keydown', function(e) {
+            if (!searchInputEl) return;
+            var tag = document.activeElement && document.activeElement.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement.isContentEditable) {
+                if (document.activeElement !== searchInputEl) return;
             }
-        }
-        
-        if (searchContainerEl && searchStickyWrap && navEl) {
-            var scrollTicking = false;
-            window.addEventListener('scroll', function() {
-                if (scrollTicking) return;
-                scrollTicking = true;
-                requestAnimationFrame(function() {
-                    scrollTicking = false;
-                    updateStickyState();
-                });
-            }, { passive: true });
-            window.addEventListener('resize', function() {
-                if (stickyVisible && !stickyAnimating) {
-                    var contentRect = searchContainerEl.getBoundingClientRect();
-                    var target = getStickyTarget(contentRect);
-                    if (target) {
-                        searchStickyWrap.style.left = target.left + 'px';
-                        searchStickyWrap.style.top = target.top + 'px';
-                        searchStickyWrap.style.width = target.width + 'px';
-                        searchStickyWrap.style.height = target.height + 'px';
-                    }
-                }
-            });
-        }
+            if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return;
+            if (e.key === ' ' && document.activeElement !== searchInputEl) {
+                e.preventDefault();
+                searchInputEl.focus();
+                searchInputEl.value += ' ';
+                updateSearchActiveState();
+                applySearchFilter();
+                return;
+            }
+            if (document.activeElement === searchInputEl) return;
+            var isPrintable = !e.repeat && e.key >= ' ' && e.key <= '~';
+            if (!isPrintable) return;
+            e.preventDefault();
+            searchInputEl.focus();
+            searchInputEl.value += e.key;
+            updateSearchActiveState();
+            applySearchFilter();
+        });
 
         document.addEventListener('mousedown', function(e) {
-            if (!e.target.classList.contains('search-input') && 
+            if (!e.target.classList.contains('sidebar-search-input') && 
                 !e.target.classList.contains('command-name') && 
                 !e.target.classList.contains('copy-btn') && 
                 !e.target.classList.contains('copy-icon') &&
