@@ -39,7 +39,6 @@
             cursor: default;
         }
         
-        /* Enable selection for specific elements */
         .command-name, input, button {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -47,7 +46,6 @@
             user-select: text;
         }
         
-        /* Background with blur overlay */
         body::before {
             content: '';
             position: fixed;
@@ -74,7 +72,6 @@
             z-index: -1;
         }
         
-        /* Loading animation */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -114,7 +111,6 @@
             50% { transform: scale(1.05); opacity: 0.8; }
         }
         
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -173,14 +169,12 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
         
-        /* Main Layout */
         .main-container {
             display: flex;
             min-height: calc(100vh - 80px);
             padding-top: 80px;
         }
         
-        /* Sidebar */
         .sidebar {
             width: 280px;
             padding: 30px 20px;
@@ -343,7 +337,6 @@
             color: #ffffff;
         }
         
-        /* Content Area */
         .content {
             flex: 1;
             margin-left: 280px;
@@ -389,7 +382,6 @@
             max-width: 600px;
         }
         
-        /* Search */
         .search-container {
             max-width: 600px;
             margin-bottom: 40px;
@@ -434,7 +426,6 @@
             pointer-events: none;
         }
         
-        /* Commands Grid */
         .commands-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -492,6 +483,7 @@
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
             transform: translateY(10px);
+            contain: layout style;
         }
         
         .command-item.visible {
@@ -593,7 +585,6 @@
             word-break: break-word;
         }
         
-        /* Command Icons Container */
         .command-icons {
             display: flex;
             align-items: center;
@@ -601,7 +592,6 @@
             margin-left: 15px;
         }
         
-        /* Icon base styles */
         .command-icon {
             width: 18px;
             height: 18px;
@@ -623,7 +613,6 @@
             transform: scale(1.1);
         }
         
-        /* Free icon */
         .free-icon img {
             filter: brightness(0) invert(0.7);
         }
@@ -632,7 +621,6 @@
             filter: brightness(0) invert(1);
         }
         
-        /* Premium icon */
         .premium-icon img {
             filter: brightness(0) invert(0.9) drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
         }
@@ -641,7 +629,6 @@
             filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
         }
         
-        /* Tooltip */
         .command-icon .tooltip {
             position: absolute;
             bottom: 100%;
@@ -680,7 +667,6 @@
             transform: translateX(-50%) translateY(-4px);
         }
         
-        /* Copy button */
         .copy-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -715,7 +701,6 @@
             transform: scale(1.1);
         }
         
-        /* Stats */
         .stats-container {
             display: flex;
             gap: 20px;
@@ -756,7 +741,6 @@
             letter-spacing: 1px;
         }
         
-        /* Command Loading Animation */
         .command-loading {
             display: flex;
             align-items: center;
@@ -792,7 +776,6 @@
             40% { transform: scale(1); opacity: 1; }
         }
         
-        /* Notification */
         .copied-notification {
             position: fixed;
             bottom: 30px;
@@ -827,7 +810,6 @@
             filter: brightness(0) invert(1);
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px;
@@ -856,7 +838,6 @@
             color: #ffffff;
         }
         
-        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -884,7 +865,6 @@
             }
         }
         
-        /* Responsive */
         @media (max-width: 1024px) {
             .main-container {
                 flex-direction: column;
@@ -927,17 +907,43 @@
             }
             
             .nav-links {
-                gap: 10px;
+                gap: 8px;
             }
             
             .nav-links a {
-                padding: 6px 12px;
+                padding: 10px 14px;
                 font-size: 13px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .stats-container {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .search-input {
+                min-height: 48px;
+                padding: 14px 48px 14px 18px;
+            }
+            
+            .category-btn {
+                min-height: 48px;
+                padding: 14px 18px;
+            }
+            
+            .copy-btn {
+                min-width: 44px;
+                min-height: 44px;
+            }
+            
+            .prefix-tag {
+                min-height: 36px;
+                padding: 8px 12px;
+                display: inline-flex;
+                align-items: center;
             }
             
             .copied-notification {
@@ -981,9 +987,7 @@
                 <h2 class="sidebar-title">Categories</h2>
                 <p class="sidebar-subtitle">Browse commands by category</p>
             </div>
-            <ul class="category-list" id="categoryList">
-                <!-- Categories will be generated by JavaScript -->
-            </ul>
+            <ul class="category-list" id="categoryList"></ul>
         </aside>
 
         <main class="content">
@@ -1015,14 +1019,12 @@
                 <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="Search">
             </div>
 
-            <div id="commandsContainer">
-                <!-- Commands will be loaded here by JavaScript -->
-            </div>
+            <div id="commandsContainer"></div>
         </main>
     </div>
 
     <div class="copied-notification" id="copiedNotification">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/checked.png" class="check-icon" alt="✓">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/checked.png" class="check-icon" alt="">
         <span>Copied to clipboard</span>
     </div>
 
@@ -1036,12 +1038,13 @@
     </footer>
 
     <script>
-        // Domyślnie korzystaj z workers.dev aby ominąć WAF; można nadpisać VETEMENTS_COMMANDS_URL
         const DEFAULT_COMMANDS_ENDPOINT =
             window.location.protocol === 'https:'
                 ? 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands'
-                : 'http://127.0.0.1:8787/commands';
-        const COMMANDS_ENDPOINT = window.VETEMENTS_COMMANDS_URL || DEFAULT_COMMANDS_ENDPOINT;
+                : 'http://127.0.0.1:8787/api/commands';
+        function getCommandsEndpoint() {
+            return window.VETEMENTS_COMMANDS_URL || DEFAULT_COMMANDS_ENDPOINT;
+        }
         const iconDefaults = {
             free: {
                 url: 'https://i.ibb.co/Jj3XFC41/32056e299ce2.png',
@@ -1058,7 +1061,7 @@
         };
 
         const STALE_MINUTES = 10;
-        const REFRESH_INTERVAL_MS = 60000; // 60s
+        const REFRESH_INTERVAL_MS = 60000;
         let currentCategory = 'all';
         let allCommands = [];
         let totalCommandCount = 0;
@@ -1088,13 +1091,13 @@
                 showLoading();
             }
             try {
-                const res = await fetch(COMMANDS_ENDPOINT, { cache: 'no-store', headers: { 'Accept': 'application/json' } });
+                const res = await fetch(getCommandsEndpoint(), { cache: 'no-store', headers: { 'Accept': 'application/json' } });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
 
                 allCommands = Array.isArray(data.commands) ? data.commands.map(cmd => {
                     const raw = cmd.prefixForms;
-                    const prefixForms = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? [raw] : []);
+                    const prefixForms = Array.isArray(raw) ? [...raw] : (typeof raw === 'string' && raw ? [raw] : []);
                     return {
                         name: cmd.name,
                         desc: cmd.description || cmd.desc || '',
@@ -1114,7 +1117,9 @@
 
                 updateStats(allCommands.length);
                 createCategoryList(categories);
-                renderCommands('all');
+                var searchEl = document.getElementById('searchInput');
+                var searchTerm = searchEl ? searchEl.value.trim().toLowerCase() : '';
+                renderCommands(currentCategory, searchTerm);
             } catch (err) {
                 if (!silent) {
                     console.error('Failed to fetch commands:', err);
@@ -1252,7 +1257,6 @@
                         </div>
                     ` : '';
 
-                    // Pełna tablica prefixForms z API – wyświetlamy WSZYSTKIE aliasy (pętla po całej tablicy, nie tylko pierwszy)
                     const rawForms = cmd.prefixForms;
                     const allPrefixForms = Array.isArray(rawForms) ? [...rawForms] : (typeof rawForms === 'string' && rawForms ? [rawForms] : []);
                     const fallbackPrefix = cmd.name.startsWith('/') ? ',' + cmd.name.slice(1) : ',' + cmd.name;
@@ -1377,9 +1381,15 @@
             document.querySelectorAll('.command-item').forEach(el => observer.observe(el));
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
+        var searchInputEl = document.getElementById('searchInput');
+        var searchRAF = null;
+        searchInputEl.addEventListener('input', function(e) {
             if (isLoading) return;
-            filterCategory(currentCategory, e.target.value.toLowerCase());
+            if (searchRAF) cancelAnimationFrame(searchRAF);
+            searchRAF = requestAnimationFrame(function() {
+                searchRAF = null;
+                filterCategory(currentCategory);
+            });
         });
 
         document.addEventListener('mousedown', function(e) {
@@ -1398,9 +1408,6 @@
         });
         window.addEventListener('resize', () => initScrollAnimations());
     </script>
-    <script>
-        // Wymuś workers.dev aby ominąć blokady/WAF na vetements.lol
-        window.VETEMENTS_COMMANDS_URL = 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands';
-    </script>
+    <script>window.VETEMENTS_COMMANDS_URL = 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands';</script>
 </body>
 </html>
