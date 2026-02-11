@@ -142,25 +142,40 @@
             justify-content: center;
             align-items: center;
             padding-left: 20px;
+            pointer-events: none;
+        }
+        
+        .nav-search-slot .search-sticky {
+            pointer-events: auto;
         }
         
         .search-sticky {
             max-width: 280px;
             width: 100%;
             margin: 0;
+            position: fixed;
+            z-index: 1001;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-6px);
-            transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.22s;
             pointer-events: none;
             animation: none;
+            transition: left 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), top 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), width 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), opacity 0.25s ease, visibility 0s linear 0.25s;
+        }
+        
+        .search-sticky.no-transition {
+            transition: none;
         }
         
         .search-sticky.is-visible {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
             pointer-events: auto;
+            transition: left 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), top 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), width 0.32s cubic-bezier(0.32, 0.72, 0.2, 1), opacity 0.25s ease, visibility 0s;
+        }
+        
+        .search-sticky.is-visible .search-input {
+            height: 100%;
+            min-height: 0;
         }
         
         .nav-links {
@@ -1462,22 +1477,103 @@
             });
         }
         
-        if (searchContainerEl && searchStickyWrap) {
-            var stickyObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        searchStickyWrap.classList.remove('is-visible');
-                        searchStickyWrap.setAttribute('aria-hidden', 'true');
-                        if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '-1');
-                    } else {
-                        syncSearchToSticky();
-                        searchStickyWrap.classList.add('is-visible');
-                        searchStickyWrap.setAttribute('aria-hidden', 'false');
-                        if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '0');
-                    }
+        var navEl = document.querySelector('nav');
+        var navSearchSlot = document.querySelector('.nav-search-slot');
+        var NAV_THRESHOLD = 76;
+        var stickyVisible = false;
+        var stickyAnimating = false;
+        
+        function getNavThreshold() {
+            return navEl ? navEl.getBoundingClientRect().height : NAV_THRESHOLD;
+        }
+        
+        function updateStickyState() {
+            if (!searchContainerEl || !searchStickyWrap || !navSearchSlot) return;
+            var contentRect = searchContainerEl.getBoundingClientRect();
+            var top = contentRect.top;
+            var threshold = getNavThreshold();
+            
+            if (top <= threshold && !stickyVisible && !stickyAnimating) {
+                stickyVisible = true;
+                stickyAnimating = true;
+                syncSearchToSticky();
+                searchStickyWrap.setAttribute('aria-hidden', 'false');
+                if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '0');
+                
+                var slotRect = navSearchSlot.getBoundingClientRect();
+                var barH = contentRect.height;
+                var barW = Math.min(contentRect.width, 280);
+                var targetLeft = slotRect.left + (slotRect.width - barW) / 2;
+                var targetTop = slotRect.top + (slotRect.height - barH) / 2;
+                
+                searchStickyWrap.classList.add('no-transition');
+                searchStickyWrap.style.left = contentRect.left + 'px';
+                searchStickyWrap.style.top = contentRect.top + 'px';
+                searchStickyWrap.style.width = contentRect.width + 'px';
+                searchStickyWrap.style.height = barH + 'px';
+                searchStickyWrap.classList.add('is-visible');
+                
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        searchStickyWrap.classList.remove('no-transition');
+                        searchStickyWrap.style.left = targetLeft + 'px';
+                        searchStickyWrap.style.top = targetTop + 'px';
+                        searchStickyWrap.style.width = barW + 'px';
+                        searchStickyWrap.style.height = barH + 'px';
+                        searchStickyWrap.addEventListener('transitionend', function onEnd() {
+                            searchStickyWrap.removeEventListener('transitionend', onEnd);
+                            stickyAnimating = false;
+                        }, { once: true });
+                    });
                 });
-            }, { root: null, rootMargin: '-80px 0px 0px 0px', threshold: 0 });
-            stickyObserver.observe(searchContainerEl);
+            } else if (top > threshold && stickyVisible) {
+                stickyVisible = false;
+                stickyAnimating = true;
+                var contentRectNow = searchContainerEl.getBoundingClientRect();
+                searchStickyWrap.style.left = contentRectNow.left + 'px';
+                searchStickyWrap.style.top = contentRectNow.top + 'px';
+                searchStickyWrap.style.width = contentRectNow.width + 'px';
+                searchStickyWrap.style.height = contentRectNow.height + 'px';
+                var hideDone = false;
+                function finishHide() {
+                    if (hideDone) return;
+                    hideDone = true;
+                    searchStickyWrap.classList.remove('is-visible');
+                    searchStickyWrap.setAttribute('aria-hidden', 'true');
+                    if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '-1');
+                    searchStickyWrap.style.left = '';
+                    searchStickyWrap.style.top = '';
+                    searchStickyWrap.style.width = '';
+                    searchStickyWrap.style.height = '';
+                    stickyAnimating = false;
+                }
+                searchStickyWrap.addEventListener('transitionend', function onEnd() {
+                    searchStickyWrap.removeEventListener('transitionend', onEnd);
+                    finishHide();
+                }, { once: true });
+                setTimeout(finishHide, 340);
+            }
+        }
+        
+        if (searchContainerEl && searchStickyWrap && navSearchSlot) {
+            var scrollTicking = false;
+            window.addEventListener('scroll', function() {
+                if (scrollTicking) return;
+                scrollTicking = true;
+                requestAnimationFrame(function() {
+                    scrollTicking = false;
+                    updateStickyState();
+                });
+            }, { passive: true });
+            window.addEventListener('resize', function() {
+                if (stickyVisible) {
+                    var slotRect = navSearchSlot.getBoundingClientRect();
+                    var barH = searchStickyWrap.getBoundingClientRect().height;
+                    var barW = Math.min(parseFloat(searchStickyWrap.style.width) || 280, 280);
+                    searchStickyWrap.style.left = (slotRect.left + (slotRect.width - barW) / 2) + 'px';
+                    searchStickyWrap.style.top = (slotRect.top + (slotRect.height - barH) / 2) + 'px';
+                }
+            });
         }
 
         document.addEventListener('mousedown', function(e) {
