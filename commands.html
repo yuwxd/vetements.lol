@@ -114,9 +114,11 @@
         nav {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
             background: rgba(255, 255, 255, 0.05);
@@ -126,6 +128,39 @@
             transform: translateY(-100%);
             opacity: 0;
             animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+        
+        .nav-spacer {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .nav-search-slot {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 20px;
+        }
+        
+        .search-sticky {
+            max-width: 280px;
+            width: 100%;
+            margin: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.22s;
+            pointer-events: none;
+            animation: none;
+        }
+        
+        .search-sticky.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
         }
         
         .nav-links {
@@ -901,6 +936,12 @@
             }
         }
         
+        @media (max-width: 900px) {
+            .nav-search-slot {
+                display: none;
+            }
+        }
+        
         @media (max-width: 768px) {
             .page-title {
                 font-size: 36px;
@@ -972,12 +1013,19 @@
     </div>
 
     <nav>
+        <div class="nav-spacer"></div>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="commands.html" class="active">Commands</a>
             <a href="faq.html">FAQ</a>
             <a href="premium.html">Premium</a>
             <a href="https://discord.gg/larpfunds" target="_blank">Discord</a>
+        </div>
+        <div class="nav-search-slot">
+            <div class="search-container search-sticky" id="searchStickyWrap" aria-hidden="true">
+                <input type="text" class="search-input" id="searchInputSticky" placeholder="Search commands..." tabindex="-1">
+                <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="">
+            </div>
         </div>
     </nav>
 
@@ -1012,9 +1060,7 @@
                     <div class="stat-label">Currently Showing</div>
                 </div>
             </div>
-            <p class="last-updated" id="lastUpdated">—</p>
-
-            <div class="search-container">
+            <div class="search-container" id="searchContainer">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search commands...">
                 <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="search-icon" alt="Search">
             </div>
@@ -1339,10 +1385,9 @@
                 .filter(c => c.category === category)
                 .filter(c => {
                     if (!term) return true;
-                    const t = term.toLowerCase();
-                    const prefixMatch = (c.prefixForms && c.prefixForms.length) && c.prefixForms.some(p => p.toLowerCase().includes(t));
-                    const usageMatch = (c.usage && String(c.usage).toLowerCase().includes(t));
-                    return c.name.toLowerCase().includes(t) || c.desc.toLowerCase().includes(t) || prefixMatch || usageMatch;
+                    const t = term.toLowerCase().trim();
+                    var nameOnly = (c.name || '').replace(/^\//, '').toLowerCase();
+                    return nameOnly.includes(t);
                 });
         }
 
@@ -1382,15 +1427,58 @@
         }
 
         var searchInputEl = document.getElementById('searchInput');
+        var searchInputStickyEl = document.getElementById('searchInputSticky');
+        var searchStickyWrap = document.getElementById('searchStickyWrap');
+        var searchContainerEl = document.getElementById('searchContainer');
         var searchRAF = null;
-        searchInputEl.addEventListener('input', function(e) {
-            if (isLoading) return;
+        
+        function applySearchFilter() {
             if (searchRAF) cancelAnimationFrame(searchRAF);
             searchRAF = requestAnimationFrame(function() {
                 searchRAF = null;
                 filterCategory(currentCategory);
             });
+        }
+        
+        function syncSearchToSticky() {
+            if (searchInputStickyEl) searchInputStickyEl.value = searchInputEl ? searchInputEl.value : '';
+        }
+        
+        function syncSearchFromSticky() {
+            if (searchInputEl) searchInputEl.value = searchInputStickyEl ? searchInputStickyEl.value : '';
+        }
+        
+        searchInputEl.addEventListener('input', function() {
+            if (isLoading) return;
+            syncSearchToSticky();
+            applySearchFilter();
         });
+        
+        if (searchInputStickyEl) {
+            searchInputStickyEl.addEventListener('input', function() {
+                if (isLoading) return;
+                syncSearchFromSticky();
+                applySearchFilter();
+            });
+        }
+        
+        if (searchContainerEl && searchStickyWrap) {
+            var stickyObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        searchStickyWrap.classList.remove('is-visible');
+                        searchStickyWrap.setAttribute('aria-hidden', 'true');
+                        if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '-1');
+                    } else {
+                        syncSearchToSticky();
+                        searchStickyWrap.classList.add('is-visible');
+                        searchStickyWrap.setAttribute('aria-hidden', 'false');
+                        if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '0');
+                    }
+                });
+            }, { root: null, rootMargin: '-80px 0px 0px 0px', threshold: 0 });
+            stickyObserver.observe(searchContainerEl);
+        }
 
         document.addEventListener('mousedown', function(e) {
             if (!e.target.classList.contains('search-input') && 
