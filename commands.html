@@ -1226,7 +1226,7 @@
             const allLi = document.createElement('li');
             allLi.className = 'category-item';
             allLi.innerHTML = `
-                <button class="category-btn active" onclick="filterCategory('all')">
+                <button class="category-btn active" onclick="filterCategory('all', true)">
                     <span>All Commands</span>
                     <span class="category-count">${allCount}</span>
                 </button>
@@ -1238,7 +1238,7 @@
                 const li = document.createElement('li');
                 li.className = 'category-item';
                 li.innerHTML = `
-                    <button class="category-btn" onclick="filterCategory('${cat}')">
+                    <button class="category-btn" onclick="filterCategory('${cat}', true)">
                         <span>${cat}</span>
                         <span class="category-count">${count}</span>
                     </button>
@@ -1247,13 +1247,13 @@
             });
         }
 
-        function filterCategory(category) {
+        function filterCategory(category, fromCategoryClick) {
             if (isLoading || clickCooldown) return;
             clickCooldown = true;
             setTimeout(() => (clickCooldown = false), 150);
 
             var searchInput = document.getElementById('searchInput');
-            if (searchInput) {
+            if (fromCategoryClick && searchInput) {
                 searchInput.value = '';
                 searchInput.blur();
                 if (typeof updateSearchActiveState === 'function') updateSearchActiveState();
@@ -1281,7 +1281,8 @@
                 pageSubtitle.textContent = `Browse all ${category.toLowerCase()} commands. Use the search to filter within this category.`;
             }
 
-            renderCommands(category, '');
+            var searchTerm = (searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : '';
+            renderCommands(category, searchTerm);
         }
 
         function renderCommands(category, searchTerm = '') {
