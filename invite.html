@@ -160,19 +160,14 @@
     </div>
 
     <script>
-        // Zmiana koloru kołka na ciemno szaro-niebieski
         document.addEventListener('DOMContentLoaded', function() {
-            const spinner = document.getElementById('loadingSpinner');
-            spinner.style.borderTopColor = '#2a2d4a'; // Ciemno szaro-niebieski
+            var spinner = document.getElementById('loadingSpinner');
+            if (spinner) spinner.style.borderTopColor = '#2a2d4a';
         });
-        
-        // Immediate redirect after a short delay for visual feedback
-        setTimeout(() => {
+        setTimeout(function() {
             window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
-        }, 1500); // 1.5 second delay
-        
-        // Fallback redirect after 5 seconds
-        setTimeout(() => {
+        }, 1500);
+        setTimeout(function() {
             window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
         }, 5000);
     </script>
