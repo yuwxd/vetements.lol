@@ -41,7 +41,6 @@
             cursor: default;
         }
         
-        /* Background with blur overlay */
         body::before {
             content: '';
             position: fixed;
@@ -68,7 +67,6 @@
             z-index: -1;
         }
         
-        /* Loading animation */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -108,7 +106,6 @@
             50% { transform: scale(1.05); opacity: 0.8; }
         }
         
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -167,7 +164,6 @@
             border-color: rgba(255, 255, 255, 0.25);
         }
         
-        /* Content Page */
         .content-page {
             min-height: 100vh;
             padding: 120px 40px 80px;
@@ -320,7 +316,6 @@
             line-height: 1.5;
         }
         
-        /* Animations */
         @keyframes slideDown {
             to {
                 transform: translateY(0);
@@ -341,7 +336,6 @@
             }
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px;
@@ -368,7 +362,6 @@
             color: #ffffff;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .content-page {
                 padding: 100px 20px 40px;
@@ -391,8 +384,12 @@
             }
             
             .nav-links a {
-                padding: 6px 12px;
+                padding: 10px 14px;
                 font-size: 13px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
             
             .command-item {
@@ -597,36 +594,28 @@
     </footer>
 
     <script>
-        // Initial loading animation
         window.addEventListener('load', function() {
-            setTimeout(() => {
+            setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
-                
-                // Animate FAQ sections with staggered delays
-                const faqSections = document.querySelectorAll('.faq-section');
-                faqSections.forEach((section, index) => {
-                    setTimeout(() => {
+                var faqSections = document.querySelectorAll('.faq-section');
+                faqSections.forEach(function(section, index) {
+                    setTimeout(function() {
                         section.classList.add('visible');
-                        
-                        // Animate command items inside section 3
                         if (section.id === 'section3') {
-                            const commandItems = section.querySelectorAll('.command-item');
-                            commandItems.forEach((item, itemIndex) => {
-                                setTimeout(() => {
+                            var commandItems = section.querySelectorAll('.command-item');
+                            commandItems.forEach(function(item, itemIndex) {
+                                setTimeout(function() {
                                     item.style.opacity = '1';
                                     item.style.transform = 'translateY(0)';
-                                }, itemIndex * 30); // 30ms delay between each item
+                                }, itemIndex * 30);
                             });
                         }
-                    }, index * 100 + 300); // 100ms delay between sections
+                    }, index * 100 + 300);
                 });
-                
-                // Initialize scroll animations
                 initScrollAnimations();
             }, 800);
         });
         
-        // Scroll animation function
         function initScrollAnimations() {
             const elements = document.querySelectorAll('.faq-section');
             
@@ -646,7 +635,6 @@
             });
         }
         
-        // Prevent text selection on page
         document.addEventListener('mousedown', function(e) {
             if (!e.target.classList.contains('command-name') && 
                 !e.target.classList.contains('command-desc') &&
