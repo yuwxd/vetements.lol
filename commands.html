@@ -1479,54 +1479,60 @@
         
         var navEl = document.querySelector('nav');
         var navSearchSlot = document.querySelector('.nav-search-slot');
-        var NAV_THRESHOLD = 76;
         var stickyVisible = false;
         var stickyAnimating = false;
+        var STICKY_ANIM_MS = 320;
+        var HYSTERESIS_PX = 18;
         
-        function getNavThreshold() {
-            return navEl ? navEl.getBoundingClientRect().height : NAV_THRESHOLD;
+        function getStickyTarget(contentRect) {
+            if (!navEl) return null;
+            var navRect = navEl.getBoundingClientRect();
+            var barH = contentRect.height;
+            var barW = Math.min(contentRect.width, 280);
+            var rightHalfCenter = navRect.left + (navRect.right - navRect.left) * 0.75;
+            var targetLeft = rightHalfCenter - barW / 2;
+            var targetTop = navRect.top + (navRect.height - barH) / 2 + 2;
+            targetLeft = Math.max(navRect.left + 12, Math.min(navRect.right - barW - 12, targetLeft));
+            return { left: targetLeft, top: targetTop, width: barW, height: barH };
         }
         
         function updateStickyState() {
-            if (!searchContainerEl || !searchStickyWrap || !navSearchSlot) return;
+            if (!searchContainerEl || !searchStickyWrap || !navEl) return;
             var contentRect = searchContainerEl.getBoundingClientRect();
             var top = contentRect.top;
-            var threshold = getNavThreshold();
+            var navHeight = navEl.getBoundingClientRect().height;
+            var showThreshold = navHeight;
+            var hideThreshold = navHeight + HYSTERESIS_PX;
             
-            if (top <= threshold && !stickyVisible && !stickyAnimating) {
+            if (top <= showThreshold && !stickyVisible && !stickyAnimating) {
+                var target = getStickyTarget(contentRect);
+                if (!target) return;
                 stickyVisible = true;
                 stickyAnimating = true;
                 syncSearchToSticky();
                 searchStickyWrap.setAttribute('aria-hidden', 'false');
                 if (searchInputStickyEl) searchInputStickyEl.setAttribute('tabindex', '0');
                 
-                var slotRect = navSearchSlot.getBoundingClientRect();
-                var barH = contentRect.height;
-                var barW = Math.min(contentRect.width, 280);
-                var targetLeft = slotRect.left + (slotRect.width - barW) / 2;
-                var targetTop = slotRect.top + (slotRect.height - barH) / 2;
-                
                 searchStickyWrap.classList.add('no-transition');
                 searchStickyWrap.style.left = contentRect.left + 'px';
                 searchStickyWrap.style.top = contentRect.top + 'px';
                 searchStickyWrap.style.width = contentRect.width + 'px';
-                searchStickyWrap.style.height = barH + 'px';
+                searchStickyWrap.style.height = contentRect.height + 'px';
                 searchStickyWrap.classList.add('is-visible');
                 
                 requestAnimationFrame(function() {
                     requestAnimationFrame(function() {
                         searchStickyWrap.classList.remove('no-transition');
-                        searchStickyWrap.style.left = targetLeft + 'px';
-                        searchStickyWrap.style.top = targetTop + 'px';
-                        searchStickyWrap.style.width = barW + 'px';
-                        searchStickyWrap.style.height = barH + 'px';
-                        searchStickyWrap.addEventListener('transitionend', function onEnd() {
-                            searchStickyWrap.removeEventListener('transitionend', onEnd);
+                        searchStickyWrap.style.left = target.left + 'px';
+                        searchStickyWrap.style.top = target.top + 'px';
+                        searchStickyWrap.style.width = target.width + 'px';
+                        searchStickyWrap.style.height = target.height + 'px';
+                        setTimeout(function() {
                             stickyAnimating = false;
-                        }, { once: true });
+                        }, STICKY_ANIM_MS);
                     });
                 });
-            } else if (top > threshold && stickyVisible) {
+            } else if (top > hideThreshold && stickyVisible && !stickyAnimating) {
                 stickyVisible = false;
                 stickyAnimating = true;
                 var contentRectNow = searchContainerEl.getBoundingClientRect();
@@ -1547,15 +1553,11 @@
                     searchStickyWrap.style.height = '';
                     stickyAnimating = false;
                 }
-                searchStickyWrap.addEventListener('transitionend', function onEnd() {
-                    searchStickyWrap.removeEventListener('transitionend', onEnd);
-                    finishHide();
-                }, { once: true });
-                setTimeout(finishHide, 340);
+                setTimeout(finishHide, STICKY_ANIM_MS);
             }
         }
         
-        if (searchContainerEl && searchStickyWrap && navSearchSlot) {
+        if (searchContainerEl && searchStickyWrap && navEl) {
             var scrollTicking = false;
             window.addEventListener('scroll', function() {
                 if (scrollTicking) return;
@@ -1566,12 +1568,15 @@
                 });
             }, { passive: true });
             window.addEventListener('resize', function() {
-                if (stickyVisible) {
-                    var slotRect = navSearchSlot.getBoundingClientRect();
-                    var barH = searchStickyWrap.getBoundingClientRect().height;
-                    var barW = Math.min(parseFloat(searchStickyWrap.style.width) || 280, 280);
-                    searchStickyWrap.style.left = (slotRect.left + (slotRect.width - barW) / 2) + 'px';
-                    searchStickyWrap.style.top = (slotRect.top + (slotRect.height - barH) / 2) + 'px';
+                if (stickyVisible && !stickyAnimating) {
+                    var contentRect = searchContainerEl.getBoundingClientRect();
+                    var target = getStickyTarget(contentRect);
+                    if (target) {
+                        searchStickyWrap.style.left = target.left + 'px';
+                        searchStickyWrap.style.top = target.top + 'px';
+                        searchStickyWrap.style.width = target.width + 'px';
+                        searchStickyWrap.style.height = target.height + 'px';
+                    }
                 }
             });
         }
