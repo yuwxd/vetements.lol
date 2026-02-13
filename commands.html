@@ -666,6 +666,11 @@
             justify-content: center;
         }
         
+        .command-icon.premium-icon {
+            width: 28px;
+            height: 28px;
+        }
+        
         .command-icon img {
             width: 100%;
             height: 100%;
@@ -1027,6 +1032,11 @@
                 width: 16px;
                 height: 16px;
             }
+            
+            .command-icon.premium-icon {
+                width: 24px;
+                height: 24px;
+            }
         }
     </style>
 </head>
@@ -1099,12 +1109,12 @@
     </footer>
 
     <script>
-        const DEFAULT_COMMANDS_ENDPOINT =
-            window.location.protocol === 'https:'
-                ? 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands'
-                : 'http://127.0.0.1:8787/api/commands';
+        (function() {
+            var _base = window.location.origin;
+            window._veApi = function() { return window.VETEMENTS_COMMANDS_URL || _base + '/api/commands'; };
+        })();
         function getCommandsEndpoint() {
-            return window.VETEMENTS_COMMANDS_URL || DEFAULT_COMMANDS_ENDPOINT;
+            return typeof window._veApi === 'function' ? window._veApi() : (window.location.origin + '/api/commands');
         }
         const iconDefaults = {
             free: {
@@ -1112,7 +1122,7 @@
                 tooltip: 'free version available'
             },
             premium: {
-                url: 'https://i.ibb.co/mCcqPgm8/55125afe6f8b.png',
+                url: 'https://i.ibb.co/VcMYt3tb/vplusxd.png',
                 tooltip: 'vetements+ subscription required'
             },
             both: {
@@ -1152,7 +1162,7 @@
                 showLoading();
             }
             try {
-                const res = await fetch(getCommandsEndpoint(), { cache: 'no-store', headers: { 'Accept': 'application/json' } });
+                const res = await fetch(getCommandsEndpoint(), { cache: 'no-store', headers: { 'Accept': 'application/json' }, referrerPolicy: 'no-referrer' });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
 
@@ -1523,6 +1533,5 @@
         });
         window.addEventListener('resize', () => initScrollAnimations());
     </script>
-    <script>window.VETEMENTS_COMMANDS_URL = 'https://etements-stats-kv.ivofudala0000.workers.dev/api/commands';</script>
 </body>
 </html>
