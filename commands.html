@@ -1414,7 +1414,7 @@
                 .filter(c => {
                     if (!normTerm) return true;
                     var normName = normalizeSearch(c.name || '');
-                    return normName.indexOf(normTerm) === 0;
+                    return normName.indexOf(normTerm) !== -1;
                 });
         }
 
