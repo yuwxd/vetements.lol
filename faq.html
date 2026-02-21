@@ -19,7 +19,7 @@
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -32,7 +32,7 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
@@ -62,8 +62,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(10, 10, 10, 0.88);
+            backdrop-filter: blur(12px);
             z-index: -1;
         }
         
@@ -87,23 +87,23 @@
         }
         
         .loading-logo {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border-radius: 22px;
+            width: 96px;
+            height: 96px;
+            background: radial-gradient(ellipse at 30% 20%, rgba(40, 240, 177, 0.15) 0%, transparent 50%);
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 42px;
-            font-weight: 700;
+            font-size: 44px;
+            font-weight: 800;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            animation: logoPulse 1.5s ease-in-out infinite;
+            border: 2px solid rgba(40, 240, 177, 0.25);
+            animation: logoGlow 2s ease-in-out infinite;
         }
         
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(40, 240, 177, 0.1); }
+            50% { box-shadow: 0 0 60px rgba(40, 240, 177, 0.2); }
         }
         
         nav {
@@ -113,55 +113,52 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 32px;
+            background: rgba(13, 13, 14, 0.7);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             z-index: 1000;
             transform: translateY(-100%);
             opacity: 0;
-            animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+            animation: slideDown 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
         }
         
         .nav-links {
             display: flex;
-            gap: 35px;
+            gap: 6px;
             align-items: center;
         }
         
         .nav-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.65);
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            letter-spacing: 0.3px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border-radius: 100px;
+            transition: all 0.25s ease;
             opacity: 0;
-            transform: translateY(-10px);
-            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform: translateY(-8px);
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
-        .nav-links a:nth-child(1) { animation-delay: 0.6s; }
-        .nav-links a:nth-child(2) { animation-delay: 0.7s; }
-        .nav-links a:nth-child(3) { animation-delay: 0.8s; }
-        .nav-links a:nth-child(4) { animation-delay: 0.9s; }
-        .nav-links a:nth-child(5) { animation-delay: 1.0s; }
+        .nav-links a:nth-child(1) { animation-delay: 0.5s; }
+        .nav-links a:nth-child(2) { animation-delay: 0.55s; }
+        .nav-links a:nth-child(3) { animation-delay: 0.6s; }
+        .nav-links a:nth-child(4) { animation-delay: 0.65s; }
+        .nav-links a:nth-child(5) { animation-delay: 0.7s; }
         
         .nav-links a:hover {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.06);
         }
         
         .nav-links a.active {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.25);
+            color: #28f0b1;
+            background: rgba(40, 240, 177, 0.08);
+            border: 1px solid rgba(40, 240, 177, 0.2);
         }
         
         .content-page {
@@ -189,11 +186,11 @@
         
         .faq-section {
             margin-bottom: 50px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            backdrop-filter: blur(16px);
             transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(30px);
@@ -205,9 +202,9 @@
         }
         
         .faq-section:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(40, 240, 177, 0.03);
+            border-color: rgba(40, 240, 177, 0.15);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
         }
         
         .content-page h3 {
@@ -247,13 +244,13 @@
         }
         
         .content-page code {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 8px;
-            border-radius: 6px;
+            background: rgba(40, 240, 177, 0.08);
+            padding: 4px 10px;
+            border-radius: 10px;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #28f0b1;
+            border: 1px solid rgba(40, 240, 177, 0.2);
         }
         
         .content-page a {
@@ -265,8 +262,8 @@
         }
         
         .content-page a:hover {
-            color: #ffffff;
-            border-bottom-color: #ffffff;
+            color: #28f0b1;
+            border-bottom-color: #28f0b1;
         }
         
         .command-list {
@@ -290,8 +287,8 @@
         }
         
         .command-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(40, 240, 177, 0.04);
+            border-color: rgba(40, 240, 177, 0.15);
             transform: translateY(-2px);
         }
         
@@ -359,7 +356,7 @@
         }
         
         footer a:hover {
-            color: #ffffff;
+            color: #28f0b1;
         }
         
         @media (max-width: 768px) {
@@ -454,7 +451,7 @@
         
         <div class="faq-section" id="section2">
             <h3>2. How do I use the bot?</h3>
-            <p>Simply add bot to your server or add it to your apps, then use slash commands like <code>/qr gen</code>, <code>/search song spotify</code>, or <code>/crypto chart</code> anywhere to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
+            <p>Simply add vetements to your server or add it to your apps, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> anywhere to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
         </div>
         
         <div class="faq-section" id="section3">
