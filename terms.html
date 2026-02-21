@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>terms</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
     <meta property="og:title" content="vetements">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
     <meta property="og:url" content="https://vetements.lol">
@@ -17,7 +16,7 @@
     <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -30,40 +29,18 @@
         }
         
         body {
-            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
             cursor: default;
+            background: #08080a;
         }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            z-index: -2;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(12px);
-            z-index: -1;
-        }
+        .stars-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.9; } }
         
         .loading-screen {
             position: fixed;
@@ -399,6 +376,8 @@
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsBg"></div>
+    <script src="/stars.js"></script>
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">V</div>
     </div>
