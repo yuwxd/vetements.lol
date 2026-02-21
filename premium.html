@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vetements+</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -20,7 +19,7 @@
     <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -33,7 +32,7 @@
         }
         
         body {
-            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
@@ -42,31 +41,10 @@
             cursor: default;
         }
         
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            z-index: -2;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(12px);
-            z-index: -1;
-        }
+        body { background: #08080a; }
+        .stars-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.9; } }
         
         .loading-screen {
             position: fixed;
@@ -258,13 +236,10 @@
         }
         
         .pricing-icon.monthly {
-            width: 80px;
-            height: 80px;
-            background-image: url('https://i.ibb.co/mCcqPgm8/55125afe6f8b.png');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            margin: 0 auto 25px;
+            font-size: 48px;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+            display: inline-block;
         }
         
         .pricing-card.lifetime {
@@ -830,6 +805,8 @@
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsBg"></div>
+    <script src="/stars.js"></script>
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">V</div>
     </div>
@@ -845,12 +822,12 @@
     </nav>
 
     <div class="premium-hero">
-        <h1 class="premium-title">Premium</h1>
-        <p class="premium-subtitle">Unlock the full potential of vetements with enhanced capabilities, priority features, and exclusive tools designed to elevate your Discord experience to the next level.</p>
+        <h1 class="premium-title">vetements+</h1>
+        <p class="premium-subtitle">Higher limits, exclusive commands, priority support. Pay once or monthly — your call.</p>
         
         <div class="pricing-container">
             <div class="pricing-card monthly">
-                <div class="pricing-icon monthly"></div>
+                <div class="pricing-icon monthly">★</div>
                 <h3 class="pricing-title">Monthly Subscription</h3>
                 <p class="pricing-subtitle">Perfect for users who want to test vetements app</p>
                 <div class="price">
@@ -871,7 +848,7 @@
                 <h3 class="pricing-title">Lifetime Subscription</h3>
                 <p class="pricing-subtitle">One-time payment for permanent premium access</p>
                 <div class="price">
-                    <span class="price-currency">$</span>9.99
+                    <span class="price-currency">$</span>7.99
                 </div>
                 <div class="price-period">one-time payment</div>
                 <ul class="pricing-features">
@@ -894,35 +871,9 @@
             <button class="close-notification" id="closeNotification">×</button>
         </div>
         
-        <div class="payment-section parallax-section">
-            <h3 class="payment-title">Accepted Payment Methods</h3>
-            <div class="payment-methods">
-                <div class="payment-method parallax-section">
-                    <img src="https://i.ibb.co/DfpGhscp/image.png" class="payment-icon" alt="BLIK">
-                    <span>BLIK</span>
-                </div>
-                <div class="payment-method parallax-section">
-                    <img src="https://img.icons8.com/?size=80&id=AQd5OluNqpNW&format=png" class="payment-icon" alt="Cryptocurrency">
-                    <span>Cryptocurrency</span>
-                </div>
-                <div class="payment-method parallax-section">
-                    <img src="https://img.icons8.com/?size=80&id=VOv2ShpC3Qaw&format=png" class="payment-icon" alt="Credit Card">
-                    <span>Credit Card</span>
-                </div>
-                <div class="payment-method parallax-section">
-                    <img src="https://emoji.discadia.com/emojis/b04439dc-f812-41fe-ae30-e025bb7bf5b5.PNG" class="payment-icon" alt="paysafecard">
-                    <span>paysafecard</span>
-                </div>
-                <div class="payment-method parallax-section">
-                    <img src="https://emoji.discadia.com/emojis/f62e6426-bef9-4f51-bced-0db03fc8e733.PNG" class="payment-icon" alt="Robux">
-                    <span>Robux</span>
-                </div>
-            </div>
-        </div>
-        
         <div style="text-align: center; margin-top: 60px;">
             <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="parallax-section">
-                Once premium launches, use the <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> command in Discord to activate your license key and unlock all premium features.
+                When premium drops, use <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> in Discord to activate your key.
             </p>
         </div>
     </div>
