@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>invite</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/FkFpM62c/fe61a079-a964-4c8b-ae03-0b5c491defe6-1-modified.png">
     <meta property="og:title" content="vetements / invite">
     <meta property="og:description" content="Add vetements to your Discord server">
     <meta property="og:url" content="https://vetements.lol/invite">
@@ -18,7 +17,7 @@
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -27,8 +26,8 @@
         }
         
         body {
-            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #08080a;
             color: #e5e5e5;
             overflow-x: hidden;
             min-height: 100vh;
@@ -36,6 +35,9 @@
             justify-content: center;
             align-items: center;
         }
+        .stars-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.9; } }
         
         .container {
             text-align: center;
@@ -150,16 +152,18 @@
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsBg"></div>
+    <script src="/stars.js"></script>
     <div class="container">
         <div class="logo">V</div>
         <h1>vetements</h1>
-        <p class="message">Redirecting to Discord authorization...</p>
+        <p class="message">Redirecting to Discord…</p>
         
         <div class="spinner" id="loadingSpinner"></div>
         
         <p class="redirecting">If you're not redirected automatically, click below:</p>
         <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="discord-link">
-            Add vetements to Discord
+            Add to Discord
         </a>
     </div>
 
