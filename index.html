@@ -708,6 +708,14 @@
     </style>
 </head>
 <body>
+    <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.95);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+        <div class="loading-logo">V</div>
+        <p style="color:rgba(255,255,255,0.8);font-size:16px;">Authorizing Vetements...</p>
+    </div>
+    <div id="oauth-error" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.95);z-index:10000;align-items:center;justify-content:center;gap:20px;padding:20px;text-align:center;flex-direction:column;">
+        <p style="color:#ff5757;font-size:18px;font-weight:600;">Authorization failed. Please try again.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Fvetements.lol&integration_type=1&scope=identify%20bot%20email" style="color:rgba(255,255,255,0.9);padding:12px 24px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;text-decoration:none;transition:all 0.2s;">Try again</a>
+    </div>
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">V</div>
     </div>
@@ -788,8 +796,10 @@
         </p>
     </footer>
 
+    <script type="module" src="/oauth-callback.js"></script>
     <script>
         window.addEventListener('load', function() {
+            if (document.getElementById('oauth-overlay').style.display === 'flex') return;
             setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
             }, 800);
