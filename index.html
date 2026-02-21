@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
-    <link rel="icon" type="image/png" href="https://i.ibb.co/RG0xccbR/d45f7c24eba4.png">
     <meta property="og:title" content="vetements">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
     <meta property="og:url" content="https://vetements.lol">
@@ -18,7 +17,7 @@
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -31,39 +30,34 @@
         }
         
         body {
-            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             color: #e5e5e5;
             overflow-x: hidden;
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
             cursor: default;
+            background: #08080a;
         }
         
-        body::before {
-            content: '';
+        .stars-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.ibb.co/tVHbTWf/b37d74f426f9.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            z-index: -2;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(12px);
+            inset: 0;
             z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .stars-bg .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: starTwinkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.12; }
+            50% { opacity: 0.9; }
         }
         
         .loading-screen {
@@ -580,6 +574,8 @@
     </style>
 </head>
 <body>
+    <div class="stars-bg" id="starsBg"></div>
+    <script src="/stars.js"></script>
     <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.96);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
         <div class="loading-logo">V</div>
         <p style="color:rgba(255,255,255,0.8);font-size:15px;font-weight:600;">Authorizing Vetements...</p>
@@ -606,8 +602,8 @@
         <div class="logo">V</div>
         <h1>vetements</h1>
         <p class="made-by">made by <a href="https://fakecrime.bio/external" class="made-by-link" target="_blank">@yuw</a></p>
-        <p class="subtitle">The Ultimate All-in-One Discord Utility Bot</p>
-        <p class="tagline">From powerful moderation tools to advanced utilities — everything you need in one place</p>
+        <p class="subtitle">One bot. Every tool you need.</p>
+        <p class="tagline">Moderation, utilities, AI, crypto — run it all from Discord. No hopping between apps.</p>
         <span class="version">v2.0</span>
         
         <div class="cta-buttons">
@@ -618,7 +614,7 @@
 
     <div class="stats-section">
         <div class="stats-header">
-            <div class="stats-title">Live bot footprint</div>
+            <div class="stats-title">Stats</div>
             <div class="live-pill" id="livePill">
                 <span class="live-dot"></span>
                 <span id="liveStatusText">Live</span>
@@ -645,15 +641,15 @@
     </div>
 
     <div class="showcase-section">
-        <h2 class="showcase-title">The Complete Discord Companion</h2>
+        <h2 class="showcase-title">All-in-One. Zero Fuss.</h2>
         <p class="showcase-text">
-            vetements combines cutting-edge functionality with intuitive design, offering everything from essential server management to advanced creative tools. 
-            Experience professional-grade utilities through an elegant interface that values both form and function.
+            Server management, image gen, crypto, translations, QR codes — the list goes on. 
+            Everything runs in Discord. No downloads, no cluttered dashboards.
         </p>
         
         <div class="highlight">
             <p class="highlight-text">
-                "We aim for perfection in both appearance and functionality — because your Discord experience deserves nothing less."
+                "One invite. All the tools. That’s it."
             </p>
             <p class="highlight-author">— vetements</p>
         </div>
