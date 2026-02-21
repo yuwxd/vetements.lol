@@ -18,7 +18,7 @@
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
@@ -27,7 +27,7 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0a0a0a;
             color: #e5e5e5;
             overflow-x: hidden;
@@ -45,19 +45,19 @@
         }
         
         .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            border-radius: 20px;
-            margin: 0 auto 25px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(ellipse at 30% 20%, rgba(40, 240, 177, 0.2) 0%, transparent 50%);
+            border-radius: 28px;
+            margin: 0 auto 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 38px;
-            font-weight: 700;
+            font-size: 46px;
+            font-weight: 800;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(40, 240, 177, 0.3);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 0 80px rgba(40, 240, 177, 0.06);
             animation: logoFloat 3s ease-in-out infinite;
         }
         
@@ -92,28 +92,32 @@
         
         .discord-link {
             display: inline-block;
-            margin-top: 20px;
-            padding: 14px 32px;
-            background: #ffffff;
-            color: #0a0a0a;
+            margin-top: 24px;
+            padding: 16px 36px;
+            background: rgba(40, 240, 177, 0.15);
+            color: #28f0b1;
             text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 15px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 2px solid rgba(40, 240, 177, 0.4);
             transition: all 0.3s ease;
-            border: none;
         }
         
         .discord-link:hover {
-            background: #e5e5e5;
-            transform: translateY(-2px);
+            background: rgba(40, 240, 177, 0.25);
+            border-color: rgba(40, 240, 177, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(40, 240, 177, 0.2);
         }
         
         .spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.05);
-            border-top-color: #5865f2; /* Discord blue for reference */
+            border: 3px solid rgba(255, 255, 255, 0.06);
+            border-top-color: #28f0b1;
             border-radius: 50%;
             margin: 30px auto;
             animation: spin 1s linear infinite;
@@ -160,10 +164,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var spinner = document.getElementById('loadingSpinner');
-            if (spinner) spinner.style.borderTopColor = '#2a2d4a';
-        });
         setTimeout(function() {
             window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
         }, 1500);
