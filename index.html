@@ -791,14 +791,17 @@
                 var servers = data.servers ?? data.guilds ?? data.guildCount ?? data.server_count;
                 var members = data.members ?? data.users ?? data.memberCount ?? data.member_count;
                 var installs = data.installedUsers ?? data.installed_users ?? data.users_total ?? data.users;
-                var ping = data.ping;
-                var dbPing = data.databasePing ?? data.database_ping;
+                var ping = data.ping ?? data.discordPing ?? data.discord_ping ?? data.wsPing;
+                var dbPing = data.databasePing ?? data.database_ping ?? data.dbPing ?? data.db_ping ?? data.mongoPing;
+
+                var pingNum = ping != null ? parseFloat(String(ping).replace(/[^\d.-]/g, '')) : NaN;
+                var dbNum = dbPing != null ? parseFloat(String(dbPing).replace(/[^\d.-]/g, '')) : NaN;
 
                 statEls.servers.textContent = formatNumber(servers);
                 statEls.members.textContent = formatNumber(members);
                 statEls.users.textContent = formatNumber(installs);
-                document.getElementById('stat-ping').textContent = (ping != null && !Number.isNaN(Number(ping))) ? ping + ' ms' : '—';
-                document.getElementById('stat-dbPing').textContent = (dbPing != null && !Number.isNaN(Number(dbPing))) ? dbPing + ' ms' : '—';
+                document.getElementById('stat-ping').textContent = (!Number.isNaN(pingNum)) ? Math.round(pingNum) + ' ms' : '—';
+                document.getElementById('stat-dbPing').textContent = (!Number.isNaN(dbNum)) ? Math.round(dbNum) + ' ms' : '—';
 
                 setLiveState();
             } catch (err) {
