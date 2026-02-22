@@ -489,8 +489,8 @@
         
         .category-section {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(28px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .category-section.visible {
@@ -535,9 +535,9 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             margin-bottom: 12px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, transform 0.5s ease;
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(16px);
             contain: layout style;
         }
         
@@ -1370,12 +1370,14 @@
         }
 
         function initScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('visible'));
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-            document.querySelectorAll('.category-section').forEach(el => observer.observe(el));
-            document.querySelectorAll('.command-item').forEach(el => observer.observe(el));
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                    else entry.target.classList.remove('visible');
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.category-section').forEach(function(el) { observer.observe(el); });
+            document.querySelectorAll('.command-item').forEach(function(el) { observer.observe(el); });
         }
 
         var searchInputEl = document.getElementById('searchInput');
