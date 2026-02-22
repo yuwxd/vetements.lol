@@ -53,6 +53,8 @@
             background: #fff;
             border-radius: 50%;
             animation: starTwinkle 3s ease-in-out infinite;
+            transition: transform 0.4s ease-out;
+            will-change: transform;
         }
         
         @keyframes starTwinkle {
@@ -604,7 +606,36 @@
 <body>
     <div class="stars-bg" id="starsBg"></div>
     <script>
-(function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}})();
+(function(){
+var c=document.getElementById('starsBg');if(!c)return;
+for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}
+var stars=c.querySelectorAll('.star');
+var CURSOR_RADIUS=160;
+var PUSH_MAX=56;
+var mx=-1e4,my=-1e4;
+var raf=null;
+function update(){
+raf=null;
+for(var i=0;i<stars.length;i++){
+var r=stars[i].getBoundingClientRect();
+var cx=r.left+r.width/2;
+var cy=r.top+r.height/2;
+var dx=mx-cx;
+var dy=my-cy;
+var d=Math.sqrt(dx*dx+dy*dy);
+if(d<CURSOR_RADIUS&&d>0){
+var t=1-d/CURSOR_RADIUS;
+var f=t*t*PUSH_MAX;
+var tx=(-dx/d)*f;
+var ty=(-dy/d)*f;
+stars[i].style.transform='translate('+tx+'px,'+ty+'px)';
+}else{
+stars[i].style.transform='translate(0,0)';
+}
+}
+}
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(update);});
+})();
     </script>
     <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.96);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
         <div class="loading-logo">V</div>
