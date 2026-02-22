@@ -168,9 +168,9 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 18px;
             backdrop-filter: blur(16px);
-            transition: all 0.3s ease;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(28px);
         }
         
         .faq-section.visible {
@@ -229,6 +229,7 @@
             color: #818cf8;
             border: 1px solid rgba(99, 102, 241, 0.2);
         }
+        .content-page .faq-section strong { color: #ffffff; }
         
         .content-page a {
             color: rgba(255, 255, 255, 0.8);
@@ -432,22 +433,22 @@
         
         <div class="faq-section" id="section2">
             <h3>2. How do I use the bot?</h3>
-            <p>Simply add vetements to your server or add it to your apps, then use slash commands like <code>/qrgen</code>, <code>/translate</code>, or <code>/cryptoprice</code> anywhere to access various features. The bot provides interactive menus and easy-to-follow instructions for each command.</p>
+            <p>Add vetements to your server or to your apps, then use slash commands directly in Discord. The bot provides interactive menus and clear instructions for each feature. Visit the Commands page for a full list of available features.</p>
         </div>
         
         <div class="faq-section" id="section3">
             <h3>3. Is vetements free?</h3>
-            <p>Yes! Most features are completely free to use. We offer a premium tier with enhanced capabilities and limits for users who want to support development and get additional features.</p>
+            <p>Yes. Most features are free. We offer a premium tier (Vetements+) with enhanced capabilities and higher limits for users who want to support development.</p>
         </div>
         
         <div class="faq-section" id="section4">
             <h3>4. Where can I get support?</h3>
-            <p>Join our Discord server for support, updates, bug reports, and to connect with the community. You can also use the <code>/support</code> command to get a direct link to our support server.</p>
+            <p>Join our Discord server for support, updates, and bug reports. The invite link is available on the homepage.</p>
         </div>
         
         <div class="faq-section" id="section5">
             <h3>5. How do I add vetements to my server?</h3>
-            <p>Click the "Add to Discord" button on the homepage or use the <code>/invite</code> command. You'll need "Manage Server" permissions to add the bot.</p>
+            <p>Use the "Add to Discord" button on the homepage. You need "Manage Server" permissions to add the bot.</p>
         </div>
         
         <div class="faq-section" id="section6">
@@ -467,12 +468,17 @@
         
         <div class="faq-section" id="section9">
             <h3>9. Is my data safe?</h3>
-            <p>Yes, we take privacy seriously. We only store minimal data necessary for bot functionality. See our <a href="/privacy" style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> for details.</p>
+            <p>We store only the data needed for bot functionality. See our <a href="privacy.html" style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> for details.</p>
         </div>
         
         <div class="faq-section" id="section10">
             <h3>10. Can I suggest new features?</h3>
-            <p>Absolutely! Join our Discord server and share your ideas in the suggestions channel. We value community feedback.</p>
+            <p>Yes. Join our Discord server and share your ideas. We value community feedback.</p>
+        </div>
+        
+        <div class="faq-section" id="section11">
+            <h3>11. What is the refund policy?</h3>
+            <p>All purchases (subscriptions and one-time payments) are non-refundable. See our <a href="terms.html">Terms of Service</a> for full details.</p>
         </div>
     </div>
 
@@ -490,32 +496,19 @@
             setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 var faqSections = document.querySelectorAll('.faq-section');
-                faqSections.forEach(function(section, index) {
-                    setTimeout(function() {
-                        section.classList.add('visible');
-                    }, index * 100 + 300);
-                });
                 initScrollAnimations();
             }, 800);
         });
         
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.faq-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+            var elements = document.querySelectorAll('.faq-section');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                    else entry.target.classList.remove('visible');
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            elements.forEach(element => {
-                observer.observe(element);
-            });
+            }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+            elements.forEach(function(el) { observer.observe(el); });
         }
         
         document.addEventListener('mousedown', function(e) {
