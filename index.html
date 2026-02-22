@@ -397,6 +397,32 @@
             font-weight: 500;
         }
         
+        .stats-ping-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .stats-ping-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+        .stats-ping-item img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
+        }
+        .stats-ping-value {
+            color: #818cf8;
+            font-weight: 600;
+        }
+        
         .stats-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -625,6 +651,18 @@
             </div>
             <div class="stats-meta" id="lastUpdated">refreshing…</div>
         </div>
+        <div class="stats-ping-row">
+            <div class="stats-ping-item">
+                <img src="https://i.ibb.co/jZbXXrJm/wifi.png" alt="">
+                <span>Discord Ping:</span>
+                <span class="stats-ping-value" id="stat-ping">—</span>
+            </div>
+            <div class="stats-ping-item">
+                <img src="https://i.ibb.co/jZbXXrJm/wifi.png" alt="">
+                <span>Database Ping:</span>
+                <span class="stats-ping-value" id="stat-dbPing">—</span>
+            </div>
+        </div>
         <div class="stats-container">
             <div class="stat-item">
                 <div class="stat-label">Servers</div>
@@ -694,6 +732,7 @@
                 : 'http://127.0.0.1:8787/stats';
         const STATS_ENDPOINT = window.VETEMENTS_STATS_URL || DEFAULT_STATS_ENDPOINT;
         const STAT_REFRESH_MS = 12000;
+        const STAT_TIMEOUT_MS = 8000;
         const statEls = {
             servers: document.getElementById('stat-servers'),
             members: document.getElementById('stat-members'),
@@ -708,27 +747,63 @@
             return new Intl.NumberFormat('en-US', { notation: 'compact' }).format(Number(value));
         };
 
-        async function pullStats() {
-            try {
-                const res = await fetch(STATS_ENDPOINT, { headers: { 'Accept': 'application/json' }, cache: 'no-store' });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
+        function setOfflineState() {
+            livePill.classList.add('offline');
+            liveStatusText.textContent = 'Offline';
+            lastUpdated.textContent = 'retrying…';
+            var pe = document.getElementById('stat-ping');
+            var de = document.getElementById('stat-dbPing');
+            if (pe) pe.textContent = '—';
+            if (de) de.textContent = '—';
+        }
 
-                const servers = data.servers ?? data.guilds ?? data.guildCount ?? data.server_count;
-                const members = data.members ?? data.users ?? data.memberCount ?? data.member_count;
-                const installs = data.installedUsers ?? data.installed_users ?? data.users_total ?? data.users;
+        function setLiveState() {
+            livePill.classList.remove('offline');
+            liveStatusText.textContent = 'Live';
+            lastUpdated.textContent = 'updated ' + new Date().toLocaleTimeString();
+        }
+
+        function isValidStatsData(data) {
+            if (!data || typeof data !== 'object') return false;
+            var s = data.servers ?? data.guilds ?? data.guildCount ?? data.server_count;
+            var m = data.members ?? data.users ?? data.memberCount ?? data.member_count;
+            var u = data.installedUsers ?? data.installed_users ?? data.users_total ?? data.users;
+            return (s != null && s !== '') || (m != null && m !== '') || (u != null && u !== '');
+        }
+
+        async function pullStats() {
+            var controller = null;
+            var timeoutId = null;
+            try {
+                controller = new AbortController();
+                timeoutId = setTimeout(function() { controller.abort(); }, STAT_TIMEOUT_MS);
+                var res = await fetch(STATS_ENDPOINT, {
+                    headers: { 'Accept': 'application/json' },
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                timeoutId = null;
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                var data = await res.json();
+                if (!isValidStatsData(data)) throw new Error('Invalid stats');
+
+                var servers = data.servers ?? data.guilds ?? data.guildCount ?? data.server_count;
+                var members = data.members ?? data.users ?? data.memberCount ?? data.member_count;
+                var installs = data.installedUsers ?? data.installed_users ?? data.users_total ?? data.users;
+                var ping = data.ping;
+                var dbPing = data.databasePing ?? data.database_ping;
 
                 statEls.servers.textContent = formatNumber(servers);
                 statEls.members.textContent = formatNumber(members);
                 statEls.users.textContent = formatNumber(installs);
+                document.getElementById('stat-ping').textContent = (ping != null && !Number.isNaN(Number(ping))) ? ping + ' ms' : '—';
+                document.getElementById('stat-dbPing').textContent = (dbPing != null && !Number.isNaN(Number(dbPing))) ? dbPing + ' ms' : '—';
 
-                livePill.classList.remove('offline');
-                liveStatusText.textContent = 'Live';
-                lastUpdated.textContent = `updated ${new Date().toLocaleTimeString()}`;
+                setLiveState();
             } catch (err) {
-                livePill.classList.add('offline');
-                liveStatusText.textContent = 'Offline';
-                lastUpdated.textContent = 'retrying…';
+                if (timeoutId) clearTimeout(timeoutId);
+                setOfflineState();
             } finally {
                 setTimeout(pullStats, STAT_REFRESH_MS);
             }
