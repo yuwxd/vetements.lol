@@ -1029,10 +1029,15 @@
     <script>
         (function() {
             var _base = window.location.origin;
-            window._veApi = function() { return window.VETEMENTS_COMMANDS_URL || _base + '/api/commands'; };
+            var isLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(_base);
+            window._veApi = function() {
+                if (window.VETEMENTS_COMMANDS_URL) return window.VETEMENTS_COMMANDS_URL;
+                if (isLocal) return 'https://vetements.lol/api/commands';
+                return _base + '/api/commands';
+            };
         })();
         function getCommandsEndpoint() {
-            return typeof window._veApi === 'function' ? window._veApi() : (window.location.origin + '/api/commands');
+            return typeof window._veApi === 'function' ? window._veApi() : 'https://vetements.lol/api/commands';
         }
 
         /** Maps API type (free|paid|premium|both) to display label */
