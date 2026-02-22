@@ -37,7 +37,7 @@
         }
         .stars-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
         .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; }
-        @keyframes starTwinkle { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.9; } }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.95; } }
         
         .container {
             text-align: center;
@@ -153,7 +153,9 @@
 </head>
 <body>
     <div class="stars-bg" id="starsBg"></div>
-    <script src="/stars.js"></script>
+    <script>
+(function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}})();
+    </script>
     <div class="container">
         <div class="logo">V</div>
         <h1>vetements</h1>
