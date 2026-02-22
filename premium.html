@@ -700,13 +700,13 @@
             color: #818cf8;
         }
         
-        .parallax-section {
+        .parallax-section, .notification {
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(28px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .parallax-section.visible {
+        .parallax-section.visible, .notification.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -875,7 +875,7 @@
         
         <div style="text-align: center; margin-top: 60px;">
             <p style="color: rgba(255, 255, 255, 0.6); font-size: 15px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;" class="parallax-section">
-                When premium drops, use <code style="background: rgba(255, 255, 255, 0.05); padding: 2px 8px; border-radius: 6px; color: #ffffff;">/redeem</code> in Discord to activate your key.
+                When premium launches, use the redeem feature in Discord to activate your key.
             </p>
         </div>
     </div>
@@ -896,56 +896,19 @@
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
-                setTimeout(function() {
-                    var parallaxSections = document.querySelectorAll('.parallax-section');
-                    for (var i = 0; i < parallaxSections.length; i++) {
-                        (function(idx, el) {
-                            setTimeout(function() { el.classList.add('visible'); }, idx * 150);
-                        })(i, parallaxSections[i]);
-                    }
-                }, 500);
                 initScrollAnimations();
             }, 800);
         });
         
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.parallax-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+            var elements = document.querySelectorAll('.parallax-section, .notification');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                    else entry.target.classList.remove('visible');
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            elements.forEach(function(element) {
-                observer.observe(element);
-            });
-            
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.5;
-                
-                const cards = document.querySelectorAll('.pricing-card');
-                cards.forEach((card, index) => {
-                    const speed = 0.1 + (index * 0.05);
-                    card.style.transform = `translateY(${rate * speed}px)`;
-                });
-                
-                const parallaxSections = document.querySelectorAll('.parallax-section:not(.visible)');
-                parallaxSections.forEach((section, index) => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top < window.innerHeight * 0.8) {
-                        setTimeout(() => {
-                            section.classList.add('visible');
-                        }, index * 100);
-                    }
-                });
-            });
+            }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+            elements.forEach(function(el) { observer.observe(el); });
         }
         
         document.addEventListener('mousedown', function(e) {
