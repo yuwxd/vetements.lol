@@ -349,6 +349,56 @@
             color: #818cf8;
             font-weight: 600;
         }
+        .stat-inline-wrap {
+            position: relative;
+            display: inline-block;
+        }
+        .stat-neon-line {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(165, 180, 252, 0.9), #a5b4fc, rgba(199, 210, 254, 0.95));
+            border-radius: 3px;
+            transform: scaleX(0);
+            transform-origin: left center;
+            box-shadow: 0 0 8px #818cf8, 0 0 16px rgba(129, 140, 248, 0.55), 0 0 24px rgba(129, 140, 248, 0.25);
+            pointer-events: none;
+        }
+        .stat-neon-1 {
+            animation: statNeonDraw1 9.2s ease-in-out infinite;
+            animation-delay: 0s;
+        }
+        .stat-neon-2 {
+            animation: statNeonDraw2 9.2s ease-in-out infinite;
+            animation-delay: 1.1s;
+        }
+        .stat-neon-3 {
+            animation: statNeonDraw3 9.2s ease-in-out infinite;
+            animation-delay: 2.5s;
+        }
+        @keyframes statNeonDraw1 {
+            0% { transform: scaleX(0); }
+            6.5% { transform: scaleX(1); }
+            70% { transform: scaleX(1); }
+            78% { transform: scaleX(0); }
+            100% { transform: scaleX(0); }
+        }
+        @keyframes statNeonDraw2 {
+            0% { transform: scaleX(0); }
+            8% { transform: scaleX(1); }
+            70% { transform: scaleX(1); }
+            79% { transform: scaleX(0); }
+            100% { transform: scaleX(0); }
+        }
+        @keyframes statNeonDraw3 {
+            0% { transform: scaleX(0); }
+            5% { transform: scaleX(1); }
+            70% { transform: scaleX(1); }
+            76% { transform: scaleX(0); }
+            100% { transform: scaleX(0); }
+        }
         
         .stats-header {
             display: flex;
@@ -544,7 +594,7 @@
             border-left: 3px solid rgba(99, 102, 241, 0.5);
             border-radius: 12px;
             padding: 22px 28px;
-            margin-top: 22px;
+            margin-top: 56px;
             text-align: center;
             backdrop-filter: blur(12px);
         }
@@ -686,7 +736,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </div>
 
     <div class="stats-section">
-        <p class="stats-sentence">vetements serves <span class="stat-inline" id="stat-members-text">—</span> server members and <span class="stat-inline" id="stat-users-text">—</span> individuals across <span class="stat-inline" id="stat-servers-text">—</span> servers.</p>
+        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-line stat-neon-1" aria-hidden="true"></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-line stat-neon-2" aria-hidden="true"></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-line stat-neon-3" aria-hidden="true"></span></span> servers.</p>
         <div class="stats-header">
             <div class="stats-title">Stats</div>
             <div class="live-pill" id="livePill">
@@ -735,7 +785,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         
         <div class="highlight">
             <p class="highlight-text">
-                "One invite. All the tools. That’s it."
+                "Less apps, more Discord."
             </p>
             <p class="highlight-author">— vetements</p>
         </div>
