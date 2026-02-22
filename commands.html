@@ -1042,14 +1042,13 @@
             return typeof window._veApi === 'function' ? window._veApi() : 'https://vetements.lol/api/commands';
         }
 
-        /** Maps API type (free|paid|premium|both) to display label */
         function getTypeLabel(type) {
             if (!type || typeof type !== 'string') return 'free';
             const t = String(type).toLowerCase().trim();
             if (t === 'free') return 'free';
             if (t === 'paid' || t === 'premium') return 'paid';
             if (t === 'both') return 'free & paid';
-            return t; // fallback: show raw value
+            return t;
         }
 
         function getTypeCssClass(type) {
