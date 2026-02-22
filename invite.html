@@ -44,7 +44,11 @@
             padding: 40px;
             max-width: 500px;
             width: 100%;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .container.visible { opacity: 1; transform: translateY(0); }
         
         .logo {
             width: 100px;
@@ -170,6 +174,18 @@
     </div>
 
     <script>
+        (function(){
+            var c = document.querySelector('.container');
+            if (c) {
+                var obs = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(e) {
+                        if (e.isIntersecting) e.target.classList.add('visible');
+                        else e.target.classList.remove('visible');
+                    });
+                }, { threshold: 0.2 });
+                obs.observe(c);
+            }
+        })();
         setTimeout(function() {
             window.location.href = "https://discord.com/oauth2/authorize?client_id=1447659078498127932";
         }, 1500);
