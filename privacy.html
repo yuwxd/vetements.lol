@@ -166,8 +166,9 @@
             font-style: italic;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
+        .update-date.visible { opacity: 1; transform: translateY(0); }
         
         .policy-section {
             margin-bottom: 50px;
@@ -176,9 +177,9 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 18px;
             backdrop-filter: blur(16px);
-            transition: all 0.3s ease;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(28px);
         }
         
         .policy-section.visible {
@@ -369,7 +370,7 @@
     <div class="content-page">
         <h2>Privacy Policy</h2>
         
-        <div class="update-date">Last Updated: December 14, 2025</div>
+        <div class="update-date">Last Updated: February 11, 2026</div>
         
         <div class="policy-section" id="section1">
             <h3>1. Data Collection</h3>
@@ -388,10 +389,9 @@
             <ul>
                 <li>We do NOT store your Discord messages or conversation history</li>
                 <li>We do NOT collect personal information beyond Discord IDs</li>
-                <li>We do NOT collect user credentials (payment information such as card details, billing info, or other sensitive payment data)</li>
+                <li>We do NOT collect user credentials or payment card details (payment data is handled exclusively by third-party payment processors)</li>
                 <li>We do NOT share your data with third parties for marketing purposes</li>
                 <li>We do NOT use cookies or tracking technologies on our website</li>
-                <li>We do NOT collect payment information directly (handled by payment processors)</li>
             </ul>
         </div>
         
@@ -421,7 +421,7 @@
         
         <div class="policy-section" id="section5">
             <h3>5. Third-Party Services</h3>
-            <p>Some commands may interact with third-party services (like cryptocurrency APIs, image processing services, or AI providers). These services have their own privacy policies, and we encourage you to review them. We only share necessary data with these services for command functionality.</p>
+            <p>Our bot may interact with third-party services (e.g. APIs, image processing, or AI providers). These services have their own privacy policies. We only share data necessary for functionality. Payment processing is handled by third-party processors; we do not store payment details.</p>
         </div>
         
         <div class="policy-section" id="section6">
@@ -464,7 +464,12 @@
         </div>
         
         <div class="policy-section" id="section11">
-            <h3>11. Contact Us</h3>
+            <h3>11. Refunds</h3>
+            <p>We do not offer refunds for subscriptions, one-time purchases, or any other paid products. All sales are final. See our Terms of Service for details.</p>
+        </div>
+        
+        <div class="policy-section" id="section12">
+            <h3>12. Contact Us</h3>
             <p>For privacy-related questions, requests, or concerns, contact us on our Discord server: <a href="https://discord.gg/larpfunds">discord.gg/larpfunds</a></p>
         </div>
     </div>
@@ -483,32 +488,19 @@
             setTimeout(function() {
                 document.getElementById('loadingScreen').classList.add('fade-out');
                 var policySections = document.querySelectorAll('.policy-section');
-                policySections.forEach(function(section, index) {
-                    setTimeout(function() {
-                        section.classList.add('visible');
-                    }, index * 80 + 300);
-                });
                 initScrollAnimations();
             }, 800);
         });
         
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.policy-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+            var elements = document.querySelectorAll('.policy-section, .update-date');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                    else entry.target.classList.remove('visible');
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            elements.forEach(element => {
-                observer.observe(element);
-            });
+            }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+            elements.forEach(function(el) { observer.observe(el); });
         }
         
         document.addEventListener('mousedown', function(e) {
