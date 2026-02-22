@@ -1238,10 +1238,9 @@
                 if (filtered.length) groups.push({ category, commands: filtered });
             }
 
-            const totalVisible = groups.reduce((sum, g) => sum + g.commands.length, 0);
-            document.getElementById('visibleCommands').textContent = totalVisible;
+            var totalVisible = groups.reduce(function(sum, g) { return sum + g.commands.length; }, 0);
 
-            groups.forEach((section, idx) => {
+            groups.forEach(function(section, idx) {
                 const sectionEl = document.createElement('div');
                 sectionEl.className = 'category-section';
                 const commandsHTML = section.commands.map((cmd, cmdIdx) => {
@@ -1337,11 +1336,35 @@
                 });
         }
 
+        function animateCount(el, target, duration) {
+            if (!el) return;
+            var start = 0;
+            var cur = el.getAttribute('data-count');
+            if (cur != null && cur !== '') start = parseInt(cur, 10) || 0;
+            var t = Math.round(Number(target)) || 0;
+            if (start === t) { el.textContent = t; el.setAttribute('data-count', t); return; }
+            var startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var elapsed = timestamp - startTime;
+                var progress = Math.min(elapsed / duration, 1);
+                progress = 1 - Math.pow(1 - progress, 2);
+                var val = Math.round(start + (t - start) * progress);
+                el.textContent = val;
+                el.setAttribute('data-count', val);
+                if (progress < 1) requestAnimationFrame(step);
+                else { el.textContent = t; el.setAttribute('data-count', t); }
+            }
+            requestAnimationFrame(step);
+        }
+
         function updateStats(visibleCount = null) {
-            document.getElementById('totalCommands').textContent = totalCommandCount;
-            document.getElementById('totalCategories').textContent = totalCategoriesCount || [...new Set(allCommands.map(c => c.category))].length;
+            var total = totalCommandCount;
+            var cats = totalCategoriesCount || (allCommands.length ? [...new Set(allCommands.map(function(c) { return c.category; }))].length : 0);
+            animateCount(document.getElementById('totalCommands'), total, 520);
+            animateCount(document.getElementById('totalCategories'), cats, 520);
             if (visibleCount !== null) {
-                document.getElementById('visibleCommands').textContent = visibleCount;
+                animateCount(document.getElementById('visibleCommands'), visibleCount, 520);
             }
         }
 
