@@ -33,6 +33,16 @@
         .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; }
         @keyframes starTwinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.95; } }
         
+        .success-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .success-content.visible { opacity: 1; transform: translateY(0); }
+        
         .logo {
             width: 100px;
             height: 100px;
@@ -93,9 +103,25 @@
     <script>
 (function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}})();
     </script>
-    <div class="logo">V</div>
-    <h1>You're in.</h1>
-    <p class="message">Check your DMs for the next steps.</p>
-    <a href="/" class="home-link">Back to homepage</a>
+    <div class="success-content">
+        <div class="logo">V</div>
+        <h1>You're in.</h1>
+        <p class="message">Check your DMs for the next steps.</p>
+        <a href="/" class="home-link">Back to homepage</a>
+    </div>
+    <script>
+        (function(){
+            var c = document.querySelector('.success-content');
+            if (c) {
+                var obs = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(e) {
+                        if (e.isIntersecting) e.target.classList.add('visible');
+                        else e.target.classList.remove('visible');
+                    });
+                }, { threshold: 0.2 });
+                obs.observe(c);
+            }
+        })();
+    </script>
 </body>
 </html>
