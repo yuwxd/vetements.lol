@@ -199,6 +199,8 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         
         .pricing-card.monthly {
@@ -333,7 +335,7 @@
             align-items: center;
             justify-content: center;
             animation: plusGlow 2.5s ease-in-out infinite alternate;
-            box-shadow: 0 0 18px rgba(129, 140, 248, 0.35);
+            overflow: hidden;
         }
         .pricing-icon.lifetime::before,
         .pricing-icon.lifetime::after {
@@ -362,18 +364,19 @@
             transform: translate(-50%, -50%);
             width: 80px;
             height: 80px;
-            background: radial-gradient(circle, rgba(129, 140, 248, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.3) 0%, transparent 65%);
             animation: plusPulse 3s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
         }
         @keyframes plusGlow {
             from {
-                box-shadow: 0 0 18px rgba(129, 140, 248, 0.35);
+                filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.4));
                 transform: scale(1);
             }
             to {
-                box-shadow: 0 0 24px rgba(129, 140, 248, 0.5), 0 0 32px rgba(129, 140, 248, 0.2);
+                filter: drop-shadow(0 0 18px rgba(129, 140, 248, 0.55));
                 transform: scale(1.03);
             }
         }
@@ -463,6 +466,7 @@
             list-style: none;
             text-align: left;
             margin: 30px 0 35px;
+            flex: 1;
         }
         
         .pricing-features li {
@@ -489,8 +493,11 @@
         }
         
         .pricing-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 100%;
+            min-height: 52px;
             padding: 16px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -505,6 +512,7 @@
             overflow: hidden;
             cursor: pointer;
             backdrop-filter: blur(5px);
+            margin-top: auto;
         }
         
         .pricing-card.lifetime .pricing-button {
@@ -800,7 +808,7 @@
                 <div class="price">
                     <span class="price-currency">$</span>7.99
                 </div>
-                <div class="price-period">one-time · own it forever</div>
+                <div class="price-period">one-time</div>
                 <ul class="pricing-features">
                     <li>Everything in Monthly, unlocked permanently</li>
                     <li>Lifetime access — no expiry</li>
