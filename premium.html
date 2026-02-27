@@ -334,8 +334,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 50%;
             animation: plusGlow 2.5s ease-in-out infinite alternate;
-            overflow: hidden;
         }
         .pricing-icon.lifetime::before,
         .pricing-icon.lifetime::after {
@@ -357,32 +357,19 @@
             width: 6px;
             height: 28px;
         }
-        .pricing-icon.lifetime .plus-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(129, 140, 248, 0.3) 0%, transparent 65%);
-            animation: plusPulse 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
         @keyframes plusGlow {
             from {
-                filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.4));
+                box-shadow: 0 0 20px rgba(129, 140, 248, 0.2),
+                            0 0 40px rgba(129, 140, 248, 0.12),
+                            0 0 60px rgba(129, 140, 248, 0.06);
                 transform: scale(1);
             }
             to {
-                filter: drop-shadow(0 0 18px rgba(129, 140, 248, 0.55));
+                box-shadow: 0 0 28px rgba(129, 140, 248, 0.28),
+                            0 0 50px rgba(129, 140, 248, 0.16),
+                            0 0 80px rgba(129, 140, 248, 0.08);
                 transform: scale(1.03);
             }
-        }
-        @keyframes plusPulse {
-            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
         }
         
         .pricing-title {
@@ -802,7 +789,7 @@
             </div>
             <div class="pricing-card lifetime">
                 <span class="pricing-badge">Best value</span>
-                <div class="pricing-icon lifetime" aria-hidden="true"><span class="plus-glow"></span></div>
+                <div class="pricing-icon lifetime" aria-hidden="true"></div>
                 <h3 class="pricing-title">Lifetime</h3>
                 <p class="pricing-subtitle">Pay once. Keep vetements+ forever. No renewal, no hassle.</p>
                 <div class="price">
