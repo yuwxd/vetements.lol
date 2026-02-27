@@ -236,10 +236,31 @@
         }
         
         .pricing-icon.monthly {
-            font-size: 48px;
-            margin-bottom: 25px;
-            color: rgba(255, 255, 255, 0.9);
-            display: inline-block;
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 25px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pricing-icon.monthly::before,
+        .pricing-icon.monthly::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 4px;
+            transform: translate(-50%, -50%);
+        }
+        .pricing-icon.monthly::before {
+            width: 28px;
+            height: 6px;
+        }
+        .pricing-icon.monthly::after {
+            width: 6px;
+            height: 28px;
         }
         
         .pricing-card.lifetime {
@@ -291,69 +312,61 @@
         }
         
         .pricing-icon.lifetime {
-            font-size: 48px;
-            margin-bottom: 25px;
-            color: #ffffff;
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 25px;
             position: relative;
-            display: inline-block;
-            animation: starGlow 2s ease-in-out infinite alternate;
-            text-shadow: 
-                0 0 10px rgba(255, 255, 255, 0.8),
-                0 0 20px rgba(255, 255, 255, 0.6),
-                0 0 30px rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: plusGlow 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
         }
-        
-        .pricing-icon.lifetime::before {
-            content: '★';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            color: rgba(255, 255, 255, 0.9);
-            z-index: 1;
-        }
-        
+        .pricing-icon.lifetime::before,
         .pricing-icon.lifetime::after {
             content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(199, 210, 254, 0.95) 100%);
+            border-radius: 4px;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        .pricing-icon.lifetime::before {
+            width: 28px;
+            height: 6px;
+        }
+        .pricing-icon.lifetime::after {
+            width: 6px;
+            height: 28px;
+        }
+        .pricing-icon.lifetime .plus-glow {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.25) 0%, transparent 70%);
+            animation: plusPulse 3s ease-in-out infinite;
+            pointer-events: none;
             z-index: 0;
-            animation: starPulse 3s ease-in-out infinite;
-            opacity: 0.5;
         }
-        
-        @keyframes starGlow {
+        @keyframes plusGlow {
             from {
-                text-shadow: 
-                    0 0 10px rgba(255, 255, 255, 0.8),
-                    0 0 20px rgba(255, 255, 255, 0.6),
-                    0 0 30px rgba(255, 255, 255, 0.4);
+                box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
                 transform: scale(1);
             }
             to {
-                text-shadow: 
-                    0 0 15px rgba(255, 255, 255, 1),
-                    0 0 25px rgba(255, 255, 255, 0.8),
-                    0 0 35px rgba(255, 255, 255, 0.6),
-                    0 0 45px rgba(255, 255, 255, 0.4);
+                box-shadow: 0 0 28px rgba(129, 140, 248, 0.6), 0 0 40px rgba(129, 140, 248, 0.3);
                 transform: scale(1.05);
             }
         }
-        
-        @keyframes starPulse {
-            0%, 100% {
-                opacity: 0.3;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                opacity: 0.6;
-                transform: translate(-50%, -50%) scale(1.2);
-            }
+        @keyframes plusPulse {
+            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
         }
         
         .pricing-title {
@@ -829,7 +842,7 @@
         
         <div class="pricing-container">
             <div class="pricing-card monthly">
-                <div class="pricing-icon monthly">★</div>
+                <div class="pricing-icon monthly" aria-hidden="true"></div>
                 <h3 class="pricing-title">Monthly Subscription</h3>
                 <p class="pricing-subtitle">Perfect for users who want to test vetements app</p>
                 <div class="price">
@@ -846,7 +859,7 @@
                 <a href="https://discord.com/discovery/applications/1447659078498127932/store/1471914607357591697" class="pricing-button" target="_blank" rel="noopener noreferrer">Subscribe Monthly</a>
             </div>
             <div class="pricing-card lifetime">
-                <div class="pricing-icon lifetime">★</div>
+                <div class="pricing-icon lifetime" aria-hidden="true"><span class="plus-glow"></span></div>
                 <h3 class="pricing-title">Lifetime Subscription</h3>
                 <p class="pricing-subtitle">One-time payment for permanent premium access</p>
                 <div class="price">
