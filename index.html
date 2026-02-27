@@ -326,12 +326,17 @@
         }
         
         .stats-section {
+            width: 100%;
             max-width: 1100px;
-            margin: 0 auto 28px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 28px;
             padding: 0 32px;
+            box-sizing: border-box;
             opacity: 0;
             transform: translateY(28px);
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
         }
         .stats-section.visible { opacity: 1; transform: translateY(0); }
 
@@ -397,6 +402,7 @@
             gap: 12px;
             margin-bottom: 12px;
             flex-wrap: wrap;
+            width: 100%;
         }
         
         .stats-title {
@@ -481,6 +487,8 @@
         
         .stats-container {
             display: grid;
+            margin-left: auto;
+            margin-right: auto;
             grid-template-columns: repeat(3, 1fr);
             gap: 14px;
             max-width: 800px;
@@ -733,7 +741,6 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 <span class="live-dot"></span>
                 <span id="liveStatusText">Live</span>
             </div>
-            <div class="stats-meta" id="lastUpdated">refreshing…</div>
         </div>
         <div class="stats-ping-row">
             <div class="stats-ping-item">
@@ -772,13 +779,6 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             Server management, image gen, crypto, translations, QR codes — the list goes on. 
             Everything runs in Discord. No downloads, no cluttered dashboards.
         </p>
-        
-        <div class="highlight">
-            <p class="highlight-text">
-                "Everything you need. One place."
-            </p>
-            <p class="highlight-author">— vetements</p>
-        </div>
     </div>
 
     <footer>
@@ -812,11 +812,14 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             els.forEach(function(el) { observer.observe(el); });
         }
 
-        var DEFAULT_STATS_ENDPOINT =
-            window.location.protocol === 'https:'
-                ? '/api/stats'
-                : 'http://127.0.0.1:8787/stats';
-        const STATS_ENDPOINT = window.VETEMENTS_STATS_URL || DEFAULT_STATS_ENDPOINT;
+        function getVetementsApiBase() {
+            var base = (typeof window.VETEMENTS_API_BASE === 'string' && window.VETEMENTS_API_BASE.trim()) ? window.VETEMENTS_API_BASE.trim().replace(/\/+$/, '') : '';
+            if (base) return base;
+            var origin = window.location.origin;
+            if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return 'https://vetements.lol';
+            return origin;
+        }
+        const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getVetementsApiBase() + '/api/stats');
         const STAT_REFRESH_MS = 12000;
         const STAT_TIMEOUT_MS = 8000;
         const statEls = {
@@ -826,7 +829,6 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         };
         const livePill = document.getElementById('livePill');
         const liveStatusText = document.getElementById('liveStatusText');
-        const lastUpdated = document.getElementById('lastUpdated');
 
         const formatNumber = (value) => {
             if (value === undefined || value === null || Number.isNaN(Number(value))) return '--';
@@ -836,7 +838,6 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         function setOfflineState() {
             livePill.classList.add('offline');
             liveStatusText.textContent = 'Offline';
-            lastUpdated.textContent = 'retrying…';
             var pe = document.getElementById('stat-ping');
             var de = document.getElementById('stat-dbPing');
             if (pe) pe.textContent = '—';
@@ -846,7 +847,6 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         function setLiveState() {
             livePill.classList.remove('offline');
             liveStatusText.textContent = 'Live';
-            lastUpdated.textContent = 'updated ' + new Date().toLocaleTimeString();
         }
 
         function isValidStatsData(data) {
