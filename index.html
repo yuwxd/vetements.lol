@@ -654,6 +654,100 @@
         footer a:hover {
             color: #818cf8;
         }
+
+        .users-roll-section {
+            width: 100%;
+            overflow: hidden;
+            padding: 32px 0 40px;
+            position: relative;
+        }
+        .users-roll-section::before,
+        .users-roll-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .users-roll-section::before {
+            left: 0;
+            background: linear-gradient(to right, #08080a 0%, transparent 100%);
+        }
+        .users-roll-section::after {
+            right: 0;
+            background: linear-gradient(to left, #08080a 0%, transparent 100%);
+        }
+        .users-roll-track {
+            display: flex;
+            gap: 16px;
+            width: max-content;
+            animation: usersRollScroll 80s linear infinite;
+        }
+        .users-roll-section:hover .users-roll-track {
+            animation-play-state: paused;
+        }
+        @keyframes usersRollScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .users-roll-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 18px 12px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            flex-shrink: 0;
+            min-width: 0;
+        }
+        .users-roll-avatar {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .users-roll-avatar img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .users-roll-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            min-width: 0;
+        }
+        .users-roll-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+        .users-roll-username {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.35;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+        .users-roll-section.empty {
+            display: none;
+        }
         
         @media (max-width: 900px) {
             .stats-container { gap: 12px; }
@@ -742,6 +836,10 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" class="btn btn-primary" target="_blank">Add the bot</a>
             <a href="https://discord.gg/larpfunds" class="btn btn-secondary" target="_blank">Join Server</a>
         </div>
+    </div>
+
+    <div class="users-roll-section" id="users-roll-section">
+        <div class="users-roll-track" id="users-roll-track"></div>
     </div>
 
     <div class="stats-section">
@@ -836,6 +934,32 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return 'https://vetements.lol';
             return origin;
         }
+        async function loadUsersRoll() {
+            var track = document.getElementById('users-roll-track');
+            var section = document.getElementById('users-roll-section');
+            if (!track || !section) return;
+            try {
+                var base = getVetementsApiBase();
+                var res = await fetch(base + '/api/users', { cache: 'no-store' });
+                if (!res.ok) { section.classList.add('empty'); return; }
+                var list = await res.json();
+                if (!Array.isArray(list) || list.length === 0) { section.classList.add('empty'); return; }
+                function cardHtml(u) {
+                    var name = (u.displayName || u.username || 'User').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var username = (u.username || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var avatar = (u.avatarUrl || '').replace(/"/g, '&quot;');
+                    return '<div class="users-roll-card">' +
+                        '<div class="users-roll-avatar"><img src="' + avatar + '" alt="" loading="lazy"></div>' +
+                        '<div class="users-roll-info">' +
+                        '<span class="users-roll-name">' + name + '</span>' +
+                        '<span class="users-roll-username">@' + username + '</span>' +
+                        '</div></div>';
+                }
+                var html = list.map(cardHtml).join('') + list.map(cardHtml).join('');
+                track.innerHTML = html;
+            } catch (e) { section.classList.add('empty'); }
+        }
+        loadUsersRoll();
         const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getVetementsApiBase() + '/api/stats');
         const STAT_REFRESH_MS = 8000;
         const STAT_TIMEOUT_MS = 8000;
