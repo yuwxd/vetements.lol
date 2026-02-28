@@ -350,9 +350,20 @@
             max-width: 560px;
             margin: 0 auto 14px;
         }
-        .stats-sentence .stat-inline {
+        .stats-sentence .stat-inline,
+        .stats-commands-line .stat-inline {
             color: #818cf8;
             font-weight: 600;
+        }
+        .stats-commands-line {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.55;
+            text-align: center;
+            max-width: 560px;
+            margin: 18px auto 0;
         }
         .stat-inline-wrap {
             position: relative;
@@ -734,7 +745,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </div>
 
     <div class="stats-section">
-        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers — <span class="stat-inline-wrap"><span class="stat-inline" id="stat-commands-text">—</span></span> commands used in total.</p>
+        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers.</p>
         <div class="stats-header">
             <div class="stats-title">Stats</div>
             <div class="live-pill" id="livePill">
@@ -776,6 +787,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 <div class="stat-foot">Total commands executed</div>
             </div>
         </div>
+        <p class="stats-commands-line"><span class="stat-inline-wrap"><span class="stat-inline" id="stat-commands-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> commands used in total.</p>
     </div>
 
     <div class="showcase-section">
@@ -825,7 +837,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             return origin;
         }
         const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getVetementsApiBase() + '/api/stats');
-        const STAT_REFRESH_MS = 12000;
+        const STAT_REFRESH_MS = 8000;
         const STAT_TIMEOUT_MS = 8000;
         const statEls = {
             servers: document.getElementById('stat-servers'),
