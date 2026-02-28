@@ -489,9 +489,9 @@
             display: grid;
             margin-left: auto;
             margin-right: auto;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 14px;
-            max-width: 800px;
+            max-width: 960px;
             margin: 0 auto;
         }
         
@@ -653,7 +653,7 @@
             .tagline { font-size: 15px; padding: 0 16px; }
             .cta-buttons { flex-direction: column; max-width: 280px; }
             .btn { width: 100%; justify-content: center; }
-            .stats-container { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .stats-container { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .stat-number { font-size: 26px; }
             .stat-item { padding: 14px 12px; }
         }
@@ -734,7 +734,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </div>
 
     <div class="stats-section">
-        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers.</p>
+        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers — <span class="stat-inline-wrap"><span class="stat-inline" id="stat-commands-text">—</span></span> commands used in total.</p>
         <div class="stats-header">
             <div class="stats-title">Stats</div>
             <div class="live-pill" id="livePill">
@@ -769,6 +769,11 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 <div class="stat-label">Installed users</div>
                 <div class="stat-number" id="stat-users">--</div>
                 <div class="stat-foot">Individuals using the bot</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Commands used</div>
+                <div class="stat-number" id="stat-commands">--</div>
+                <div class="stat-foot">Total commands executed</div>
             </div>
         </div>
     </div>
@@ -825,7 +830,8 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         const statEls = {
             servers: document.getElementById('stat-servers'),
             members: document.getElementById('stat-members'),
-            users: document.getElementById('stat-users')
+            users: document.getElementById('stat-users'),
+            commands: document.getElementById('stat-commands')
         };
         const livePill = document.getElementById('livePill');
         const liveStatusText = document.getElementById('liveStatusText');
@@ -883,15 +889,19 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 var pingNum = ping != null ? parseFloat(String(ping).replace(/[^\d.-]/g, '')) : NaN;
                 var dbNum = dbPing != null ? parseFloat(String(dbPing).replace(/[^\d.-]/g, '')) : NaN;
 
+                var totalCommands = data.totalCommands ?? data.commandsUsed ?? data.commands_used ?? data.commands;
                 statEls.servers.textContent = formatNumber(servers);
                 statEls.members.textContent = formatNumber(members);
                 statEls.users.textContent = formatNumber(installs);
+                if (statEls.commands) statEls.commands.textContent = formatNumber(totalCommands);
                 var st = document.getElementById('stat-servers-text');
                 var mt = document.getElementById('stat-members-text');
                 var ut = document.getElementById('stat-users-text');
+                var ct = document.getElementById('stat-commands-text');
                 if (st) st.textContent = formatNumber(servers);
                 if (mt) mt.textContent = formatNumber(members);
                 if (ut) ut.textContent = formatNumber(installs);
+                if (ct) ct.textContent = formatNumber(totalCommands);
                 document.getElementById('stat-ping').textContent = (!Number.isNaN(pingNum)) ? Math.round(pingNum) + ' ms' : '—';
                 document.getElementById('stat-dbPing').textContent = (!Number.isNaN(dbNum)) ? Math.round(dbNum) + ' ms' : '—';
 
