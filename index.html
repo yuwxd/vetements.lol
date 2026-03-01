@@ -998,8 +998,17 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                     Promise.all(avatarUrls.map(preloadImage)),
                     new Promise(function(r) { setTimeout(r, 1600); })
                 ]);
+                var invisibleDisplayChar = '\u1BFB';
+                function isInvisibleName(s) {
+                    if (s == null || typeof s !== 'string') return false;
+                    var t = s.trim();
+                    return t === '' || t === invisibleDisplayChar || t.length === 0;
+                }
                 function cardHtml(u, cb) {
-                    var name = (u.displayName || u.username || 'User').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var rawDisplay = (u.displayName !== undefined && u.displayName !== null) ? String(u.displayName) : (u.username || 'User');
+                    var rawName = isInvisibleName(rawDisplay) ? '' : (rawDisplay || u.username || 'User');
+                    if (isInvisibleName(rawName)) rawName = '';
+                    var name = rawName === '' ? '' : rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var username = (u.username || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var avatar = (u.avatarUrl || '').replace(/"/g, '&quot;');
                     if (avatar) avatar += (avatar.indexOf('?') >= 0 ? '&' : '?') + '_=' + (cb || fetchedAt);
