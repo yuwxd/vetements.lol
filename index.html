@@ -253,7 +253,8 @@
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
         }
-        
+        .tagline-hopping { margin-bottom: 4px; animation-delay: 0.97s; }
+        .tagline-no { margin-bottom: 16px; font-size: 15px; color: rgba(255, 255, 255, 0.7); animation-delay: 0.99s; }
         .version {
             display: inline-block;
             padding: 8px 18px;
@@ -683,14 +684,7 @@
             display: flex;
             gap: 16px;
             width: max-content;
-            animation: usersRollScroll 80s linear infinite;
-        }
-        .users-roll-section:hover .users-roll-track {
-            animation-play-state: paused;
-        }
-        @keyframes usersRollScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            will-change: transform;
         }
         .users-roll-card {
             display: flex;
@@ -829,7 +823,9 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         <h1>vetements</h1>
         <p class="made-by">made by <a href="https://fakecrime.bio/external" class="made-by-link" target="_blank">@yuw</a></p>
         <p class="subtitle">One bot. Every tool you need.</p>
-        <p class="tagline">Moderation, utilities, AI, crypto — run it all from Discord. No hopping between apps.</p>
+        <p class="tagline">Moderation, utilities, AI, crypto — run it all from Discord.</p>
+        <p class="tagline tagline-hopping">hopping between apps.</p>
+        <p class="tagline tagline-no">No</p>
         <span class="version">v2.0</span>
         
         <div class="cta-buttons">
@@ -934,6 +930,33 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return 'https://vetements.lol';
             return origin;
         }
+        var usersRollOffset = 0;
+        var usersRollHalfWidth = 0;
+        var usersRollPaused = false;
+        var usersRollRaf = null;
+        function runUsersRollScroll() {
+            var track = document.getElementById('users-roll-track');
+            var section = document.getElementById('users-roll-section');
+            if (!track || !section || section.classList.contains('empty')) {
+                usersRollRaf = requestAnimationFrame(runUsersRollScroll);
+                return;
+            }
+            if (usersRollHalfWidth === 0 && track.offsetWidth > 0)
+                usersRollHalfWidth = track.offsetWidth / 2;
+            if (usersRollHalfWidth > 0 && !usersRollPaused) {
+                usersRollOffset -= 0.6;
+                if (usersRollOffset <= -usersRollHalfWidth) usersRollOffset += usersRollHalfWidth;
+                track.style.transform = 'translateX(' + usersRollOffset + 'px)';
+            }
+            usersRollRaf = requestAnimationFrame(runUsersRollScroll);
+        }
+        runUsersRollScroll();
+        var usersRollSectionEl = document.getElementById('users-roll-section');
+        if (usersRollSectionEl) {
+            usersRollSectionEl.addEventListener('mouseenter', function() { usersRollPaused = true; });
+            usersRollSectionEl.addEventListener('mouseleave', function() { usersRollPaused = false; });
+        }
+        var usersRollCurrentLength = 0;
         async function loadUsersRoll() {
             var track = document.getElementById('users-roll-track');
             var section = document.getElementById('users-roll-section');
@@ -941,13 +964,22 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             try {
                 var base = getVetementsApiBase();
                 var res = await fetch(base + '/api/users', { cache: 'no-store' });
-                if (!res.ok) { section.classList.add('empty'); return; }
+                if (!res.ok) {
+                    if (usersRollCurrentLength === 0) section.classList.add('empty');
+                    return;
+                }
                 var list = await res.json();
-                if (!Array.isArray(list) || list.length === 0) { section.classList.add('empty'); return; }
-                function cardHtml(u) {
+                if (!Array.isArray(list) || list.length === 0) {
+                    if (usersRollCurrentLength === 0) section.classList.add('empty');
+                    return;
+                }
+                if (list.length < usersRollCurrentLength) return;
+                var fetchedAt = Date.now();
+                function cardHtml(u, cb) {
                     var name = (u.displayName || u.username || 'User').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var username = (u.username || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var avatar = (u.avatarUrl || '').replace(/"/g, '&quot;');
+                    if (avatar) avatar += (avatar.indexOf('?') >= 0 ? '&' : '?') + '_=' + (cb || fetchedAt);
                     return '<div class="users-roll-card">' +
                         '<div class="users-roll-avatar"><img src="' + avatar + '" alt="" loading="lazy"></div>' +
                         '<div class="users-roll-info">' +
@@ -957,9 +989,17 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 }
                 var html = list.map(cardHtml).join('') + list.map(cardHtml).join('');
                 track.innerHTML = html;
-            } catch (e) { section.classList.add('empty'); }
+                usersRollCurrentLength = list.length;
+                usersRollHalfWidth = 0;
+                usersRollOffset = 0;
+                section.classList.remove('empty');
+            } catch (e) {
+                if (usersRollCurrentLength === 0) section.classList.add('empty');
+            }
         }
+        var USERS_REFRESH_MS = 60000;
         loadUsersRoll();
+        setInterval(loadUsersRoll, USERS_REFRESH_MS);
         const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getVetementsApiBase() + '/api/stats');
         const STAT_REFRESH_MS = 8000;
         const STAT_TIMEOUT_MS = 8000;
