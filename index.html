@@ -661,6 +661,11 @@
             overflow: hidden;
             padding: 32px 0 40px;
             position: relative;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .users-roll-section.roll-ready {
+            opacity: 1;
         }
         .users-roll-section::before,
         .users-roll-section::after {
@@ -708,9 +713,12 @@
         .users-roll-avatar img {
             width: 48px;
             height: 48px;
+            min-width: 48px;
+            min-height: 48px;
             border-radius: 50%;
             object-fit: cover;
             display: block;
+            background: rgba(255, 255, 255, 0.06);
         }
         .users-roll-info {
             display: flex;
@@ -957,6 +965,15 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             usersRollSectionEl.addEventListener('mouseleave', function() { usersRollPaused = false; });
         }
         var usersRollCurrentLength = 0;
+        function preloadImage(src) {
+            return new Promise(function(resolve) {
+                if (!src) { resolve(); return; }
+                var img = new Image();
+                var t = setTimeout(function() { resolve(); }, 2200);
+                img.onload = img.onerror = function() { clearTimeout(t); resolve(); };
+                img.src = src;
+            });
+        }
         async function loadUsersRoll() {
             var track = document.getElementById('users-roll-track');
             var section = document.getElementById('users-roll-section');
@@ -975,13 +992,22 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 }
                 if (list.length < usersRollCurrentLength) return;
                 var fetchedAt = Date.now();
+                var avatarUrls = list.map(function(u) {
+                    var avatar = (u.avatarUrl || '').trim();
+                    if (avatar) avatar += (avatar.indexOf('?') >= 0 ? '&' : '?') + '_=' + fetchedAt;
+                    return avatar;
+                });
+                await Promise.race([
+                    Promise.all(avatarUrls.map(preloadImage)),
+                    new Promise(function(r) { setTimeout(r, 1600); })
+                ]);
                 function cardHtml(u, cb) {
                     var name = (u.displayName || u.username || 'User').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var username = (u.username || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                     var avatar = (u.avatarUrl || '').replace(/"/g, '&quot;');
                     if (avatar) avatar += (avatar.indexOf('?') >= 0 ? '&' : '?') + '_=' + (cb || fetchedAt);
                     return '<div class="users-roll-card">' +
-                        '<div class="users-roll-avatar"><img src="' + avatar + '" alt="" loading="lazy"></div>' +
+                        '<div class="users-roll-avatar"><img src="' + avatar + '" alt="" width="48" height="48"></div>' +
                         '<div class="users-roll-info">' +
                         '<span class="users-roll-name">' + name + '</span>' +
                         '<span class="users-roll-username">@' + username + '</span>' +
@@ -993,6 +1019,25 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 usersRollHalfWidth = 0;
                 usersRollOffset = 0;
                 section.classList.remove('empty');
+                var imgs = track.querySelectorAll('img');
+                function rollReady() {
+                    usersRollHalfWidth = 0;
+                    section.classList.add('roll-ready');
+                }
+                if (imgs.length === 0) {
+                    rollReady();
+                } else {
+                    var done = 0;
+                    function oneDone() {
+                        done++;
+                        if (done >= imgs.length) rollReady();
+                    }
+                    for (var j = 0; j < imgs.length; j++) {
+                        imgs[j].onload = oneDone;
+                        imgs[j].onerror = oneDone;
+                    }
+                    setTimeout(rollReady, 480);
+                }
             } catch (e) {
                 if (usersRollCurrentLength === 0) section.classList.add('empty');
             }
