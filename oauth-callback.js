@@ -2,7 +2,7 @@
  * OAuth2 callback handler for Discord authorization.
  * Checks URL for ?code=... and sends it to the bot API.
  * Passes guild_id and permissions if present (Discord adds them on redirect).
- * API URL: use VITE_API_URL env var (default: https://api.vetements.lol)
+ * API URL: use VITE_API_URL env var (default: https://api.shiver.lol)
  */
 (function () {
   const params = new URLSearchParams(window.location.search);
@@ -11,9 +11,9 @@
 
   const overlay = document.getElementById('oauth-overlay');
   const errEl = document.getElementById('oauth-error');
-  const API_BASE = (typeof __VETEMENTS_API_URL__ !== 'undefined' ? __VETEMENTS_API_URL__ : null)
-    || window.VETEMENTS_API_URL
-    || 'https://api.vetements.lol';
+  const API_BASE = (typeof __SHIVER_API_URL__ !== 'undefined' ? __SHIVER_API_URL__ : null)
+    || window.SHIVER_API_URL
+    || 'https://api.shiver.lol';
 
   var payload = { code: code };
   var guildId = params.get('guild_id');

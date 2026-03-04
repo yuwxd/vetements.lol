@@ -1074,7 +1074,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         var USERS_REFRESH_MS = 60000;
         loadUsersRoll();
         setInterval(loadUsersRoll, USERS_REFRESH_MS);
-        const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getShiverApiBase() + '/api/stats');
+        const STATS_ENDPOINT = (window.SHIVER_STATS_URL && window.SHIVER_STATS_URL.trim()) ? window.SHIVER_STATS_URL.trim() : (getShiverApiBase() + '/api/stats');
         const STAT_REFRESH_MS = 8000;
         const STAT_TIMEOUT_MS = 8000;
         const statEls = {
