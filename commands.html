@@ -201,20 +201,14 @@
         }
         
         .category-header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 32px;
+            margin-bottom: 24px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
         }
         
         .header-left {
-            flex: 1;
-            min-width: 300px;
+            max-width: 600px;
         }
         
         .page-title {
@@ -233,16 +227,17 @@
             font-size: 16px;
             color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
-            max-width: 600px;
         }
         
-        .filters-block {
-            flex-shrink: 0;
+        .search-row {
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 1.05s forwards;
         }
         
         .filters-search-wrap {
             position: relative;
-            width: 280px;
+            max-width: 420px;
         }
         
         .filters-search-input {
@@ -298,7 +293,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.6px;
-            color: rgba(255, 255, 255, 0.45);
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 10px;
         }
         
@@ -306,28 +301,31 @@
             list-style: none;
             display: flex;
             flex-wrap: nowrap;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
-            padding: 6px 0 10px;
+            padding: 10px 12px 12px;
             margin: 0;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
         }
         
         .category-list::-webkit-scrollbar {
-            height: 6px;
+            height: 8px;
         }
         
         .category-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
         }
         
         .category-list::-webkit-scrollbar-thumb {
-            background: rgba(92, 177, 230, 0.25);
-            border-radius: 3px;
+            background: rgba(92, 177, 230, 0.35);
+            border-radius: 4px;
         }
         
         .category-item {
@@ -336,54 +334,52 @@
         }
         
         .category-btn {
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 12px;
-            font-weight: 500;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             white-space: nowrap;
         }
         
         .category-btn:hover {
-            background: rgba(255, 255, 255, 0.09);
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         .category-btn.active {
-            background: rgba(92, 177, 230, 0.14);
+            background: rgba(92, 177, 230, 0.25);
             color: #5CB1E6;
-            border-color: rgba(92, 177, 230, 0.4);
+            border-color: rgba(92, 177, 230, 0.5);
         }
         
         .category-count {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 6px;
-            border-radius: 6px;
-            min-width: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 8px;
+            min-width: 22px;
             text-align: center;
             transition: all 0.2s ease;
         }
         
         .category-btn:hover .category-count {
-            background: rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.3);
         }
         
         .category-btn.active .category-count {
-            background: rgba(92, 177, 230, 0.25);
+            background: rgba(92, 177, 230, 0.35);
             color: #5CB1E6;
         }
         
@@ -772,18 +768,8 @@
                 grid-template-columns: 1fr;
             }
             
-            .category-header-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .filters-block {
-                width: 100%;
-                max-width: 100%;
-            }
-            
             .filters-search-wrap {
-                width: 100%;
+                max-width: 100%;
             }
         }
         
@@ -878,11 +864,12 @@
                     <h1 class="page-title" id="pageTitle">All Commands</h1>
                     <p class="page-subtitle" id="pageSubtitle">Browse through all available commands. Use the search to find specific commands or filter by category.</p>
                 </div>
-                <div class="filters-block">
-                    <div class="filters-search-wrap" id="sidebarSearchBlock">
-                        <input type="text" class="filters-search-input" id="searchInput" placeholder="Search by command name..." autocomplete="off">
-                        <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="filters-search-icon" alt="">
-                    </div>
+            </div>
+
+            <div class="search-row">
+                <div class="filters-search-wrap" id="sidebarSearchBlock">
+                    <input type="text" class="filters-search-input" id="searchInput" placeholder="Search by command name..." autocomplete="off">
+                    <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="filters-search-icon" alt="">
                 </div>
             </div>
 
@@ -1361,6 +1348,15 @@
                 t.closest('button');
             if (!allowed) e.preventDefault();
         });
+
+        var categoryListEl = document.getElementById('categoryList');
+        if (categoryListEl) {
+            categoryListEl.addEventListener('wheel', function(e) {
+                if (e.deltaY === 0) return;
+                e.preventDefault();
+                this.scrollLeft += e.deltaY;
+            }, { passive: false });
+        }
 
         window.addEventListener('load', () => {
             fetchCommands();
