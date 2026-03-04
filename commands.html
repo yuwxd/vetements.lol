@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <title>commands</title>
     <meta property="og:title" content="shiver">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
     <meta property="og:url" content="https://shiver.lol">
-    <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <meta property="og:image" content="https://shiver.lol/assets/background.png">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="shiver">
     <meta name="theme-color" content="#0c0c0e">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="shiver">
     <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
-    <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
+    <meta name="twitter:image" content="https://shiver.lol/assets/background.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
         
@@ -188,181 +189,6 @@
             z-index: 1;
         }
         
-        .sidebar {
-            width: 100%;
-            padding: 24px 32px;
-            background: rgba(10, 14, 20, 0.5);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(92, 177, 230, 0.1);
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 20px;
-            transform: translateX(0);
-            opacity: 1;
-            animation: fadeIn 0.6s ease 0.5s backwards;
-        }
-        
-        .sidebar-search-block {
-            flex: 1;
-            min-width: 260px;
-            max-width: 420px;
-            padding: 0;
-            background: transparent;
-            border: none;
-            transition: none;
-        }
-        
-        .sidebar-search-block:hover {
-            background: transparent;
-            border-color: transparent;
-        }
-        
-        .sidebar-search-block.active {
-            background: transparent;
-            border-color: transparent;
-            box-shadow: none;
-        }
-        
-        .sidebar-search-block.active .sidebar-search-input {
-            background: rgba(92, 177, 230, 0.08);
-            border-color: rgba(92, 177, 230, 0.3);
-        }
-        
-        .sidebar-search-block.active::after {
-            display: none;
-        }
-        
-        .sidebar-search-block .sidebar-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-        
-        .sidebar-search-wrap {
-            position: relative;
-            width: 100%;
-        }
-        
-        .sidebar-search-input {
-            width: 100%;
-            padding: 12px 40px 12px 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #ffffff;
-            font-size: 13px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 500;
-            transition: all 0.25s ease;
-        }
-        
-        .sidebar-search-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-        
-        .sidebar-search-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .sidebar-search-icon {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            filter: brightness(0) invert(0.6);
-            pointer-events: none;
-        }
-        
-        .category-list {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            padding: 0;
-        }
-        
-        .category-item {
-            margin: 0;
-        }
-        
-        .category-btn {
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 100px;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .category-btn::before {
-            display: none;
-        }
-        
-        .category-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .category-btn.active {
-            background: rgba(92, 177, 230, 0.12);
-            color: #5CB1E6;
-            border-color: rgba(92, 177, 230, 0.35);
-        }
-        
-        .category-btn.active::after {
-            display: none;
-        }
-        
-        @keyframes whiteDotPulse {
-            0%, 100% { 
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-                transform: translateY(-50%) scale(1);
-            }
-            50% { 
-                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-                transform: translateY(-50%) scale(1.2);
-            }
-        }
-        
-        .category-count {
-            font-size: 11px;
-            font-weight: 600;
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 8px;
-            border-radius: 10px;
-            min-width: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .category-btn:hover .category-count {
-            background: rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        .category-btn.active .category-count {
-            background: rgba(92, 177, 230, 0.2);
-            color: #5CB1E6;
-        }
-        
         .content {
             flex: 1;
             padding: 32px;
@@ -377,10 +203,10 @@
         .category-header-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 40px;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 32px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
@@ -410,48 +236,146 @@
             max-width: 600px;
         }
         
-        .search-container {
-            max-width: 600px;
-            margin-bottom: 40px;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.1s forwards;
+        .filters-block {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 24px;
+            min-width: 320px;
+            max-width: 680px;
+            flex-shrink: 0;
         }
         
-        .search-input {
+        .filters-search-wrap {
+            position: relative;
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .filters-categories-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .filters-search-input {
             width: 100%;
-            padding: 16px 50px 16px 20px;
-            background: rgba(255, 255, 255, 0.04);
+            padding: 14px 46px 14px 20px;
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 14px;
             color: #ffffff;
             font-size: 15px;
             font-family: 'Outfit', sans-serif;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: all 0.25s ease;
         }
         
-        .search-input::placeholder {
+        .filters-search-input::placeholder {
             color: rgba(255, 255, 255, 0.4);
         }
         
-        .search-input:focus {
+        .filters-search-input:focus {
             outline: none;
             border-color: rgba(92, 177, 230, 0.45);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 0 3px rgba(92, 177, 230, 0.12);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 0 3px rgba(92, 177, 230, 0.1);
         }
         
-        .search-icon {
+        .filters-search-input.active,
+        #sidebarSearchBlock.active .filters-search-input {
+            background: rgba(92, 177, 230, 0.06);
+            border-color: rgba(92, 177, 230, 0.28);
+        }
+        
+        .filters-search-icon {
             position: absolute;
-            right: 20px;
+            right: 18px;
             top: 50%;
             transform: translateY(-50%);
             width: 20px;
             height: 20px;
-            filter: brightness(0) invert(0.6);
+            filter: brightness(0) invert(0.55);
             pointer-events: none;
+        }
+        
+        .filters-categories-wrap {
+            width: 100%;
+        }
+        
+        .filters-categories-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+        }
+        
+        .category-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .category-item {
+            margin: 0;
+        }
+        
+        .category-btn {
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+        
+        .category-btn.active {
+            background: rgba(92, 177, 230, 0.14);
+            color: #5CB1E6;
+            border-color: rgba(92, 177, 230, 0.4);
+        }
+        
+        .category-count {
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 3px 8px;
+            border-radius: 8px;
+            min-width: 24px;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+        
+        .category-btn:hover .category-count {
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .category-btn.active .category-count {
+            background: rgba(92, 177, 230, 0.25);
+            color: #5CB1E6;
         }
         
         .commands-grid {
@@ -831,11 +755,6 @@
         }
         
         @media (max-width: 1024px) {
-            .sidebar {
-                padding: 16px 20px;
-                gap: 16px;
-            }
-            
             .content {
                 padding: 20px;
             }
@@ -847,6 +766,16 @@
             .category-header-container {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            
+            .filters-block {
+                width: 100%;
+                max-width: 100%;
+                flex-direction: column;
+            }
+            
+            .filters-search-wrap {
+                width: 100%;
             }
         }
         
@@ -873,14 +802,18 @@
                 gap: 10px;
             }
             
-            .sidebar-search-input {
-                min-height: 44px;
-                padding: 12px 40px 12px 14px;
+            .filters-search-input {
+                min-height: 48px;
+                padding: 12px 46px 12px 18px;
+            }
+            
+            .filters-categories-label {
+                margin-bottom: 10px;
             }
             
             .category-btn {
-                min-height: 48px;
-                padding: 14px 18px;
+                min-height: 44px;
+                padding: 10px 14px;
             }
             
             .copy-btn {
@@ -931,22 +864,21 @@
     </nav>
 
     <div class="main-container">
-        <aside class="sidebar">
-            <div class="sidebar-search-block" id="sidebarSearchBlock">
-                <h2 class="sidebar-title">Search</h2>
-                <div class="sidebar-search-wrap">
-                    <input type="text" class="sidebar-search-input" id="searchInput" placeholder="Search by command name..." autocomplete="off">
-                    <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="sidebar-search-icon" alt="">
-                </div>
-            </div>
-            <ul class="category-list" id="categoryList"></ul>
-        </aside>
-
         <main class="content">
             <div class="category-header-container">
                 <div class="header-left">
                     <h1 class="page-title" id="pageTitle">All Commands</h1>
                     <p class="page-subtitle" id="pageSubtitle">Browse through all available commands. Use the search to find specific commands or filter by category.</p>
+                </div>
+                <div class="filters-block">
+                    <div class="filters-search-wrap" id="sidebarSearchBlock">
+                        <input type="text" class="filters-search-input" id="searchInput" placeholder="Search by command name..." autocomplete="off">
+                        <img src="https://img.icons8.com/?size=48&id=WwWusvLMTFd7&format=png" class="filters-search-icon" alt="">
+                    </div>
+                    <div class="filters-categories-wrap">
+                        <div class="filters-categories-label">Filter by category</div>
+                        <ul class="category-list" id="categoryList"></ul>
+                    </div>
                 </div>
             </div>
 
@@ -1408,13 +1340,17 @@
         });
 
         document.addEventListener('mousedown', function(e) {
-            if (!e.target.classList.contains('sidebar-search-input') && 
-                !e.target.classList.contains('command-name') && 
-                !e.target.classList.contains('copy-btn') && 
-                !e.target.classList.contains('copy-icon') &&
-                !e.target.classList.contains('command-type-label')) {
-                e.preventDefault();
-            }
+            var t = e.target;
+            var allowed = t.classList.contains('filters-search-input') ||
+                t.classList.contains('command-name') ||
+                t.classList.contains('copy-btn') ||
+                t.classList.contains('copy-icon') ||
+                t.classList.contains('command-type-label') ||
+                t.closest('.category-btn') ||
+                t.closest('.prefix-tag') ||
+                t.closest('a') ||
+                t.closest('button');
+            if (!allowed) e.preventDefault();
         });
 
         window.addEventListener('load', () => {
