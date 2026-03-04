@@ -783,6 +783,12 @@
         @media (max-width: 600px) {
             .stats-container { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
         }
+        .burst-container { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
+        .burst-star { position: absolute; width: 4px; height: 4px; background: #74D0F4; border-radius: 50%; box-shadow: 0 0 8px rgba(92, 177, 230, 0.6); }
+        .burst-star--l { animation: burstStarL 0.5s ease-out forwards; }
+        .burst-star--r { animation: burstStarR 0.5s ease-out forwards; }
+        @keyframes burstStarL { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-58px, 0); } }
+        @keyframes burstStarR { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(58px, 0); } }
     </style>
 </head>
 <body>
@@ -818,6 +824,7 @@ stars[i].style.transform='translate(0,0)';
 }
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(update);});
 })();
+(function(){var container=null,last=0,sel='input,button,.category-btn,.prefix-tag,.copy-btn,.nav-links a,.btn,[data-burst]';document.addEventListener('mousedown',function(e){var el=e.target.closest(sel);if(!el)return;if(Date.now()-last<180)return;last=Date.now();var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;if(!container){container=document.createElement('div');container.className='burst-container';document.body.appendChild(container);}for(var i=0;i<6;i++){var s=document.createElement('span');s.className='burst-star burst-star--'+(i<3?'l':'r');var dy=(Math.random()-0.5)*14;s.style.left=cx+'px';s.style.top=(cy+dy)+'px';s.style.marginLeft='-2px';s.style.marginTop='-2px';container.appendChild(s);setTimeout(function(x){return function(){if(x.parentNode)x.parentNode.removeChild(x);};}(s),520);}});})();
     </script>
     <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,14,20,0.96);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
         <div class="loading-logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>

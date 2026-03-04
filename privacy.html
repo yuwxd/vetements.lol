@@ -358,12 +358,19 @@
                 padding: 15px;
             }
         }
+        .burst-container { position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
+        .burst-star { position: absolute; width: 4px; height: 4px; background: #74D0F4; border-radius: 50%; box-shadow: 0 0 8px rgba(92, 177, 230, 0.6); }
+        .burst-star--l { animation: burstStarL 0.5s ease-out forwards; }
+        .burst-star--r { animation: burstStarR 0.5s ease-out forwards; }
+        @keyframes burstStarL { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-58px, 0); } }
+        @keyframes burstStarR { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(58px, 0); } }
     </style>
 </head>
 <body>
     <div class="stars-bg" id="starsBg"></div>
     <script>
 (function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}var stars=c.querySelectorAll('.star');var R=160;var P=56;var mx=-1e4,my=-1e4;var raf=null;function up(){raf=null;for(var i=0;i<stars.length;i++){var r=stars[i].getBoundingClientRect();var cx=r.left+r.width/2;var cy=r.top+r.height/2;var dx=mx-cx;var dy=my-cy;var d=Math.sqrt(dx*dx+dy*dy);if(d<R&&d>0){var t=1-d/R;var f=t*t*P;stars[i].style.transform='translate('+(-dx/d)*f+'px,'+(-dy/d)*f+'px)';}else{stars[i].style.transform='translate(0,0)';}}}document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(up);});})();
+(function(){var container=null,last=0,sel='input,button,.category-btn,.prefix-tag,.copy-btn,.nav-links a,.btn,[data-burst]';document.addEventListener('mousedown',function(e){var el=e.target.closest(sel);if(!el)return;if(Date.now()-last<180)return;last=Date.now();var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;if(!container){container=document.createElement('div');container.className='burst-container';document.body.appendChild(container);}for(var i=0;i<6;i++){var s=document.createElement('span');s.className='burst-star burst-star--'+(i<3?'l':'r');var dy=(Math.random()-0.5)*14;s.style.left=cx+'px';s.style.top=(cy+dy)+'px';s.style.marginLeft='-2px';s.style.marginTop='-2px';container.appendChild(s);setTimeout(function(x){return function(){if(x.parentNode)x.parentNode.removeChild(x);};}(s),520);}});})();
     </script>
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>
