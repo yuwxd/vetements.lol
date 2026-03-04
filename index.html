@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
-    <meta property="og:title" content="vetements">
+    <meta property="og:title" content="shiver">
     <meta property="og:description" content="The only Discord app you'll ever need. Tap in.">
-    <meta property="og:url" content="https://vetements.lol">
+    <meta property="og:url" content="https://shiver.lol">
     <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="vetements">
+    <meta property="og:site_name" content="shiver">
     <meta name="theme-color" content="#0c0c0e">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="vetements">
+    <meta name="twitter:title" content="shiver">
     <meta name="twitter:description" content="The only Discord app you'll ever need. Tap in.">
     <meta name="twitter:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     
@@ -37,20 +37,38 @@
             min-height: 100vh;
             position: relative;
             cursor: default;
-            background: #08080a;
+            background: #0a0e14;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: url('assets/background.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(10, 14, 20, 0.75) 0%, rgba(10, 14, 20, 0.5) 50%, rgba(10, 14, 20, 0.85) 100%);
+            pointer-events: none;
         }
         
         .stars-bg {
             position: fixed;
             inset: 0;
-            z-index: -1;
+            z-index: 0;
             overflow: hidden;
             pointer-events: none;
+            opacity: 0.4;
         }
         
         .stars-bg .star {
             position: absolute;
-            background: #fff;
+            background: #74D0F4;
             border-radius: 50%;
             animation: starTwinkle 3s ease-in-out infinite;
             transition: transform 0.4s ease-out;
@@ -58,8 +76,8 @@
         }
         
         @keyframes starTwinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.95; }
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 0.8; }
         }
         
         .loading-screen {
@@ -68,7 +86,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0a0a0a;
+            background: #0a0e14;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -82,24 +100,22 @@
         }
         
         .loading-logo {
-            width: 72px;
-            height: 72px;
-            background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
-            border-radius: 22px;
+            width: 88px;
+            height: 88px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 34px;
-            font-weight: 800;
-            color: #ffffff;
-            border: 2px solid rgba(99, 102, 241, 0.25);
-            box-shadow: 0 0 40px rgba(99, 102, 241, 0.1);
             animation: logoGlow 2s ease-in-out infinite;
+        }
+        .loading-logo .logo-img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
         }
         
         @keyframes logoGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.25); }
-            50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.4); }
+            0%, 100% { opacity: 0.95; filter: drop-shadow(0 0 20px rgba(92, 177, 230, 0.3)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 32px rgba(116, 208, 244, 0.5)); }
         }
         
         nav {
@@ -110,9 +126,9 @@
             justify-content: center;
             align-items: center;
             padding: 12px 24px;
-            background: rgba(13, 13, 14, 0.7);
+            background: rgba(10, 14, 20, 0.75);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(92, 177, 230, 0.12);
             z-index: 1000;
             transform: translateY(-100%);
             opacity: 0;
@@ -152,9 +168,9 @@
         }
         
         .nav-links a.active {
-            color: #818cf8;
-            background: rgba(99, 102, 241, 0.08);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #5CB1E6;
+            background: rgba(92, 177, 230, 0.12);
+            border: 1px solid rgba(92, 177, 230, 0.25);
         }
         
         .hero {
@@ -170,22 +186,21 @@
         }
         
         .logo {
-            width: 78px;
-            height: 78px;
-            background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 50%);
-            border-radius: 22px;
+            width: 90px;
+            height: 90px;
             margin-bottom: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            font-weight: 800;
-            color: #ffffff;
-            border: 2px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 0 80px rgba(99, 102, 241, 0.06);
             opacity: 0;
             transform: translateY(24px) scale(0.94);
             animation: heroLogo 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+        }
+        .logo .logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4));
         }
         
         @keyframes heroLogo {
@@ -217,18 +232,18 @@
         }
         
         .made-by-link {
-            color: #818cf8;
+            color: #5CB1E6;
             text-decoration: none;
             font-weight: 700;
             transition: all 0.25s ease;
             padding: 2px 10px;
             border-radius: 6px;
-            background: rgba(99, 102, 241, 0.08);
+            background: rgba(92, 177, 230, 0.12);
         }
         
         .made-by-link:hover {
-            color: #ffffff;
-            background: rgba(99, 102, 241, 0.15);
+            color: #74D0F4;
+            background: rgba(92, 177, 230, 0.2);
         }
         
         .subtitle {
@@ -301,16 +316,16 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.05) 100%);
-            color: #818cf8;
-            border-color: rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, rgba(92, 177, 230, 0.2) 0%, rgba(92, 177, 230, 0.06) 100%);
+            color: #5CB1E6;
+            border-color: rgba(92, 177, 230, 0.45);
         }
         
         .btn-primary:hover {
-            background: rgba(99, 102, 241, 0.15);
-            border-color: rgba(99, 102, 241, 0.6);
+            background: rgba(92, 177, 230, 0.18);
+            border-color: rgba(92, 177, 230, 0.65);
             transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 12px 32px rgba(92, 177, 230, 0.25);
         }
         
         .btn-secondary {
@@ -352,7 +367,7 @@
         }
         .stats-sentence .stat-inline,
         .stats-commands-line .stat-inline {
-            color: #818cf8;
+            color: #5CB1E6;
             font-weight: 600;
         }
         .stats-commands-line {
@@ -384,15 +399,15 @@
         }
         .stat-neon-path {
             fill: none;
-            stroke: #a5b4fc;
+            stroke: #74D0F4;
             stroke-width: 1.8;
             stroke-linecap: round;
             stroke-linejoin: round;
             stroke-dasharray: 100;
             stroke-dashoffset: 100;
-            filter: drop-shadow(0 0 4px #818cf8) drop-shadow(0 0 8px rgba(129, 140, 248, 0.5));
+            filter: drop-shadow(0 0 4px #5CB1E6) drop-shadow(0 0 8px rgba(92, 177, 230, 0.5));
         }
-        .stat-neon-path.stat-neon-2b { stroke-width: 1.3; stroke: rgba(199, 210, 254, 0.95); }
+        .stat-neon-path.stat-neon-2b { stroke-width: 1.3; stroke: rgba(116, 208, 244, 0.9); }
         .stat-neon-1 { animation: statNeonDraw 9.2s ease-in-out infinite 0s; animation-play-state: paused; }
         .stat-neon-2a { animation: statNeonDraw 9.2s ease-in-out infinite 1.15s; animation-play-state: paused; }
         .stat-neon-2b { animation: statNeonDraw 9.2s ease-in-out infinite 1.4s; animation-play-state: paused; }
@@ -430,9 +445,9 @@
             gap: 8px;
             padding: 8px 12px;
             border-radius: 100px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #c7d2fe;
+            background: rgba(92, 177, 230, 0.12);
+            border: 1px solid rgba(92, 177, 230, 0.35);
+            color: #74D0F4;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
@@ -443,8 +458,8 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #818cf8;
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+            background: #5CB1E6;
+            box-shadow: 0 0 12px rgba(92, 177, 230, 0.6);
             animation: pulse 2s ease-in-out infinite;
         }
         
@@ -492,7 +507,7 @@
             opacity: 0.8;
         }
         .stats-ping-value {
-            color: #818cf8;
+            color: #5CB1E6;
             font-weight: 600;
         }
         
@@ -524,7 +539,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(92, 177, 230, 0.4), transparent);
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -600,7 +615,7 @@
         .highlight {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-left: 3px solid rgba(99, 102, 241, 0.5);
+            border-left: 3px solid rgba(92, 177, 230, 0.5);
             border-radius: 12px;
             padding: 22px 28px;
             margin-top: 56px;
@@ -633,13 +648,13 @@
             color: rgba(255, 255, 255, 0.4);
             font-size: 13px;
             font-weight: 500;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(92, 177, 230, 0.08);
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.45s forwards;
             position: relative;
             z-index: 1;
-            background: rgba(10, 10, 10, 0.4);
+            background: rgba(10, 14, 20, 0.6);
             backdrop-filter: blur(8px);
         }
         
@@ -652,7 +667,7 @@
         }
         
         footer a:hover {
-            color: #818cf8;
+            color: #5CB1E6;
         }
 
         .users-roll-section {
@@ -678,11 +693,11 @@
         }
         .users-roll-section::before {
             left: 0;
-            background: linear-gradient(to right, #08080a 0%, transparent 100%);
+            background: linear-gradient(to right, #0a0e14 0%, transparent 100%);
         }
         .users-roll-section::after {
             right: 0;
-            background: linear-gradient(to left, #08080a 0%, transparent 100%);
+            background: linear-gradient(to left, #0a0e14 0%, transparent 100%);
         }
         .users-roll-track {
             display: flex;
@@ -803,16 +818,16 @@ stars[i].style.transform='translate(0,0)';
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(update);});
 })();
     </script>
-    <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.96);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
-        <div class="loading-logo">V</div>
-        <p style="color:rgba(255,255,255,0.8);font-size:15px;font-weight:600;">Authorizing Vetements...</p>
+    <div id="oauth-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,14,20,0.96);z-index:10000;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
+        <div class="loading-logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>
+        <p style="color:rgba(255,255,255,0.8);font-size:15px;font-weight:600;">Authorizing Shiver...</p>
     </div>
     <div id="oauth-error" style="display:none;position:fixed;inset:0;background:rgba(10,10,10,0.96);z-index:10000;align-items:center;justify-content:center;gap:24px;padding:24px;text-align:center;flex-direction:column;">
         <p class="oauth-error-msg" style="color:#ff5757;font-size:18px;font-weight:700;">Authorization failed. Please try again.</p>
         <a href="https://discord.com/oauth2/authorize?client_id=1447659078498127932" style="color:rgba(255,255,255,0.9);padding:14px 28px;background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);border-radius:100px;text-decoration:none;font-weight:700;transition:all 0.25s;">Try again</a>
     </div>
     <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo">V</div>
+        <div class="loading-logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>
     </div>
 
     <nav>
@@ -826,8 +841,8 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </nav>
 
     <div class="hero">
-        <div class="logo">V</div>
-        <h1>vetements</h1>
+        <div class="logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>
+        <h1>shiver</h1>
         <p class="made-by">made by <a href="https://fakecrime.bio/external" class="made-by-link" target="_blank">@yuw</a></p>
         <p class="subtitle">One bot. Every tool you need.</p>
         <p class="tagline tagline-hopping">No hopping between apps.</p>
@@ -844,7 +859,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </div>
 
     <div class="stats-section">
-        <p class="stats-sentence">vetements serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers.</p>
+        <p class="stats-sentence">shiver serves <span class="stat-inline-wrap"><span class="stat-inline" id="stat-members-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-1" pathLength="100" d="M 0 6 Q 28 3, 50 7 Q 72 4, 100 6"/></svg></span></span> server members and <span class="stat-inline-wrap"><span class="stat-inline" id="stat-users-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 14" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-2a" pathLength="100" d="M 0 5 Q 30 9, 50 5 Q 70 8, 100 6"/><path class="stat-neon-path stat-neon-2b" pathLength="100" d="M 4 10 Q 35 7, 65 10 Q 88 6, 98 9"/></svg></span></span> individuals across <span class="stat-inline-wrap"><span class="stat-inline" id="stat-servers-text">—</span><span class="stat-neon-svg" aria-hidden="true"><svg viewBox="0 0 100 12" preserveAspectRatio="none"><path class="stat-neon-path stat-neon-3" pathLength="100" d="M 0 7 Q 20 4, 45 6 Q 55 9, 80 5 Q 95 7, 100 6"/></svg></span></span> servers.</p>
         <div class="stats-header">
             <div class="stats-title">Stats</div>
             <div class="live-pill" id="livePill">
@@ -898,7 +913,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
     </div>
 
     <footer>
-        <p>© 2025 vetements • Developed by @yuw</p>
+        <p>© 2025 shiver • Developed by @yuw</p>
         <p style="margin-top: 10px;">
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
@@ -928,11 +943,11 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             els.forEach(function(el) { observer.observe(el); });
         }
 
-        function getVetementsApiBase() {
-            var base = (typeof window.VETEMENTS_API_BASE === 'string' && window.VETEMENTS_API_BASE.trim()) ? window.VETEMENTS_API_BASE.trim().replace(/\/+$/, '') : '';
+        function getShiverApiBase() {
+            var base = (typeof window.SHIVER_API_BASE === 'string' && window.SHIVER_API_BASE.trim()) ? window.SHIVER_API_BASE.trim().replace(/\/+$/, '') : '';
             if (base) return base;
             var origin = window.location.origin;
-            if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return 'https://vetements.lol';
+            if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return 'https://shiver.lol';
             return origin;
         }
         var usersRollOffset = 0;
@@ -976,7 +991,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
             var section = document.getElementById('users-roll-section');
             if (!track || !section) return;
             try {
-                var base = getVetementsApiBase();
+                var base = getShiverApiBase();
                 var res = await fetch(base + '/api/users', { cache: 'no-store' });
                 if (!res.ok) {
                     if (usersRollCurrentLength === 0) section.classList.add('empty');
@@ -1051,7 +1066,7 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
         var USERS_REFRESH_MS = 60000;
         loadUsersRoll();
         setInterval(loadUsersRoll, USERS_REFRESH_MS);
-        const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getVetementsApiBase() + '/api/stats');
+        const STATS_ENDPOINT = (window.VETEMENTS_STATS_URL && window.VETEMENTS_STATS_URL.trim()) ? window.VETEMENTS_STATS_URL.trim() : (getShiverApiBase() + '/api/stats');
         const STAT_REFRESH_MS = 8000;
         const STAT_TIMEOUT_MS = 8000;
         const statEls = {
@@ -1129,8 +1144,10 @@ document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!
                 if (mt) mt.textContent = formatNumber(members);
                 if (ut) ut.textContent = formatNumber(installs);
                 if (ct) ct.textContent = formatNumber(totalCommands);
-                document.getElementById('stat-ping').textContent = (!Number.isNaN(pingNum)) ? Math.round(pingNum) + ' ms' : '—';
-                document.getElementById('stat-dbPing').textContent = (!Number.isNaN(dbNum)) ? Math.round(dbNum) + ' ms' : '—';
+                var pe = document.getElementById('stat-ping');
+                var de = document.getElementById('stat-dbPing');
+                if (pe) pe.textContent = (!Number.isNaN(pingNum)) ? Math.round(pingNum) + ' ms' : '—';
+                if (de) de.textContent = (!Number.isNaN(dbNum)) ? Math.round(dbNum) + ' ms' : '—';
 
                 setLiveState();
             } catch (err) {

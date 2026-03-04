@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanks – vetements</title>
-    <meta property="og:title" content="vetements / thanks">
-    <meta property="og:description" content="Thanks for authorizing Vetements!">
-    <meta property="og:url" content="https://vetements.lol/success">
+    <title>Thanks – shiver</title>
+    <meta property="og:title" content="shiver / thanks">
+    <meta property="og:description" content="Thanks for authorizing Shiver!">
+    <meta property="og:url" content="https://shiver.lol/success">
     <meta property="og:image" content="https://i.ibb.co/dwD119G2/116efd2b36cc.png">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="vetements">
-    <meta name="theme-color" content="#0c0c0e">
+    <meta property="og:site_name" content="shiver">
+    <meta name="theme-color" content="#0a0e14">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
         
@@ -18,7 +18,7 @@
         
         body {
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #08080a;
+            background: #0a0e14;
             color: #e5e5e5;
             overflow-x: hidden;
             min-height: 100vh;
@@ -28,10 +28,26 @@
             align-items: center;
             padding: 40px;
         }
-        
-        .stars-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-        .stars-bg .star { position: absolute; background: #fff; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; transition: transform 0.4s ease-out; will-change: transform; }
-        @keyframes starTwinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.95; } }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: url('assets/background.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(10, 14, 20, 0.78) 0%, rgba(10, 14, 20, 0.55) 50%, rgba(10, 14, 20, 0.88) 100%);
+            pointer-events: none;
+        }
+        .stars-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.35; }
+        .stars-bg .star { position: absolute; background: #74D0F4; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; transition: transform 0.4s ease-out; will-change: transform; }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.8; } }
         
         .success-content {
             display: flex;
@@ -46,18 +62,12 @@
         .logo {
             width: 100px;
             height: 100px;
-            background: radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.2) 0%, transparent 50%);
-            border-radius: 28px;
             margin-bottom: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 46px;
-            font-weight: 800;
-            color: #ffffff;
-            border: 2px solid rgba(99, 102, 241, 0.3);
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 0 80px rgba(99, 102, 241, 0.06);
         }
+        .logo .logo-img { width: 80px; height: 80px; object-fit: contain; }
         
         h1 {
             font-size: 28px;
@@ -78,23 +88,23 @@
             display: inline-block;
             margin-top: 36px;
             padding: 14px 32px;
-            background: rgba(99, 102, 241, 0.08);
-            color: #818cf8;
+            background: rgba(92, 177, 230, 0.12);
+            color: #5CB1E6;
             text-decoration: none;
             border-radius: 100px;
             font-weight: 700;
             font-size: 14px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            border: 2px solid rgba(99, 102, 241, 0.3);
+            border: 2px solid rgba(92, 177, 230, 0.35);
             transition: all 0.3s ease;
         }
         
         .home-link:hover {
-            background: rgba(99, 102, 241, 0.15);
-            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(92, 177, 230, 0.2);
+            border-color: rgba(92, 177, 230, 0.55);
             transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 8px 24px rgba(92, 177, 230, 0.2);
         }
     </style>
 </head>
@@ -104,7 +114,7 @@
 (function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}var stars=c.querySelectorAll('.star');var R=160;var P=56;var mx=-1e4,my=-1e4;var raf=null;function up(){raf=null;for(var i=0;i<stars.length;i++){var r=stars[i].getBoundingClientRect();var cx=r.left+r.width/2;var cy=r.top+r.height/2;var dx=mx-cx;var dy=my-cy;var d=Math.sqrt(dx*dx+dy*dy);if(d<R&&d>0){var t=1-d/R;var f=t*t*P;stars[i].style.transform='translate('+(-dx/d)*f+'px,'+(-dy/d)*f+'px)';}else{stars[i].style.transform='translate(0,0)';}}}document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(up);});})();
     </script>
     <div class="success-content">
-        <div class="logo">V</div>
+        <div class="logo"><img src="assets/logo.png" alt="Shiver" class="logo-img"></div>
         <h1>You're in.</h1>
         <p class="message">Check your DMs for the next steps.</p>
         <a href="/" class="home-link">Back to homepage</a>
