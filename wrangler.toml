@@ -1,0 +1,11 @@
+name = "shiver-one"
+main = "worker-stats.example.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "STATS"
+id = "e0dfce579e8247b2a07b5ed043b15266"
+
+[[routes]]
+pattern = "shiver.one/api/*"
+zone_name = "shiver.one"

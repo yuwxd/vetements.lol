@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <title>Spotify connected – shiver</title>
+    <meta property="og:title" content="shiver / Spotify connected">
+    <meta property="og:description" content="Your Spotify account is now linked to your Discord account.">
+    <meta property="og:url" content="https://shiver.one/spotify-callback.html">
+    <meta property="og:image" content="https://shiver.one/assets/background.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="shiver">
+    <meta name="theme-color" content="#0a0e14">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0e14;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: url('assets/background.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgba(10, 14, 20, 0.78) 0%, rgba(10, 14, 20, 0.55) 50%, rgba(10, 14, 20, 0.88) 100%);
+            pointer-events: none;
+        }
+        .stars-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.35; }
+        .stars-bg .star { position: absolute; background: #74D0F4; border-radius: 50%; animation: starTwinkle 3s ease-in-out infinite; transition: transform 0.4s ease-out; will-change: transform; }
+        @keyframes starTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.8; } }
+        
+        .success-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 480px;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .success-content.visible { opacity: 1; transform: translateY(0); }
+        
+        .spotify-logo-wrap {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            border-radius: 50%;
+            padding: 22px;
+        }
+        .spotify-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
+        
+        h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .message {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .code-section {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .code-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+        .code-row {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+        .code-box {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-family: 'Outfit', monospace;
+            font-size: 13px;
+            color: #5CB1E6;
+            word-break: break-all;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        .copy-btn {
+            padding: 14px 20px;
+            background: rgba(92, 177, 230, 0.15);
+            color: #5CB1E6;
+            border: 2px solid rgba(92, 177, 230, 0.4);
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: rgba(92, 177, 230, 0.25);
+            border-color: rgba(92, 177, 230, 0.6);
+            transform: translateY(-2px);
+        }
+        .copy-btn.copied {
+            background: rgba(72, 187, 120, 0.2);
+            border-color: rgba(72, 187, 120, 0.5);
+            color: #48bb78;
+        }
+        
+        .instruction {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.55);
+            text-align: center;
+            line-height: 1.55;
+            margin-bottom: 32px;
+        }
+        .instruction strong { color: rgba(255, 255, 255, 0.85); }
+        
+        .home-link {
+            display: inline-block;
+            padding: 14px 32px;
+            background: rgba(92, 177, 230, 0.12);
+            color: #5CB1E6;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border: 2px solid rgba(92, 177, 230, 0.35);
+            transition: all 0.3s ease;
+        }
+        
+        .home-link:hover {
+            background: rgba(92, 177, 230, 0.2);
+            border-color: rgba(92, 177, 230, 0.55);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(92, 177, 230, 0.2);
+        }
+        
+        .no-code .code-section { display: none; }
+        .no-code .instruction { display: none; }
+        .no-code .message { margin-bottom: 32px; }
+    </style>
+</head>
+<body>
+    <div class="stars-bg" id="starsBg"></div>
+    <script>
+(function(){var c=document.getElementById('starsBg');if(!c)return;for(var i=0;i<140;i++){var s=document.createElement('span');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';s.style.width=s.style.height=(2+Math.random()*2)+'px';c.appendChild(s);}var stars=c.querySelectorAll('.star');var R=160;var P=56;var mx=-1e4,my=-1e4;var raf=null;function up(){raf=null;for(var i=0;i<stars.length;i++){var r=stars[i].getBoundingClientRect();var cx=r.left+r.width/2;var cy=r.top+r.height/2;var dx=mx-cx;var dy=my-cy;var d=Math.sqrt(dx*dx+dy*dy);if(d<R&&d>0){var t=1-d/R;var f=t*t*P;stars[i].style.transform='translate('+(-dx/d)*f+'px,'+(-dy/d)*f+'px)';}else{stars[i].style.transform='translate(0,0)';}}}document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(up);});})();
+    </script>
+    <div class="success-content" id="successContent">
+        <div class="spotify-logo-wrap">
+            <img src="assets/spotify-logo.png" alt="Spotify" class="spotify-logo">
+        </div>
+        <h1>Spotify connected</h1>
+        <p class="message" id="mainMessage">Your Spotify account is now linked to your Discord account. Copy the code below and paste it in Discord to finish.</p>
+        <div class="code-section">
+            <div class="code-label">Authorization code</div>
+            <div class="code-row">
+                <div class="code-box" id="codeBox"></div>
+                <button type="button" class="copy-btn" id="copyBtn">Copy</button>
+            </div>
+        </div>
+        <p class="instruction">In Discord, run <strong>/spotify test link</strong> and paste the code in the <strong>code</strong> option.</p>
+        <a href="/" class="home-link">Back to homepage</a>
+    </div>
+    <script>
+(function(){
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get('code');
+    var content = document.getElementById('successContent');
+    var codeBox = document.getElementById('codeBox');
+    var copyBtn = document.getElementById('copyBtn');
+    var mainMessage = document.getElementById('mainMessage');
+    
+    if (!code || !content) {
+        if (mainMessage) mainMessage.textContent = 'No authorization code was received. Please try again from Discord by running /spotify test link.';
+        if (content) content.classList.add('no-code');
+        if (codeBox) codeBox.textContent = '';
+        if (copyBtn) copyBtn.style.display = 'none';
+    } else {
+        codeBox.textContent = code;
+        copyBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(code).then(function() {
+                copyBtn.textContent = 'Copied';
+                copyBtn.classList.add('copied');
+                setTimeout(function() {
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        });
+    }
+    
+    var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) e.target.classList.add('visible');
+            else e.target.classList.remove('visible');
+        });
+    }, { threshold: 0.2 });
+    if (content) obs.observe(content);
+})();
+    </script>
+</body>
+</html>
